@@ -199,3 +199,141 @@ require get_template_directory() . '/inc/enqueue.php';
  * Acf Functions
  */
 require get_template_directory() . '/inc/acf-functions.php';
+
+//elicheva functionnality
+
+// שינוי טקסט בשדה ההתחברות לווקומרס
+add_filter( 'gettext', function( $translated_text, $text, $domain ) {
+
+    if ( trim( $text ) === 'Username or email address' ) {
+        return __('מספר נייד', 'madimz' );
+    }
+
+    return $translated_text;
+
+}, 20, 3 );
+
+add_filter( 'gettext', function( $translated, $text, $domain ) {
+
+    // כפתור התחברות בטופס login
+    if ( trim( $text ) === 'Log in' ) {
+        return __( 'כניסה לקוחות', 'madimz' );
+    }
+
+    return $translated;
+
+}, 20, 3 );
+
+
+function get_user_set_password_url( $user_id ) {
+    $user = get_user_by('id', $user_id);
+
+    if (!$user) return false;
+
+    $key = get_password_reset_key( $user );
+    if ( is_wp_error( $key ) ) return false;
+
+    return wp_login_url() . "?action=rp&key={$key}&login=" . rawurlencode( $user->user_login );
+}
+
+
+add_filter('authenticate', function($user, $username, $password) {
+
+
+    if ( is_admin() ) return $user;
+
+    if ( strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false ) return $user;
+
+    $ref = $_SERVER['HTTP_REFERER'] ?? '';
+    if ( strpos($ref, 'my-account') === false ) return $user;
+
+    $current_action = $_REQUEST['action'] ?? '';
+    if ($current_action === 'rp' || $current_action === 'resetpass') {
+        return $user;
+    }
+
+
+    if (empty($username)) return $user;
+
+    $userdata = get_user_by('login', $username);
+    if (!$userdata) return $user;
+
+    $has_changed_password = get_user_meta($userdata->ID, 'has_changed_password', true);
+
+    if (!$has_changed_password || $has_changed_password == 0) {
+
+        $url = get_user_set_password_url($userdata->ID);
+
+        if ($url) {
+            wp_redirect($url);
+            exit;
+        }
+    }
+
+    return $user;
+
+}, 10, 3);
+
+
+
+add_action('after_password_reset', function($user, $new_pass) {
+    update_user_meta($user->ID, 'has_changed_password', 1);
+}, 10, 2);
+
+
+// add_action('login_init', function() {
+
+//     // אם אנחנו בדף resetpass אחרי שינוי סיסמה
+//     if ( isset($_GET['action']) && $_GET['action'] === 'resetpass' ) {
+
+//         // הפניה ל-my-account
+//         wp_safe_redirect( site_url('/my-account/') );
+//         exit;
+//     }
+// });
+
+
+
+// מציג שדה עריכה במסך המשתמש
+add_action('show_user_profile', 'show_has_changed_password_field');
+add_action('edit_user_profile', 'show_has_changed_password_field');
+
+function show_has_changed_password_field($user) {
+    $value = get_user_meta($user->ID, 'has_changed_password', true);
+    ?>
+    <h3>Force First Login Password Reset</h3>
+
+    <table class="form-table">
+        <tr>
+            <th><label for="has_changed_password">Has Changed Password?</label></th>
+            <td>
+                <select name="has_changed_password" id="has_changed_password">
+                    <option value="1" <?php selected($value, 1); ?>>Yes (User already set password)</option>
+                    <option value="0" <?php selected($value, 0); ?>>No (Force password reset)</option>
+                </select>
+                <p class="description">Set to "No" to force user to choose a new password on next login.</p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+
+
+add_action('personal_options_update', 'save_has_changed_password_field');
+add_action('edit_user_profile_update', 'save_has_changed_password_field');
+
+function save_has_changed_password_field($user_id) {
+
+    // הרשאות
+    if (!current_user_can('edit_user', $user_id)) {
+        return false;
+    }
+
+    if (isset($_POST['has_changed_password'])) {
+        update_user_meta($user_id, 'has_changed_password', intval($_POST['has_changed_password']));
+    }
+}
+
+
+
+
