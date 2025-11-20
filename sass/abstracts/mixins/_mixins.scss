@@ -1,0 +1,127 @@
+// Center block
+@mixin center-block {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// Column width with margin
+@mixin column-width($numberColumns: 3) {
+	width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+}
+
+@mixin woocommerce-breadcrumb( $link_color: #626264, $max_width: true ) {
+	@if $max_width {
+		max-width: 1440px;
+		margin: 3px auto;
+	} @else {
+		margin: 3px 0;
+	}
+
+    padding-right: 10px;
+
+    font-size: .75rem;
+    line-height: 1.125rem;
+
+    span {
+        padding: 0 6px;
+        
+        a {
+            &:hover {
+                text-decoration-line: underline;
+            }
+            color: $link_color;
+            text-underline-offset: 4px;
+        }
+    }
+}
+
+
+@mixin entry-header() {
+	display: flex;
+	flex-direction: column;
+
+	max-width: 1440px;
+	margin: 0 auto;
+
+	.entry-title {
+		text-align: center;
+
+		margin: 60px 0;
+
+		font-size: 2.5rem;
+		line-height: 3rem;
+
+		@media (min-width: 768px) {
+			font-size: 4rem;
+			line-height: 4rem;
+		}
+	}
+}
+
+
+@mixin woocommerce-order-details() {
+	thead {
+		.product-name {
+			text-align: right;
+			padding: 0 16px 0 0;
+		}
+		.product-total {
+			text-align: left;
+			padding: 0 0 0 16px;
+		}
+	}
+
+	tbody {
+		tr {
+			&:last-child {
+				td {
+					border-bottom: 1px solid hsla(0, 0%, 7%, .11);
+				}
+			}
+		}
+		td {
+			&:last-child {
+				padding-left: 16px;
+				text-align: left;
+			}
+
+			text-align: right;
+			border-top: 1px solid hsla(0, 0%, 7%, .11);
+			padding: 24px 16px 24px 0;
+			vertical-align: top;
+
+			a {
+				color: #000;
+				text-decoration: underline;
+				text-underline-offset: 2px;
+
+				&:hover,
+				&:active,
+				&:focus {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+
+	tfoot {
+		tr {
+			&:first-child {
+				th,
+				td {
+					border-top: 1px solid hsla(0, 0%, 7%, .11);
+				}
+			}
+		}
+
+		th {
+			text-align: right;
+			padding: 0 16px 0 0;
+		}
+		td {
+			text-align: left;
+			padding: 0 0 0 16px;
+		}
+	}
+}

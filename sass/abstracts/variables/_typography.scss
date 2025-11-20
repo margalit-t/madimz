@@ -1,0 +1,124 @@
+@font-face {
+    font-family: 'Heebo';
+    src: url('../fonts/Heebo-Light.eot');
+    src: url('../fonts/Heebo-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Heebo-Light.woff2') format('woff2'),
+        url('../fonts/Heebo-Light.woff') format('woff'),
+        url('../fonts/Heebo-Light.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Heebo';
+    src: url('../fonts/Heebo-Regular.eot');
+    src: url('../fonts/Heebo-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Heebo-Regular.woff2') format('woff2'),
+        url('../fonts/Heebo-Regular.woff') format('woff'),
+        url('../fonts/Heebo-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Heebo';
+    src: url('../fonts/Heebo-Bold.eot');
+    src: url('../fonts/Heebo-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Heebo-Bold.woff2') format('woff2'),
+        url('../fonts/Heebo-Bold.woff') format('woff'),
+        url('../fonts/Heebo-Bold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body{
+    font-family: 'Heebo';
+    font-weight: 400;
+    margin: 0;
+    margin-top: 120px;
+}
+
+fieldset{
+  border: 0;
+  padding: 0;
+}
+
+input[type=radio] {
+   accent-color: #000;
+}
+
+input:not([type=checkbox],[type=radio]) {
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffffb3;
+  font-family: 'Heebo';
+  text-indent: 12px;
+  max-width: none;
+  height: 40px;
+  padding: 8px 16px;
+  width: 100%;
+  font-weight: 400;
+  text-align: right;
+  color: #000000;
+}
+
+select {
+  width: 100%;
+  font-weight: 500;
+}
+
+label {
+  font-family:'Heebo';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0;
+  @media (max-width: 1023px) {
+    font-size: 12px;
+  }
+}
+
+p {
+  direction: rtl;
+  margin: 0 0 10px !important;
+  font-size: 18px;
+}
+
+@mixin red_btn($bg-color: #d1060d) {
+    background-color: $bg-color !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Heebo';
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 12px 24px !important;
+}
+
+button:not(.acf-custom-content button).red-btn, .red-btn {
+  @include red_btn;
+}
+
+@mixin title {
+  direction: rtl;
+  color: #333;
+  text-align: center;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 20px 0 12px 0 !important;
+}
+h2:not(.acf-custom-content h2).title, .title {
+  @include title;
+}
