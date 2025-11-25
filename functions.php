@@ -703,6 +703,52 @@ function madimz_add_order_status_box( $order_id ) {
     <?php
 }
 
+//יצירת אימייל על נטישות עגלה
+add_filter('woocommerce_email_classes', 'register_abandoned_order_email', 10, 1);
+function register_abandoned_order_email($emails) {
+    require_once get_stylesheet_directory() . '/custom-emails/class-wc-email-abandoned-order.php';
+    $emails['WC_Email_Abandoned_Order'] = new WC_Email_Abandoned_Order();
+    return $emails;
+}
+
+/**
+ * Schedule abandoned order email 15 minutes after order creation
+ */
+add_action('woocommerce_checkout_order_processed', 'madimz_schedule_abandoned_email');
+function madimz_schedule_abandoned_email($order_id) {
+
+    // לא לקבוע פעמיים
+    if (! wp_next_scheduled('madimz_send_abandoned_order_email', array($order_id))) {
+        wp_schedule_single_event(time() + 15 * 60, 'madimz_send_abandoned_order_email', array($order_id));
+    }
+}
+
+
+/**
+ * Send abandoned order email only if still pending
+ */
+add_action('madimz_send_abandoned_order_email', 'madimz_process_abandoned_order');
+function madimz_process_abandoned_order($order_id) {
+
+    $order = wc_get_order($order_id);
+    if (! $order) return;
+
+    // שולחים רק אם עדיין ממתין לתשלום
+    if ($order->get_status() !== 'pending' || $order->get_status() !== 'on-hold') {
+        return;
+    }
+
+    // שולחים רק אם לא נשלח כבר
+    if (get_post_meta($order_id, '_abandoned_email_sent', true)) {
+        return;
+    }
+
+    // שליחת המייל
+    do_action('send_abandoned_order_email', $order_id);
+
+    // סימון שנשלח
+    update_post_meta($order_id, '_abandoned_email_sent', time());
+}
 
 
 
