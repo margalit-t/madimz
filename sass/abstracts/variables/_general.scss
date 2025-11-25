@@ -517,3 +517,91 @@ header.site-header {
         }
     }
 }
+
+
+/****
+*  Content Page
+*/
+
+.page-template-default{
+    main.site-main{
+        max-width: 1200px;
+        margin: 0 auto 30px;
+        @media screen and (max-width: 1200px){
+            padding: 0 20px;
+        }
+        article{
+            header{
+                margin: 40px 0;
+                h1{
+
+                }
+            }
+        }
+    }
+}
+
+.post-template-default{
+    main.site-main{
+        max-width: 1200px;
+        margin: 0 auto 30px;
+        @media screen and (max-width: 1200px){
+            padding: 0 20px;
+        }
+        img{
+            width: auto;
+            padding-bottom: 15px;
+        }
+        .entry-header{
+            h1{
+                font-size: 30px;
+                margin-bottom: 30px;
+            }
+        }
+        #comments,.post-navigation,.entry-meta{
+            display: none;
+        }
+    }
+
+}
+.blog{
+    main.site-main{
+        max-width: 1200px;
+        margin: 0 auto 30px;
+        @media screen and (max-width: 1200px){
+            padding: 0 20px;
+        }
+        img{
+            width: auto;
+        }
+    }
+   article{
+        border-bottom: 1px solid #dedede;
+        padding: 10px 0px;
+        margin-bottom: 10px;
+        .entry-header{
+            padding-bottom:10px;
+            .entry-title,.entry-title > *{
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .entry-meta{
+                display: none;
+            }
+        }
+ 
+        .post-thumbnail{
+            max-width: 150px;
+            display: block;
+            padding-bottom: 10px;
+            img{
+                width: 100%;
+            }
+        }
+        .entry-content,.entry-content > *{
+            font-size: 14px;
+        }
+   } 
+}
+
+

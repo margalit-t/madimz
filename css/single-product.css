@@ -685,6 +685,81 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
   display: none;
 }
 
+/****
+*  Content Page
+*/
+.page-template-default main.site-main {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+}
+@media screen and (max-width: 1200px) {
+  .page-template-default main.site-main {
+    padding: 0 20px;
+  }
+}
+.page-template-default main.site-main article header {
+  margin: 40px 0;
+}
+.post-template-default main.site-main {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+}
+@media screen and (max-width: 1200px) {
+  .post-template-default main.site-main {
+    padding: 0 20px;
+  }
+}
+.post-template-default main.site-main img {
+  width: auto;
+  padding-bottom: 15px;
+}
+.post-template-default main.site-main .entry-header h1 {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.post-template-default main.site-main #comments, .post-template-default main.site-main .post-navigation, .post-template-default main.site-main .entry-meta {
+  display: none;
+}
+
+.blog main.site-main {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+}
+@media screen and (max-width: 1200px) {
+  .blog main.site-main {
+    padding: 0 20px;
+  }
+}
+.blog main.site-main img {
+  width: auto;
+}
+.blog article {
+  border-bottom: 1px solid #dedede;
+  padding: 10px 0px;
+  margin-bottom: 10px;
+}
+.blog article .entry-header {
+  padding-bottom: 10px;
+}
+.blog article .entry-header .entry-title, .blog article .entry-header .entry-title > * {
+  font-size: 18px;
+  font-weight: bold;
+}
+.blog article .entry-header .entry-meta {
+  display: none;
+}
+.blog article .post-thumbnail {
+  max-width: 150px;
+  display: block;
+  padding-bottom: 10px;
+}
+.blog article .post-thumbnail img {
+  width: 100%;
+}
+.blog article .entry-content, .blog article .entry-content > * {
+  font-size: 14px;
+}
+
 .single-product .child-category-layout {
   min-height: 400px;
   max-width: 100%;

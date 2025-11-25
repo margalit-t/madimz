@@ -1,0 +1,40 @@
+.page-template-location .location_wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 1200px) {
+  .page-template-location .location_wrapper {
+    padding: 0 20px;
+  }
+}
+.page-template-location .location_wrapper .contact-address {
+  margin-bottom: 20px;
+}
+.page-template-location .location_wrapper .contact-address .contact-address-title {
+  font-size: 16px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.page-template-location .location_wrapper .contact-address .contact-address-text {
+  font-size: 16px;
+}
+.page-template-location .location_wrapper .contact-waze {
+  margin-bottom: 20px;
+}
+.page-template-location .location_wrapper .contact-waze a img {
+  width: auto;
+}
+.page-template-location .location_wrapper .contact-hours {
+  margin-bottom: 10px;
+}
+.page-template-location .location_wrapper .contact-hours .contact-hours-title {
+  font-size: 16px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.page-template-location .location_wrapper .contact-hours .contact-hours-text {
+  font-size: 16px;
+}
+.page-template-location .location_wrapper .contact-map {
+  max-width: 600px;
+}/*# sourceMappingURL=location.css.map */

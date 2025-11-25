@@ -55,6 +55,13 @@ function madimz_custom_scripts() {
         $should_load_default = false;
     }
 
+    // location page
+    if(is_page_template( 'page-templates/location.php' )){
+        wp_enqueue_style( 'location-min', get_template_directory_uri() . '/dist/css/location.min.css', array(), '1.0.0' );
+        $should_load_default = false;
+    }
+
 
 }
 add_action( 'wp_enqueue_scripts', 'madimz_custom_scripts' );
+
