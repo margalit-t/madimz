@@ -27,10 +27,16 @@
 
 	<header id="masthead" class="site-header">
 		<div class="top-header">
-			<div id="site-search">
-				<?php get_product_search_form(); ?>
-			</div><!-- .site-navigation -->
-
+			<!-- <div id="site-search">
+				<?//php get_product_search_form(); ?>
+			</div> -->
+			<div class="search-wrapper">
+				<div class="search-icon">
+					<?php echo inline_svg_with_class('search.svg', '');?>
+				</div>
+				<input type="text" id="live-search" placeholder="<?php esc_html_e( 'מה אתם מחפשים?', 'madimz' ); ?>" autocomplete="off">
+				<div id="search-results"></div>
+			</div>
 			<div class="site-branding">
 				<?php
 					the_custom_logo();
@@ -47,9 +53,9 @@
 
 				<!-- My Account / Login -->
 				<li class="account-icon login-icon">
-					<button type="button" class="header-link" aria-label="<?php esc_html_e( 'login', 'madimz' ); ?>">
+					<a class="header-link" aria-label="<?php esc_html_e( 'חשבון שלי', 'madimz' ); ?>" href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>">
 						<?php echo inline_svg_with_class('user.svg', '');?>
-					</button>
+					</a>
 					<?php if(false): ?>
 					<?php if(is_user_logged_in()): ?>
 						<ul class="dropdown-login">

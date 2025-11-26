@@ -200,6 +200,13 @@ require get_template_directory() . '/inc/enqueue.php';
  */
 require get_template_directory() . '/inc/acf-functions.php';
 
+/**
+ * Ajax Functions
+ */
+require get_template_directory() . '/inc/ajax-functions.php';
+
+
+
 //elicheva functionnality
 
 // שינוי טקסט בשדה ההתחברות לווקומרס
@@ -749,8 +756,6 @@ function madimz_process_abandoned_order($order_id) {
     // סימון שנשלח
     update_post_meta($order_id, '_abandoned_email_sent', time());
 }
-
-
 
 
 

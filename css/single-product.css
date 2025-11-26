@@ -245,8 +245,60 @@ header.site-header .top-header {
     height: 85px;
   }
 }
-header.site-header .top-header .site-search {
+header.site-header .top-header .search-wrapper {
+  position: relative;
+  width: 285px;
+}
+header.site-header .top-header .search-wrapper .search-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+header.site-header .top-header .search-wrapper .search-icon svg {
+  width: 38px;
+  height: auto;
+}
+header.site-header .top-header .search-wrapper input {
   font-size: 14px;
+  color: rgb(155, 155, 155);
+  text-indent: 13px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 18px;
+  background: rgb(247, 247, 247);
+}
+header.site-header .top-header .search-wrapper #search-results {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  border: 1px solid #ddd;
+  z-index: 9999;
+  display: none;
+  padding: 10px;
+}
+header.site-header .top-header .search-wrapper #search-results .search-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 6px;
+  text-decoration: none;
+  color: #333;
+}
+header.site-header .top-header .search-wrapper #search-results .search-item img.search-thumb {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-left: 10px;
+}
+header.site-header .top-header .search-wrapper #search-results .all-results {
+  display: block;
+  text-align: right;
+  padding: 10px;
+  font-weight: bold;
+  color: #000;
 }
 header.site-header .top-header .site-branding a {
   width: 200px;

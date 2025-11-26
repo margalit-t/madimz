@@ -112,8 +112,59 @@ header.site-header {
         @media (min-width: 768px) {
             height: calc(120px - 35px);
         }
-        .site-search {
-            font-size: 14px;
+        .search-wrapper{
+            position: relative;
+            width: 285px;
+            .search-icon{
+                position: absolute;
+                top:0;
+                left:0;
+                svg{
+                    width: 38px;
+                    height: auto;
+                }
+            }
+            input{
+                font-size: 14px;
+                color: rgba(155, 155, 155, 1);
+                text-indent: 13px;
+                border: 1px solid rgba(224, 224, 224, 1);
+                border-radius: 18px;
+                background: rgba(247, 247, 247, 1);
+            }
+            #search-results {
+                position: absolute;
+                background: #fff;
+                width: 100%;
+                border: 1px solid #ddd;
+                z-index: 9999;
+                display: none;
+                padding: 10px;
+                .search-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 6px;
+                    //border-bottom: 1px solid #f1f1f1;
+                    text-decoration: none;
+                    color: #333;
+                    img.search-thumb {
+                        width: 40px;
+                        height: 40px;
+                        object-fit: contain;
+                        margin-left: 10px;
+                    }
+                }
+                .all-results {
+                    display: block;
+                    text-align: right;
+                    padding: 10px;
+                    font-weight: bold;
+                    color: #000;
+                }
+            }
+
+
+
         }
         .site-branding {
             a {

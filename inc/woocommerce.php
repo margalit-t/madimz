@@ -410,6 +410,14 @@ function madimz_child_category_layout_start() {
 
 			<div class="shop-main">
 				<div class="shop-sorting-wrapper">
+					<?php 
+					if ( is_search() && get_search_query() ) : ?>
+						<div class="search-query-title">
+							<?php esc_html_e( 'חיפוש:&nbsp;', 'madimz' ); ?>
+							<strong><?php echo esc_html( get_search_query() ).','; ?> </strong>
+						</div>
+					<?php endif;
+					?>
 					<div class="results-count">
 						<?php esc_html_e( 'תוצאות:&nbsp;', 'madimz' ); ?> 
 						<strong><?php echo esc_html( $total ); ?> </strong>
