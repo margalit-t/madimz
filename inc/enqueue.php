@@ -55,6 +55,18 @@ function madimz_custom_scripts() {
         wp_enqueue_style( 'madimz-page', get_template_directory_uri() . '/dist/css/page.min.css', array(), '1.0.5' );
     }
 
+    if( (function_exists( 'is_account_page' ) && is_account_page())) {
+        wp_enqueue_style( 'my-account', get_template_directory_uri() . '/dist/css/my-account.min.css', array(), '1.0.0' );
+        $should_load_default = false;
+    }
+
+    // location page
+    if(is_page_template( 'page-templates/location.php' )){
+        wp_enqueue_style( 'location-min', get_template_directory_uri() . '/dist/css/location.min.css', array(), '1.0.0' );
+        $should_load_default = false;
+    }
+
 
 }
 add_action( 'wp_enqueue_scripts', 'madimz_custom_scripts' );
+
