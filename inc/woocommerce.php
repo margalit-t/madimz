@@ -1128,8 +1128,70 @@ function custom_buy_now_button() {
 }
 
 
+add_action('woocommerce_after_cart_table', function() { 
+    echo '<div class="continue-shopping">
+            <a href="' . wc_get_page_permalink('shop') . '" class="btn-continue">'
+			  . __('המשך לקנות', 'woocommerce')
+            . '</a>
+          </div>';
+});
 
+/****
+ * Cart Page
+ */
 
+// replace the icon with text to remove product from cart
+add_filter( 'woocommerce_cart_item_remove_link', 'custom_mini_cart_remove_text', 10, 2 );
+function custom_mini_cart_remove_text( $link, $cart_item_key ) {
+    if ( function_exists( 'wc_get_template' ) ) {
+		$cart_item = WC()->cart->get_cart()[ $cart_item_key ];
+		$product   = $cart_item['data'];
+		$icon_url = get_stylesheet_directory_uri() . '/dist/images/tin.svg';
+
+		$link = sprintf(
+			'<a href="%s" class="remove remove_from_cart_button" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s">
+				<img src="%s" alt="%s" class="remove-icon" />
+			</a>',
+			esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+			esc_html__( 'Remove this product', 'woocommerce' ),
+			esc_attr( $product->get_id() ),
+			esc_attr( $cart_item_key ),
+			esc_attr( $product->get_sku() ),
+			esc_url( $icon_url ),
+			esc_attr__( 'Remove', 'woocommerce' )
+		);
+    }
+
+    return $link;
+}
+/**
+ * @snippet       Plus Minus Quantity Buttons @ WooCommerce Cart Page
+ * @how-to        businessbloomer.com/woocommerce-customization
+ * @author        Rodolfo Melogli, Business Bloomer
+ * @compatible    WooCommerce 8
+ * @community     https://businessbloomer.com/club/
+ */
+ 
+add_action( 'woocommerce_before_quantity_input_field', 'bbloomer_display_quantity_minus' );
+ 
+function bbloomer_display_quantity_minus() {
+   if ( is_product() ) return;
+   echo '<button type="button" class="plus" >' . inline_svg_with_class('plus.svg', '') . '</button>';
+}
+
+add_action( 'woocommerce_after_quantity_input_field', 'bbloomer_display_quantity_plus' );
+
+function bbloomer_display_quantity_plus() {
+	if ( is_product() ) return;
+	echo '<button type="button" class="minus" >' . inline_svg_with_class('minus.svg', '') . '</button>';
+}
+
+add_filter( 'woocommerce_quantity_input_args', function( $args ) {
+    // Ignore min==max limitation and force input to be visible and editable
+    $args['max_value'] = max( 9999, $args['max_value'] ); // or some large number
+    $args['readonly'] = false;
+    return $args;
+}, 99 );
 
 
 // remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );

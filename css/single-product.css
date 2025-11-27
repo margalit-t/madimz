@@ -1360,7 +1360,7 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 40px;
+  margin: 40px 0 0;
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose .button-add-to-cart #simply-add-to-cart {
   background-color: #d1060d !important;
@@ -1386,7 +1386,59 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
   background-color: #fff !important;
   color: #d1060d !important;
 }
+.single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose div#cart-message {
+  position: relative;
+  height: 0;
+  font-size: 16px;
+  font-weight: 800;
+  padding-right: 36px;
+  margin: 8px 0;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose div#cart-message.success {
+  height: 24px;
+  color: #026805;
+}
+.single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose div#cart-message.success::before {
+  content: "";
+  background-image: url("../images/check-circle.svg");
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  inset-inline-start: 10px;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-filter: brightness(0) saturate(100%) invert(22%) sepia(29%) saturate(5864%) hue-rotate(96deg) brightness(95%) contrast(107%);
+          filter: brightness(0) saturate(100%) invert(22%) sepia(29%) saturate(5864%) hue-rotate(96deg) brightness(95%) contrast(107%);
+}
+.single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose div#cart-message.error {
+  height: 24px;
+  color: #d1060d;
+}
+.single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose div#cart-message.error::before {
+  content: "";
+  background-image: url("../images/alert.svg");
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  inset-inline-start: 10px;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-filter: brightness(0) saturate(100%) invert(26%) sepia(100%) saturate(4853%) hue-rotate(347deg) brightness(77%) contrast(118%);
+          filter: brightness(0) saturate(100%) invert(26%) sepia(100%) saturate(4853%) hue-rotate(347deg) brightness(77%) contrast(118%);
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose > h3 {
+  margin-top: 16px;
   font-size: 16px;
   font-weight: 400;
   color: #d1060d;

@@ -46,6 +46,11 @@ function madimz_custom_scripts() {
 
     }
     
+    if ( is_cart() ){
+        wp_enqueue_style( 'cart-min', get_template_directory_uri() . '/dist/css/cart.min.css', array(), '1.0.0' );
+        wp_enqueue_script('wc-cart');
+    }
+
     if ( is_page_template( 'default' ) && $should_load_default  ) {
         wp_enqueue_style( 'madimz-page', get_template_directory_uri() . '/dist/css/page.min.css', array(), '1.0.5' );
     }

@@ -557,11 +557,11 @@
                                     }
                                 }
                             }
-                        }      
+                        }  
                         .button-add-to-cart {
                             display: flex;
                             justify-content: center;
-                            margin: 40px;
+                            margin: 40px 0 0;
                             #simply-add-to-cart {
                                 // @include red_btn;
                                 background-color: #d1060d !important;
@@ -582,7 +582,54 @@
                                 }
                             }
                         }
+                        div#cart-message {
+                            position: relative;
+                            height: 0;
+                            font-size: 16px;
+                            font-weight: 800;
+                            padding-right: 36px;
+                            margin: 8px 0;
+                            opacity: 0;
+                            transition: all .3s ease;
+                            &.success {
+                                height: 24px;
+                                color: #026805;
+                                &::before {
+                                    content: '';
+                                    background-image: url("../images/check-circle.svg");
+                                    position: absolute;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    inset-inline-start: 10px;
+                                    width: 20px;
+                                    height: 20px;
+                                    background-size: contain;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    filter: brightness(0) saturate(100%) invert(22%) sepia(29%) saturate(5864%) hue-rotate(96deg) brightness(95%) contrast(107%);
+                                }
+                            } 
+                            &.error {
+                                height: 24px;
+                                color: #d1060d;
+                                &::before {
+                                    content: '';
+                                    background-image: url("../images/alert.svg");
+                                    position: absolute;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    inset-inline-start: 10px;
+                                    width: 20px;
+                                    height: 20px;
+                                    background-size: contain;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    filter: brightness(0) saturate(100%) invert(26%) sepia(100%) saturate(4853%) hue-rotate(347deg) brightness(77%) contrast(118%);
+                                }
+                            }
+                        }
                         & > h3 {
+                            margin-top: 16px;
                             font-size: 16px;
                             font-weight: 400;
                             color: #d1060d;
