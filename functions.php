@@ -713,7 +713,7 @@ function madimz_add_order_status_box( $order_id ) {
 //יצירת אימייל על נטישות עגלה
 add_filter('woocommerce_email_classes', 'register_abandoned_order_email', 10, 1);
 function register_abandoned_order_email($emails) {
-    require_once get_stylesheet_directory() . '/custom-emails/class-wc-email-abandoned-order.php';
+    require_once get_stylesheet_directory() . '/includes/class-madimz-email-abandoned-order.php';
     $emails['WC_Email_Abandoned_Order'] = new WC_Email_Abandoned_Order();
     return $emails;
 }

@@ -456,7 +456,7 @@
 }
 .section-wrap.about-us-wrapper .left-content .swiper.gallery-carousel-about {
   display: block;
-  width: 100%;
+  width: 480px;
   -webkit-tap-highlight-color: transparent;
   position: static;
   z-index: 1;

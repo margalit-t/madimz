@@ -4,7 +4,7 @@
 add_filter('use_block_editor_for_post', '__return_false', 10);
 
 //Disable show admin bar
-// add_filter('show_admin_bar', '__return_false');
+add_filter('show_admin_bar', '__return_false');
 
 /**
  * Allow SVG uploads.
@@ -49,6 +49,16 @@ function inline_svg_with_class($filename, $class = '') {
     }
 
     return $svg;
+}
+
+/***
+ * BreadCrumb
+ */ 
+//Change the separator to < with spaces
+add_filter( 'woocommerce_breadcrumb_defaults', 'madimz_breadcrumb_separator' );
+function madimz_breadcrumb_separator( $defaults ) {
+    $defaults['delimiter'] = '<span class="sep"> > </span>';
+    return $defaults;
 }
 
 /***

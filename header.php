@@ -50,7 +50,7 @@
 						<?php esc_html_e( 'כניסה לעסקים', 'madimz' ); ?>
 					</button>
 				</li>
-
+				
 				<!-- My Account / Login -->
 				<li class="account-icon login-icon">
 					<a class="header-link" aria-label="<?php esc_html_e( 'חשבון שלי', 'madimz' ); ?>" href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>">
@@ -66,6 +66,15 @@
 					<?php endif;?>
 					<?php endif;?>
 				</li>
+
+				<!-- copmare products -->
+				<?php if( class_exists( 'MadimzProductCompare' ) && ( $product_compare_page = MadimzProductCompare::get_compare_list_url() ) ): ?>
+					<li class="account-icon compare-icon">
+						<a href="<?php echo esc_attr( $product_compare_page ); ?>" class="header-link">
+							<?php echo inline_svg_with_class('compare.svg', '');?>
+						</a>
+					</li>
+				<?php endif; ?>
 
 				<!-- Cart -->
 				<li class="account-icon cart-icon">
@@ -95,3 +104,14 @@
 			?>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
+
+    <?php if ( !is_admin() || !is_front_page() ) : ?>
+ 
+		<div class="madimz-breadcrumb-wrapper">
+			<?php
+			if ( function_exists( 'woocommerce_breadcrumb' ) ) {
+				woocommerce_breadcrumb();
+			}
+			?>
+		</div>
+    <?php endif; ?>

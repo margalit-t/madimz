@@ -48,7 +48,7 @@ input:not([type=checkbox], [type=radio]) {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.7019607843);
   font-family: "Heebo";
-  text-indent: 12px;
+  font-size: 16px;
   max-width: none;
   height: 40px;
   padding: 8px 16px;
@@ -257,6 +257,7 @@ header.site-header .top-header .search-wrapper .search-icon {
 header.site-header .top-header .search-wrapper .search-icon svg {
   width: 38px;
   height: auto;
+  padding: 6px;
 }
 header.site-header .top-header .search-wrapper input {
   font-size: 14px;
@@ -354,7 +355,17 @@ header.site-header .top-header .header-right-icons li.account-icon .header-link 
 }
 header.site-header nav.main-navigation {
   width: 100%;
+  height: 35px;
   max-width: 96%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: auto;
   z-index: 99;
   -webkit-perspective: 1400px;
@@ -376,7 +387,6 @@ header.site-header nav.main-navigation ul.primary-menu > li {
 }
 header.site-header nav.main-navigation ul.primary-menu > li > a {
   font-size: 18px;
-  font-size: 16px;
   font-weight: 800;
 }
 @media (min-width: 768px) {
@@ -408,8 +418,8 @@ header.site-header nav.main-navigation ul.primary-menu > li.menu-item-has-childr
 }
 header.site-header nav.main-navigation .sub-menu {
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: 135%;
+  right: -5%;
   width: 400px;
   height: 260px;
   background: #fff;
@@ -452,13 +462,38 @@ header.site-header nav.main-navigation .sub-menu li a {
   font-size: 16px;
   font-weight: 600;
   padding: 4px 0;
-  color: rgb(31, 23, 92);
+  color: #2f2483;
   text-align: right;
   line-height: 35px;
   letter-spacing: -0.32px;
 }
 header.site-header nav.main-navigation .sub-menu li a:hover {
   color: #d1060d;
+}
+
+/****
+* Breadcrumb Style
+*/
+.madimz-breadcrumb-wrapper nav.woocommerce-breadcrumb {
+  direction: rtl;
+  width: 100%;
+  padding: 0;
+  max-width: 1200px;
+  color: #000;
+  margin: 12px auto;
+  padding-top: 12px;
+  font-size: 12px;
+}
+.madimz-breadcrumb-wrapper nav.woocommerce-breadcrumb a {
+  color: #337ab7 !important;
+  font-size: 12px;
+}
+.madimz-breadcrumb-wrapper nav.woocommerce-breadcrumb a:hover {
+  color: #2f2483 !important;
+}
+.madimz-breadcrumb-wrapper nav.woocommerce-breadcrumb .sep {
+  padding: 0 4px;
+  color: #337ab7 !important;
 }
 
 /****
@@ -647,7 +682,7 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
       -ms-flex-align: center;
           align-items: center;
   overflow: hidden;
-  margin: 15px auto 0;
+  margin: 16px auto 0;
   padding: 0;
   border-top: 1px solid #2f2f2f;
 }
@@ -749,9 +784,10 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
     padding: 0 20px;
   }
 }
-.page-template-default main.site-main article header {
-  margin: 40px 0;
+.page-template-default main.site-main article header h1 {
+  display: none;
 }
+
 .post-template-default main.site-main {
   max-width: 1200px;
   margin: 0 auto 30px;
@@ -1172,12 +1208,44 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
 .single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .variations_form .variations {
   display: none !important;
 }
-.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info {
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 12px 0 !important;
+  font-size: 14px;
+}
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist .icon.wishlist {
+  width: 24px;
+  height: 24px;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  display: inline-block;
+  background-color: #333;
+  -webkit-mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
+          mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
+}
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist.remove .icon {
+  -webkit-mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
+          mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
+}
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist:hover, .single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist:active, .single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info button.button-wishlist:focus {
+  color: #d1060d;
+}
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info .delivery-info {
   font-size: 14px;
   font-weight: 400;
   color: #333;
 }
-.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info .sub-title-info {
+.single-product .child-category-layout main#primary div.product .summary.entry-summary .right-side .extra-product-info .delivery-info .sub-title-info {
   font-weight: 800;
 }
 .single-product .child-category-layout main#primary div.product .summary.entry-summary .left-side {

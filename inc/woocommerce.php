@@ -50,9 +50,16 @@ add_filter( 'woocommerce_get_image_size_thumbnail', function( $size ) {
 });
 
 add_action( 'init', function () {
-	// we don't need this sidebar at the moment
+	// we don't need this sidebar 
 	remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 } );
+
+/**
+ * Internal classes for compare list and wishlist
+ */
+// require_once get_template_directory() . '/includes/class-saynet-product.php';
+require_once get_template_directory() . '/includes/class-madimz-product-compare.php';
+require_once get_template_directory() . '/includes/class-madimz-wishlist.php';
 
 /**
  * WooCommerce specific scripts & stylesheets.
@@ -242,6 +249,9 @@ if ( ! function_exists( 'madimz_woocommerce_header_cart' ) ) {
 		<?php
 	}
 }
+
+// Remove default breadcrumb placement
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 
 //remove select option inside product box
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
@@ -563,7 +573,8 @@ function custom_single_product_long_description() {
     echo '</div>';
 
 	echo '<div id="item_anchors" class="comparison-pdt">';
-	echo '	<a href="#" class="compare_url">' . esc_html('הוסף להשוואה' , 'madimz') . '</a>';
+	echo do_shortcode( '[madimz_product_compare_button]' );
+	// echo '	<a href="#" class="compare_url">' . esc_html('הוסף להשוואה' , 'madimz') . '</a>';
 	echo '</div>';
 }
 
@@ -645,9 +656,10 @@ function custom_meta_info_product() {
 		echo '<div class="extra-product-info">';
 
 			// Wishlist
-			echo '<button>';
-			echo inline_svg_with_class('heart.svg', '');
-			echo '</button>';
+			echo do_shortcode( '[madimz_wishlist_button]' ); 
+			// echo '<button>';
+			// echo inline_svg_with_class('heart.svg', '');
+			// echo '</button>';
 
 			// Delivery text
 			echo '<div class="delivery-info">';
@@ -833,6 +845,7 @@ function custom_matriza_page() {
 	$product_id = get_the_ID();
 	$product = wc_get_product( $product_id );
 	if ( ! $product ) return;
+	if ( ! $product->is_type( 'variable' ) ) return;
 
 	$meta = get_image_id($product_id);
 	$logo_id = ! empty( $meta['logo'] ) ? (int) $meta['logo'] : 0;
@@ -1117,14 +1130,14 @@ function custom_back_to_top_button() {
     echo '</div>';
 }
 
-add_action( 'woocommerce_before_add_to_cart_quantity', 'custom_quantity_minus' );
-function custom_quantity_minus() {
+add_action( 'woocommerce_before_add_to_cart_quantity', 'custom_quantity_plus' );
+function custom_quantity_plus() {
 	echo '<div class="qty-btn-wrapper">';
 	echo '<button type="button" class="qty-btn qty-plus">' . inline_svg_with_class('plus.svg', '') . '</button>';
 }
 
-add_action( 'woocommerce_after_add_to_cart_quantity', 'custom_quantity_plus' );
-function custom_quantity_plus() {
+add_action( 'woocommerce_after_add_to_cart_quantity', 'custom_quantity_minus' );
+function custom_quantity_minus() {
 	echo '<button type="button" class="qty-btn qty-minus">' . inline_svg_with_class('minus.svg', '') . '</button>';
 	echo '</div class="qty-btn-wrapper">'; // End .qty-btn-wrapper
 }
@@ -1132,17 +1145,8 @@ function custom_quantity_plus() {
 add_action( 'woocommerce_after_add_to_cart_button', 'custom_buy_now_button' );
 function custom_buy_now_button() {
     global $product;
-    echo '<a href="' . esc_url( wc_get_cart_url() . '?add-to-cart=' . $product->get_id() ) . '" class="buy-now-btn">קנה עכשיו</a>';
+    echo '<a href="' . esc_url( wc_get_cart_url() . '?add-to-cart=' . $product->get_id() ) . '" class="buy-now-btn">' . __('קנה עכשיו', 'woocommerce') . '</a>';
 }
-
-
-add_action('woocommerce_after_cart_table', function() { 
-    echo '<div class="continue-shopping">
-            <a href="' . wc_get_page_permalink('shop') . '" class="btn-continue">'
-			  . __('המשך לקנות', 'woocommerce')
-            . '</a>
-          </div>';
-});
 
 /****
  * Cart Page
@@ -1181,14 +1185,12 @@ function custom_mini_cart_remove_text( $link, $cart_item_key ) {
  */
  
 add_action( 'woocommerce_before_quantity_input_field', 'bbloomer_display_quantity_minus' );
- 
 function bbloomer_display_quantity_minus() {
    if ( is_product() ) return;
    echo '<button type="button" class="plus" >' . inline_svg_with_class('plus.svg', '') . '</button>';
 }
 
 add_action( 'woocommerce_after_quantity_input_field', 'bbloomer_display_quantity_plus' );
-
 function bbloomer_display_quantity_plus() {
 	if ( is_product() ) return;
 	echo '<button type="button" class="minus" >' . inline_svg_with_class('minus.svg', '') . '</button>';
@@ -1200,6 +1202,46 @@ add_filter( 'woocommerce_quantity_input_args', function( $args ) {
     $args['readonly'] = false;
     return $args;
 }, 99 );
+
+add_action('woocommerce_after_cart_table', function() { 
+    echo '<div class="continue-shopping">
+            <a href="' . wc_get_page_permalink('shop') . '" class="btn-continue">'
+			  . __('המשך קניות בחנות', 'woocommerce')
+            . '</a>
+          </div>';
+});
+
+add_action( 'woocommerce_after_cart', 'custom_message_about_returns' );
+function custom_message_about_returns() {
+	echo '<div class="order-returns">';
+		echo '<div class="order-shopping-cart-lightbox">';
+			echo get_field( 'message_returns', 'option' );
+		echo '</div>';
+	echo '</div>';
+}
+
+add_filter( 'woocommerce_checkout_fields', 'remove_address_2_field' );
+function remove_address_2_field( $fields ) {
+    unset( $fields['billing']['billing_address_2'] );
+    unset( $fields['shipping']['shipping_address_2'] );
+    return $fields;
+}
+
+/****
+ * Checkout Page
+ */
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+add_action( 'woocommerce_review_order_after_cart_contents', 'custom_coupon_in_wrapper', 20 );
+function custom_coupon_in_wrapper() {
+    echo '<tr class="coupon-row">';
+		echo '<td colspan="6">'; 
+			woocommerce_checkout_coupon_form();
+		echo '</td>';
+    echo '</tr>';
+}
+
+
 
 
 // remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );

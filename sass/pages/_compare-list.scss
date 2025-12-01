@@ -1,0 +1,73 @@
+#primary > article .entry-content > .compare {
+    h2 {
+        font-size: 16px;
+        padding-right: 14px;
+        line-height: 20px;
+        color: #2f2483 !important;
+        margin: 4px 0 8px 0 !important;
+    }
+
+    .table-comparison {
+        width: 97%;
+        margin: 20px auto 32px;
+        line-height: 20px;
+        font-size: 14px;
+        border-collapse: collapse;
+        direction: rtl;
+        table-layout: fixed;   
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            vertical-align: top;
+            font-size: 14px;
+            word-wrap: break-word; 
+            &:first-child {
+                width: 50px !important;
+            }
+        }
+
+        .delete {
+            text-align: center;
+            text-decoration: underline;
+            font-weight: 400;
+            transition: color .3s ease;
+            color: #2f2483;
+            
+            &:hover {
+                color: #337ab7;
+            }
+        }
+
+        .img-product img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .woocommerce-loop-product__title {
+            font-size: 14px;
+            padding: 0;
+            margin: 0 !important;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .price {
+            margin: 0 !important;
+            color: #333;
+            font-size: 14px !important;
+        }
+
+        @media (max-width: 768px) {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;    
+        }
+    }
+
+}

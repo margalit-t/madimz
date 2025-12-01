@@ -1,0 +1,612 @@
+.woocommerce-checkout {
+    h1.entry-title {
+        display: none;
+    }
+    .woocommerce {
+        display: flex;
+        flex-wrap: wrap;
+        h3 {
+            font-size: 16px;
+            text-align: right;
+            padding-right: 16px;
+            font-weight: 800 !important;
+
+            &#order_review_heading {
+                display: none;
+            }
+        }
+        p.step-title {
+            position: absolute;
+            top: -15px;
+            right: 50%;
+            transform: translateX(50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+            width: 32px;
+            height: 32px;
+            font-size: 14px !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+        }
+        form.woocommerce-checkout {      
+            order: 1;    
+            #customer_details {
+                position: relative;
+                background-color: #fcfcfc;
+                border: 1px solid #ccc;
+                max-width: 100%;
+                margin: 40px auto 20px;
+                padding: 12px;
+                .col-1 { 
+                    width: 100%;
+                    margin: 0;
+                    padding: 20px;
+                    .woocommerce-billing-fields {
+                        .woocommerce-billing-fields__field-wrapper {
+                            display: flex;
+                            flex-wrap: wrap;
+                            p.form-row{
+                                width: calc(50% - 32px);
+                                margin: 8px 16px !important;
+
+                                input {
+                                    border: 1px solid #ccc;
+                                    border-radius: 0;
+                                }
+    
+                                &#billing_country_field {
+                                    label {
+                                        position: relative;
+                                        margin-inline-end: 10px;
+                                        inset-inline-start: 0;
+                                        transform: inherit;
+                                    }
+                                    span.select2.select2-container {
+                                        span.select2-selection {
+                                            height: 40px;
+                                            border-radius: 0;
+                                            padding: 6px 0;
+                                            span.select2-selection__arrow b {
+                                                margin-left: 0px;
+                                                margin-top: 3px;
+                                            }
+                                        }
+                                    }
+                                }
+    
+                                &#billing_state_field {
+                                    display: none !important;
+                                }                            
+                            }
+                        }
+                    }
+
+                    /*.woocommerce-account-option {
+                        margin-top: 20px;
+                        border-bottom: 1px dashed #e4e4e4;
+                        .woocommerce-account-fields {
+                            width: 100%;
+                            padding: 16px;
+                            border: 1px solid #e4e4e4;
+                            outline: none;
+                            background-color: #f4f4f4;
+                            border-radius: 0;
+                            margin-bottom: 20px;
+
+                            p.form-row {  
+                                margin: 0;
+                                label.woocommerce-form__label {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 16px;
+                                    position: static;
+                                    transform: none;
+                                    text-transform: uppercase;
+                                    font-size: 16px;
+                                    input#createaccount[type="checkbox"] {
+                                        position: relative;
+                                        appearance: none;
+                                        width: 24px;
+                                        height: 24px;
+                                        border: 2px solid #424242;
+                                        flex-shrink: 0;
+                                        display: inline-grid;
+                                        place-content: center;
+                                        cursor: pointer;
+                                        padding: 0;
+                                        
+                                        &:checked{
+                                            background-color: rgb(66,66,66);
+                                            &:before{
+                                                content:url("../images/check.svg");
+                                                width: 16px;
+                                                height: 20px;
+                                                color: #fff;
+                                                filter: invert(100%) brightness(100%);
+                                            }
+                                        }                                           
+
+                                    }
+                                }
+
+                            }
+                            .create-account {
+                                margin-top: 16px;
+                                
+                                p {
+                                    margin: 0;
+                                    padding: 16px 0;
+                                    font-size: 16px;
+                                    a {
+                                        text-decoration: none;
+                                        &:hover {
+                                            text-decoration: underline;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }*/
+                }
+                .col-2 {
+                    width: 100%;
+                    margin: 0;
+                    padding: 20px;
+                    margin-top: 20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+
+                    .woocommerce-shipping-fields {
+                        width: 100%;
+                        padding: 16px;
+                        border: 1px solid #ccc;
+                        outline: none;
+                        background-color: #f4f4f4;
+                        border-radius: 0;
+                        margin: 0 16px;
+
+                        h3#ship-to-different-address {
+                            font-size: 16px;
+                            font-weight: 400;
+                            margin: 0;
+
+                            label {
+                                display: flex;
+                                align-items: center;
+                                gap: 16px;
+
+                                input[type="checkbox"]{
+                                    position: relative;
+                                    appearance: none;
+                                    width: 24px;
+                                    height: 24px;
+                                    border: 2px solid #424242;
+                                    flex-shrink: 0;
+                                    display: inline-grid;
+                                    place-content: center;
+                                    cursor: pointer;
+                                    &:checked{
+                                        background-color: rgb(66,66,66);
+                                        &:before{
+                                        content:url("../images/check.svg");
+                                        width: 16px;
+                                        height: 20px;
+                                        color: #fff;
+                                        filter: invert(100%) brightness(100%);
+                                        }
+                                    }
+                                }
+                            }                                
+                        }
+                        .shipping_address {
+                            p.form-row{
+                                width: calc(50% - 32px);
+                                margin: 8px 16px !important;
+    
+                                input {
+                                    border: 1px solid #ccc;
+                                    border-radius: 0;
+                                }
+    
+                                &#shipping_country_field {
+                                    label {
+                                        position: relative;
+                                        margin-inline-end: 10px;
+                                        inset-inline-start: 0;
+                                        transform: inherit;
+                                    }
+                                    span.select2.select2-container {
+                                        span.select2-selection {
+                                            height: 40px;
+                                            border-radius: 0;
+                                            padding: 6px 0;
+                                            span.select2-selection__arrow b {
+                                                margin-left: 0px;
+                                                margin-top: 3px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                    .woocommerce-additional-fields {
+                        padding-top: 20px;
+                        margin: 20px 16px 0;
+
+                        div.woocommerce-additional-fields__field-wrapper {
+                            padding-bottom: 10px;
+                            font-family: 'Heebo';
+                            label {
+                                top: 20px;
+                                &.focused {
+                                    top: 3px;
+                                    inset-inline-start: -23px;
+                                }
+                            }
+
+                            textarea#order_comments {
+                                width: 100%;
+                                font-family: 'Heebo';
+                                font-size: 16px;
+                                border: 1px solid #ccc;
+                                outline: none;
+                                background-color: #fff;
+                                border-radius: 0;
+                                height: 120px;
+                                max-height: 120px;
+                                padding: 8px;
+                                padding-top: 20px;
+                            }
+                        }                            
+
+                        div#payment {
+                            ul.wc_payment_methods {
+                                padding: 20px;
+                                margin-bottom: 20px;
+                                box-shadow: 0 1px 3px rgba(0, 0, 0, .08) !important;
+                                background-color: #fff;
+                                margin: 0;
+                                list-style: none;
+                                font-size: 16px;
+                                font-weight: 700;
+                                line-height: 32px;
+                                border: 1px solid #e4e4e4;
+                                background-color: #F4F4F4;
+
+                                li {
+                                    list-style: none;
+
+                                    input {
+                                        display: inline-block !important;
+                                    }
+
+                                    p {
+                                        margin: 0;
+                                    }
+                                }
+
+                            }
+
+                            
+                            div.form-row {
+                                width: 100%;
+
+                                .woocommerce-terms-and-conditions-wrapper {
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    .woocommerce-privacy-policy-text {
+                                        display: inline-block;
+                                        order: 2;
+                                    }
+
+                                    p.form-row {
+                                        order: 1;
+                                        margin-top: 20px;
+
+                                        label {
+                                            position: relative;
+                                            top: inherit;
+                                            inset-inline-start: inherit;
+                                            display: flex;
+                                            justify-content: flex-start;
+                                            align-content: flex-start;
+                                            align-items: flex-start;
+                                            transform: none;
+                                            pointer-events: auto;
+
+                                            input#terms[type="checkbox"]{
+                                                background-color: #fff;
+                                                position: relative;
+                                                appearance: none;
+                                                width: 24px;
+                                                height: 24px;
+                                                border: 2px solid #424242;
+                                                flex-shrink: 0;
+                                                display: inline-grid;
+                                                place-content: center;
+                                                cursor: pointer;
+                                                margin-inline-end: 8px;
+                                                padding: 0;
+                                                &:checked{
+                                                    background-color: #424242;
+                                                    &:before{
+                                                    content:url("../images/svg/check.svg");
+                                                    width: 16px;
+                                                    height: 20px;
+                                                    color: #fff;
+                                                    filter: invert(100%) brightness(100%);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .btn_submit_order {
+                                    button#place_order {
+                                        background-color: #026805;
+                                        
+                                        &:hover {
+                                            color: #026805;
+                                            background-color: #fff;
+                                            border-color: #026805;
+                                        }
+                                    }
+
+                                }
+
+                                
+                            }
+                        }
+                    }
+                }
+            }           
+
+            #order_review {
+                position: relative;
+                width: 100%;
+                table.shop_table {
+                    width: 100%;
+                    margin: 0;
+                    display: flex;
+                    align-items: stretch;
+                    gap: 40px;
+                    margin-top: 40px;
+                    thead {
+                        display: none !important;
+                    }
+                    tbody {
+                        position: relative;
+                        width: calc(50% - 20px);
+                        background-color: #fcfcfc;
+                        border: 1px solid #ccc;
+                        margin: 0;
+                        padding: 20px;
+                        &:before {
+                            content: "02";
+                            position: absolute;
+                            top: -15px;
+                            right: 0;
+                            left: 0;
+                            margin: auto;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 14px !important;
+                            text-align: center;
+                            line-height: 32px;
+                            border: 1px solid #ccc;
+                            background: #fff;
+                            border-radius: 200px;
+                        }
+                        tr.cart_item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            font-size: 16px;
+                            margin-bottom: 8px;
+                            &:first-child {
+                                margin-top: 20px;
+                            }
+                            // &:not(:last-child) {
+                            //     margin-bottom: 8px;
+                            // }
+                        }
+                        tr.coupon-row {
+                            .woocommerce-form-coupon-toggle {
+                                display: none;
+                            }
+                            form.checkout_coupon {  
+                                display: flex !important;  
+                                align-items: center;
+                                input#coupon_code {
+                                    border: 1px solid #ccc;
+                                    background-color: #fff;
+                                    border-radius: 0;
+                                    width: 200px;
+                                    margin-left: 8px;
+                                }
+                                button.button {
+                                    font-size: 16px;
+                                    color: #2f2483;
+                                }
+                            }
+                        }
+                    }
+                    tfoot {
+                        position: relative;
+                        width: calc(50% - 20px);
+                        background-color: #fcfcfc;
+                        border: 1px solid #ccc;
+                        margin: 0;
+                        padding: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        &:before {
+                            content: "03";
+                            position: absolute;
+                            top: -15px;
+                            right: 0;
+                            left: 0;
+                            margin: auto;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 14px !important;
+                            text-align: center;
+                            line-height: 32px;
+                            border: 1px solid #ccc;
+                            background: #fff;
+                            border-radius: 200px;
+                        }
+                        tr {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            font-size: 16px;
+                            &.cart-subtotal {
+                                margin: 20px 0;
+                            }
+                            &.order-total {
+                                margin-top: auto;
+                            }
+                        }
+                    }
+                }
+                #payment {
+                    position: relative;
+                    width: 100%;
+                    background-color: #fcfcfc;
+                    border: 1px solid #ccc;
+                    margin: 0;
+                    padding: 20px;
+                    margin-top: 40px;
+                    &:before {
+                        content: "04";
+                        position: absolute;
+                        top: -15px;
+                        right: 0;
+                        left: 0;
+                        margin: auto;
+                        width: 32px;
+                        height: 32px;
+                        font-size: 14px !important;
+                        text-align: center;
+                        line-height: 32px;
+                        border: 1px solid #ccc;
+                        background: #fff;
+                        border-radius: 200px;
+                    }
+                    .form-row.place-order {
+                        font-size: 16px;
+                        text-align: right;
+                        #place_order {
+                            @include red_btn(#d1060d); 
+                            margin: auto;
+                            border-radius: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .woocommerce-form-coupon-toggle {
+            order: 2;
+        }
+        
+        .woocommerce-form-login {
+            background-color: #f4f4f4;
+            padding: 40px;
+        
+            .woocommerce-form-login-toggle {
+                .woocommerce-info {
+                    display: flex;
+                    align-items: center;
+                    font-size: 16px;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                    padding-inline-end: 24px;
+                    background-color: #fff;
+
+                    &:after{
+                        content:url("../images/svg/arrow-down.svg");
+                        width: 20px;
+                        height: 20px;
+                        display: inline-block;
+                        transition: transform 0.3s ease;
+                    }
+                    &:hover {
+                        border-bottom: 1px solid #e10915;
+
+                    }
+
+                    a {
+                        text-decoration: none;
+                        background-color: #fff;
+                        padding: 16px 24px;
+                        display: inline-block;
+                        width: 100%;
+                    }
+                }     
+                &.rotate180 .woocommerce-info:after  {
+                    transform: rotate(180deg);
+                }
+            }
+
+            form.woocommerce-form-login {
+                padding: 16px 24px;
+                padding-top: 40px;
+                background-color: #fff;
+
+                span.password-input {
+                    .show-password-input {
+                        top: 55%;
+                        transform: translateY(-45%);
+                    }
+                }
+
+                label.woocommerce-form__label.woocommerce-form-login__rememberme {
+                    position: static;
+                    transform: none;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin: 16px;
+                    display: none;
+
+                    input#rememberme[type="checkbox"] {
+                        position: relative;
+                        appearance: none;
+                        width: 16px;
+                        height: 16px;
+                        border: 1px solid #424242;
+                        flex-shrink: 0;
+                        display: inline-grid;
+                        place-content: center;
+                        cursor: pointer;
+                        padding: 0;
+
+                        &:checked{
+                            background-color: rgb(66,66,66);
+                            &:before{
+                                content:url("../images/svg/check.svg");
+                                width: 16px;
+                                height: 20px;
+                                color: #fff;
+                                filter: invert(100%) brightness(100%);
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+
+
+
+    }
+}
