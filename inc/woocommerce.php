@@ -574,7 +574,6 @@ function custom_single_product_long_description() {
 
 	echo '<div id="item_anchors" class="comparison-pdt">';
 	echo do_shortcode( '[madimz_product_compare_button]' );
-	// echo '	<a href="#" class="compare_url">' . esc_html('הוסף להשוואה' , 'madimz') . '</a>';
 	echo '</div>';
 }
 
@@ -594,54 +593,85 @@ function custom_variation_boxes() {
 				echo '<div class="variation-box-group">';
 					echo '<h4>' . wc_attribute_label( $attribute_name ) . ':</h4>';
 					echo '<div class="variation-options">';
-						//colors array
-						if ( $attribute_name == 'pa_color' ) :
-							$colors_map = [];
-							if ( have_rows( 'add_color', 'option' ) ) :
-								while ( have_rows( 'add_color', 'option' ) ): 
-									the_row();
-									$name = trim( get_sub_field( 'name_color', 'option' ) );
-									$hex = get_sub_field( 'color', 'option' );
-									if ( $name && $hex ) {
-										$colors_map[ trim($name) ] = $hex;
-									}
-								endwhile;
-							endif;
-						endif;
 
-						foreach ( $options as $option ) {
-							// Full name of the option from the taxonomy
-							$taxonomy = str_replace('attribute_', '', $attribute_name);
-							$term     = get_term_by( 'slug', $option, $taxonomy );
-							$label    = $term ? $term->name : urldecode($option);
+					/** --------------------------------------------------------
+					 *   COLOR HANDLING
+					 * ------------------------------------------------------- */
+					if ( $attribute_name === 'pa_color' ) {
+						$colors_map = [];
 
-							//Using the appropriate HEX
-							$hex = isset( $colors_map[$label] ) ? $colors_map[$label] : 'transparent';
-
-							echo '<div class="variation-container ' . ( $attribute_name == 'pa_size' ? 'sizes' : 'colors' ) . '">';				
-								if ( $attribute_name == 'pa_size' ) {
-									echo '<span class="variation-box size-option" 
-											data-attr="' . esc_attr( $attribute_name ) . '" 
-											data-value="' . esc_attr( $option ) . '"
-											data-color="' . esc_attr( $label ) . '"
-										>' . $label . '</span>';
-										} 
-								elseif ( $attribute_name == 'pa_color' ) {
-									echo '<span class="variation-box color-option" 
-											style="background-color:' . esc_attr( $hex ) . '" 
-											data-attr="' . esc_attr( $attribute_name ) . '" 
-											data-value="' . esc_attr( $option ) . '"
-											data-color="' . esc_attr( $label ) . '"
-										></span>';
+						if ( have_rows( 'add_color', 'option' ) ) {
+							while ( have_rows( 'add_color', 'option' ) ) {
+								the_row();
+								$name = trim( get_sub_field( 'name_color', 'option' ) );
+								$hex  = get_sub_field( 'color', 'option' );
+								if ( $name && $hex ) {
+									$colors_map[ $name ] = $hex;
 								}
-							echo '</div>';
+							}
 						}
+					}
 
-					echo '</div>';
-				echo '</div>';
+					/** --------------------------------------------------------
+					 *   SIZE HANDLING - SORT FIRST
+					 * ------------------------------------------------------- */
+					if ( $attribute_name === 'pa_size' ) {
+
+						// fixed dimension order
+						$size_order = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
+
+						// Sort the options
+						usort($options, function($a, $b) use ($size_order) {
+							$pos_a = array_search( strtoupper($a), $size_order );
+							$pos_b = array_search( strtoupper($b), $size_order );
+
+							return ($pos_a === false ? 999 : $pos_a) -
+								($pos_b === false ? 999 : $pos_b);
+						});
+					}
+
+					/** --------------------------------------------------------
+					 *   DISPLAY OPTIONS (AFTER SORTING)
+					 * ------------------------------------------------------- */
+					foreach ( $options as $option ) {
+
+						// Full labeling of the value from the properties axis
+						$taxonomy = str_replace('attribute_', '', $attribute_name);
+						$term     = get_term_by( 'slug', $option, $taxonomy );
+						$label    = $term ? $term->name : urldecode($option);
+
+						echo '<div class="variation-container ' . ( $attribute_name == 'pa_size' ? 'sizes' : 'colors' ) . '">';
+
+							if ( $attribute_name === 'pa_size' ) {
+
+								echo '<span class="variation-box size-option"
+										data-attr="' . esc_attr( $attribute_name ) . '"
+										data-value="' . esc_attr( $option ) . '"
+										data-label="' . esc_attr( $label ) . '"
+									>' . $label . '</span>';
+
+							} 
+							elseif ( $attribute_name === 'pa_color' ) {
+
+								// Get the HEX by name
+								$hex = isset( $colors_map[$label] ) ? $colors_map[$label] : 'transparent';
+
+								echo '<span class="variation-box color-option"
+										style="background-color:' . esc_attr($hex) . '"
+										data-attr="' . esc_attr( $attribute_name ) . '"
+										data-value="' . esc_attr( $option ) . '"
+										data-label="' . esc_attr( $label ) . '"
+									></span>';
+							}
+						echo '</div>'; // .variation-container
+					}
+
+					echo '</div>'; // .variation-options
+				echo '</div>'; // .variation-box-group
 			}
 
-		echo '</div>';
+		echo '</div>'; // .variation-boxes-wrapper
+
 
     // Load hidden variation form for WooCommerce JS
     // wc_get_template( 'single-product/add-to-cart/variable.php' );
@@ -721,7 +751,6 @@ function custom_general_info_about_pdts() {
 			$contact_url = add_query_arg(
 				array(
 					'product_id' => $product_id,
-					'product_title' => rawurlencode($message_text),
 				),
 				site_url('/contact/')
 			);
@@ -755,85 +784,6 @@ function custom_general_info_about_pdts() {
     echo '</div>'; // End .left-side.info-product
 
 }
-
-// add_action( 'woocommerce_after_single_product_summary', 'custom_general_info_about_pdt', 5 );
-/*function custom_general_info_about_pdt() {
-
-	echo '<div class="left-side info-product">';
-
-	// Reapeter Benefits for customers
-	echo '<div class="reasons_customers">';
-    echo '	<b class="">' . esc_html( get_field( 'title_customers_buy_from_us', 'option' ) ) . '</b>';
-	if ( have_rows( 'reasons_customers_choose_us', 'option' ) ) :
-		while ( have_rows( 'reasons_customers_choose_us', 'option' ) ): the_row();
-			$reason_text = get_sub_field( 'reason_text', 'option' );
-			echo '<ul class="list">';
-			echo '	<li class="reasons">' . inline_svg_with_class('arrow-left.svg', '') . '<span>' . esc_html( $reason_text ) . '</span></li>';
-			echo '</ul>';
-		endwhile;
-	endif;
-    echo '</div>'; 
-	
-	// icons
-	echo '<div class="services-icons-info">';
-	if ( have_rows( 'website_service_icons', 'option' ) ) :
-		while ( have_rows( 'website_service_icons', 'option' ) ): the_row();
-			$service_icon = get_sub_field( 'service_icon', 'option' );
-			$service_text = get_sub_field( 'service_text', 'option' );
-			echo '<div class="service-icon">';
-			echo '	<img src="' . esc_url( $service_icon ) . '" class="icon" />';
-			echo '	<span class="text">' . esc_html( $service_text ) . '</span>';
-			echo '</div>';
-		endwhile;
-	endif;
-    echo '</div>';
-	
-	// contact
-	echo '<div class="contact-info">';
-	$product_id = get_the_ID();
-	$product    = wc_get_product( $product_id );
-	$title      = $product->get_name();
-	$url        = get_permalink( $product_id );
-	$message_text = wp_kses_post( get_field( 'text_message', 'option' ) );
-
-	// Contact URL
-	$contact_url = add_query_arg(
-		array(
-			'product_id' => $product_id,
-			'product_title' => rawurlencode($message_text),
-		),
-		site_url('/contact/')
-	);
-
-	// WhatsApp number
-	$wa_number = get_field( 'whatsapp_number', 'option');
-
-	// Build WhatsApp message
-	$wa_message = rawurlencode(
-		"$message_text:\n$title\n$url"
-	);
-
-	// Final WhatsApp URL
-	$wa_link = "https://wa.me/$wa_number?text=$wa_message";
-
-
-	// contact
-	echo '<a class="product-contact-link" href="' . esc_url($contact_url) . '">';
-	echo '	<img class="contact-icon" src="' . get_template_directory_uri() . '/dist/images/ask.png" />';
-	echo '	<span class="contact-text">' . esc_html('שאל אותנו על מוצר זה', 'madimz') . '</span>';
-	echo '</a>';
-
-	// whatsapp
-	echo '<a class="product-whatsapp-link" href="' . esc_url($wa_link) . '" target="_blank">';
-	echo '	<img class="whatsapp-icon" src="' . get_template_directory_uri() . '/dist/images/whatsapp.png" />';
-	echo '	<span class="whatsapp-text">' . esc_html('שאל אותנו ב WhatsApp', 'madimz') . '</span>';
-	echo '</a>';
-
-    echo '</div>';
-
-    echo '</div>'; // End .left-side.info-product
-
-}*/
 
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );

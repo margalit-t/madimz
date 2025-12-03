@@ -4,11 +4,55 @@
     */
 
     get_header();
+
+    $title_contact          = get_field('title_contact');
+    $sub_title_contact      = get_field('sub_title_contact');
+    $form_id                = get_field('form_id');
+    $text_contact_title     = get_field('text_contact_title'); 
+    $contact_content        = get_field('contact_information', 'option');
 ?>
 
 <!-- //Add return-to-product link -->
-<?php if ( isset($_GET['product_id']) ) : 
-    $pid = intval($_GET['product_id']);
+<?php
+    $pid = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+
+    if ($pid) {
+        $product = wc_get_product($pid);
+
+        if ($product) {
+            $product_title = $product->get_name();
+        }
+    }
 ?>
     <p><a href="<?php echo get_permalink($pid); ?>"><?php esc_html_e( 'חזרה למוצר', 'madimz' ); ?></a></p>
-<?php endif; ?>
+
+<div class="contact-wrapper">
+    <div class="right-side contact-form">
+        <?php if ( $title_contact ) : ?>
+            <h2 class="contact-title">
+                <?php echo esc_html( $title_contact ); ?>
+            </h2>
+        <?php endif; ?>
+
+        <?php if ( $sub_title_contact ) : ?>
+            <p class="contact-sub-title">
+                <?php echo esc_html( $sub_title_contact ); ?>
+            </p>
+        <?php endif; ?>
+        <?php if( $form_id ) : ?>
+            <div class="form-content">
+                   <?php echo do_shortcode('[contact-form-7 id="' . $form_id . '" title="Contact"]'); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="left-side contact">
+        <?php if ( $text_contact_title ) : ?>
+            <h2 class="contact-title">
+                <?php echo esc_html( $text_contact_title ); ?>
+            </h2>
+        <?php endif; ?>
+        <?php if ( $contact_content ) : ?> 
+            <div class="desc-contact"><?php echo wp_kses_post( $contact_content ); ?> </div>
+        <?php endif; ?>
+    </div>
+</div>

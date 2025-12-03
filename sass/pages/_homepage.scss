@@ -74,30 +74,29 @@
                 }
             }
             .swiper-main-nav {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                will-change: opacity;
                 position: absolute;
-                transition-property: opacity;
-                transition-duration: .3s;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                width: 100%;
+                top: 50%;
+                transform: translateY(-50%);
                 z-index: 999;
-                
-                .swiper-button-prev {
-                    margin-inline-start: 48px;
-                    inset-inline-start: 0;
-                    width: 16px;
+                display: flex;
+                justify-content: space-between;
+                pointer-events: none; 
+                button {
+                    pointer-events: auto;
+                    &.swiper-button-prev {
+                        margin-inline-start: 48px;
+                        inset-inline-start: 0;
+                        width: 16px;
+                    }
+                    
+                    &.swiper-button-next {
+                        margin-inline-end: 48px;
+                        inset-inline-end: 0;
+                        width: 16px;
+                    }
                 }
                 
-                .swiper-button-next {
-                    margin-inline-end: 48px;
-                    inset-inline-end: 0;
-                    width: 16px;
-                }
         
                         
                 svg {

@@ -20,6 +20,28 @@
 </head>
 
 <body <?php body_class(); ?>>
+
+	<!-- icon WhatsApp sticky in pages -->
+	<?php if ( ! is_admin() ) : ?>
+		<?php			
+			// WhatsApp number
+			$wa_number = get_field( 'whatsapp_number_sticky', 'option');
+			$wa_message = wp_kses_post( get_field( 'whatsapp_text_message', 'option' ) );
+			$wa_link = "https://wa.me/$wa_number?text=$wa_message";
+			$wa_img = get_field( 'img_whatsapp_number', 'option' );
+		    $small = wp_get_attachment_image_src($wa_img['ID'], 'small'); 
+		?>
+		<a href="<?php echo esc_url($wa_link); ?>"
+			class="whatsapp-float"
+			target="_blank"
+			rel="noopener"
+			aria-label="פנייה ב־WhatsApp">
+			<?php if ( $wa_img ): ?>
+			 	<img src="<?php echo esc_url( $small[0] ); ?>" alt="icon whatsapp">
+			<?php endif; ?>
+		</a>
+	<?php endif; ?>
+
 <?php wp_body_open(); ?>
 
 <div id="page" class="site">
@@ -36,7 +58,8 @@
 				</div>
 				<input type="text" id="live-search" placeholder="<?php esc_html_e( 'מה אתם מחפשים?', 'madimz' ); ?>" autocomplete="off">
 				<div id="search-results"></div>
-			</div>
+			</div><!-- .search-wrapper -->
+
 			<div class="site-branding">
 				<?php
 					the_custom_logo();
@@ -50,7 +73,7 @@
 						<?php esc_html_e( 'כניסה לעסקים', 'madimz' ); ?>
 					</button>
 				</li>
-				
+
 				<!-- My Account / Login -->
 				<li class="account-icon login-icon">
 					<a class="header-link" aria-label="<?php esc_html_e( 'חשבון שלי', 'madimz' ); ?>" href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>">

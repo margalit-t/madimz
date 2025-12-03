@@ -11,7 +11,7 @@
             <?php 
             $cf7_form_id = get_field('select_cf7_form','option'); // Get the selected form ID from ACF
             if( $cf7_form_id ) {
-                echo do_shortcode('[contact-form-7 id="' . $cf7_form_id . '" title="Contact form"]');
+                echo do_shortcode('[contact-form-7 id="' . $cf7_form_id . '" title="Contact form banner"]');
             }
             ?>
         </div>

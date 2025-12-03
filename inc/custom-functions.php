@@ -66,25 +66,29 @@ function madimz_breadcrumb_separator( $defaults ) {
  */
 
 //Change Page Title Dynamically
-add_filter('the_title', function($title){
-    if ( is_page('contact') && isset($_GET['product_title']) ) {
-        $product_title = sanitize_text_field($_GET['product_title']);
-        return "Customer Service – Interested in $product_title";
-    }
-    return $title;
-});
+// add_filter('the_title', function($title){
+//     if ( is_page('contact') && isset($_GET['product_title']) ) {
+//         $product_title = sanitize_text_field($_GET['product_title']);
+//         return "Customer Service – Interested in $product_title";
+//     }
+//     return $title;
+// });
 
 // Fill Contact form Message Body
-add_filter('wpcf7_posted_data', function($data){
 
-    if ( isset($_GET['product_id']) ) {
-        $pid   = intval($_GET['product_id']);
-        $title = get_the_title($pid);
-        $url   = get_permalink($pid);
 
-        $text = "The customer is contacting regarding the product:\n$title\n$url";
+// CF7 Dynamic value for product content field
+add_filter('wpcf7_posted_data', function($data) {
 
-        $data['product_details'] = $text;
+    if (!empty($_POST['product_id'])) {
+        $pid = intval($_POST['product_id']);
+        $product = wc_get_product($pid);
+
+        if ($product) {
+            $data['your-message'] =
+                esc_html_e('מעוניין לקבל פרטים לגבי ', 'madimz') . $product->get_name() . "\n\n" .
+                $data['your-message'];
+        }
     }
 
     return $data;

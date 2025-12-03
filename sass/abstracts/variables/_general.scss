@@ -84,6 +84,16 @@ img {
     transform: rotate(180deg);
 }
 
+a.whatsapp-float {
+    width: 64px;
+    height: 64px;
+    display: block;
+    position: fixed;
+    top: 250px;
+    left: 10px;
+    z-index: 9999999;
+}
+
 /****
 * Header Style
 */
