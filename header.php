@@ -27,6 +27,7 @@
 			// WhatsApp number
 			$wa_number = get_field( 'whatsapp_number_sticky', 'option');
 			$wa_message = wp_kses_post( get_field( 'whatsapp_text_message', 'option' ) );
+			$wa_message = $wa_message ?? '';
 			$wa_link = "https://wa.me/$wa_number?text=$wa_message";
 			$wa_img = get_field( 'img_whatsapp_number', 'option' );
 		    $small = wp_get_attachment_image_src($wa_img['ID'], 'small'); 
@@ -40,6 +41,22 @@
 			 	<img src="<?php echo esc_url( $small[0] ); ?>" alt="icon whatsapp">
 			<?php endif; ?>
 		</a>
+	<?php endif; ?>
+
+	<!-- icon Wishlist sticky in pages -->
+	<?php if ( ! is_admin() ) : ?>
+		<div class="btn-wishlist-float">
+			<a href="<?php echo home_url( '/wishlist/' ); ?>" class="wishlist-float" target="_self" rel="noopener" aria-label="רשימת משאלות - wishlist">
+				<?php
+					$count = 0;
+					if ( class_exists( 'MadimzWishlist' ) ) {
+						$count = count( MadimzWishlist::get_wishlist() );
+					}
+					?>
+				<span class="counter"><?php echo esc_html( $count ); ?></span>
+				<?php echo inline_svg_with_class('heart-outline.svg', '');?>
+			</a>
+		</div>
 	<?php endif; ?>
 
 <?php wp_body_open(); ?>
@@ -69,9 +86,9 @@
 			<ul class="header-right-icons">
 				<!-- Business Login -->
 				<li class="account-btn">
-					<button type="button" class="header-link red-btn bussiness-btn" aria-label="<?php esc_html_e( 'כניסה לעסקים', 'madimz' ); ?>">
-						<?php esc_html_e( 'כניסה לעסקים', 'madimz' ); ?>
-					</button>
+					<a type="button" class="header-link red-btn bussiness-btn" aria-label="<?php esc_html_e( 'כניסה לחנות', 'madimz' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
+						<?php esc_html_e( 'כניסה לחנות', 'madimz' ); ?>
+					</a>
 				</li>
 
 				<!-- My Account / Login -->

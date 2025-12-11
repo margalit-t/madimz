@@ -17,7 +17,8 @@ function madimz_custom_scripts() {
 
     wp_localize_script( 'madimz-ajax-scripts', 'ajax_obj', array( 
         'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-        'error_msg' => esc_html__('Error loading results.', 'madimz')
+        'error_msg' => esc_html__('Error loading results.', 'madimz'),
+        'thank_you_url' => site_url('/tickets-success/')
     ) );
 
     if ( is_front_page() ) {
@@ -36,27 +37,26 @@ function madimz_custom_scripts() {
     }
 
     if ( is_product() ) {
-
         wp_enqueue_style( 'swiper-bundle', get_template_directory_uri() . '/dist/lib/swiper/swiper-bundle.min.css', array() ,'12.0.3');
         wp_enqueue_style( 'single-product', get_template_directory_uri() . '/dist/css/single-product.min.css', array(), _S_VERSION );
         wp_enqueue_script( 'swiper-bundle', get_template_directory_uri() . '/dist/lib/swiper/swiper-bundle.min.js', array(), '12.0.3', array( 'strategy' => 'defer' ) );
         wp_enqueue_script( 'single-product', get_template_directory_uri() . '/dist/js/single.product.js', array( 'jquery', 'swiper-bundle' ), _S_VERSION, array( 'strategy' => 'defer' ) );
-    
         $should_load_default = false;
-
     }
+
     // cart page
     if ( function_exists( 'is_cart' ) && is_cart() ) {
         wp_enqueue_style( 'cart-min', get_template_directory_uri() . '/dist/css/cart.min.css', array(), _S_VERSION );
+        $should_load_default = false;
     }
 
     //checkout page
     if ( is_checkout() ) {
         wp_enqueue_style( 'checkout-min', get_template_directory_uri() . '/dist/css/checkout.min.css', array(), _S_VERSION );
-        wp_enqueue_script('wc-cart');
+        $should_load_default = false;
     }
 
-    if( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+    if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
         wp_enqueue_script('wc-add-to-cart-variation');
         wp_enqueue_script('wc-single-product');
     }
@@ -67,18 +67,33 @@ function madimz_custom_scripts() {
     }
 
     // my-account page
-    if( (function_exists( 'is_account_page' ) && is_account_page())) {
+    if ( (function_exists( 'is_account_page' ) && is_account_page())) {
         wp_enqueue_style( 'my-account', get_template_directory_uri() . '/dist/css/my-account.min.css', array(), _S_VERSION );
         $should_load_default = false;
     }
     
     // location page
-    if(is_page_template( 'page-templates/location.php' )){
+    if ( is_page_template( 'page-templates/location.php' ) ){
         wp_enqueue_style( 'location-min', get_template_directory_uri() . '/dist/css/location.min.css', array(), _S_VERSION );
         $should_load_default = false;
     }
+
+    // Contact page
+    if ( is_page_template( 'page-templates/contact.php' )){
+        wp_enqueue_style( 'location-min', get_template_directory_uri() . '/dist/css/contact.min.css', array(), _S_VERSION );
+        $should_load_default = false;
+    }
     
-    if ( is_page_template( 'default' ) && $should_load_default  ) {
+    // Wishlist page
+    if ( is_page_template( 'page-templates/wishlist.php' )){
+        wp_enqueue_style( 'wishlist-min', get_template_directory_uri() . '/dist/css/wishlist.min.css', array(), _S_VERSION );
+
+        // Force loading the wishlist script on this page
+        wp_enqueue_script( 'madimz-wishlist-js' );
+        $should_load_default = false;
+    }
+    
+    if ( ( is_page_template( 'default' ) && $should_load_default )  || ( is_page_template( 'page-templates/tickets.php' ) && $should_load_default ) ) {
         wp_enqueue_style( 'madimz-page', get_template_directory_uri() . '/dist/css/page.min.css', array(), _S_VERSION );
     }
 

@@ -206,13 +206,13 @@
                     <?php while ( have_rows( 'about_gallery_image' ) ): the_row(); ?>
 
                         <?php
-                            $about_img = get_sub_field( 'gallery_image' );
-                            $about_img_url = wp_get_attachment_image_url( $about_img, 'medium' ); 
+                            $about_img = get_sub_field( 'gallery_image' );                            
+                            $about_img_url = wp_get_attachment_image_url( $about_img['id'], 'medium' ); 
                         ?>
 
-                        <?php if ( $about_img ): ?>
+                        <?php if ( $about_img_url ): ?>
                             <div class="swiper-slide">
-                                <img class="img-banner-desk" src="<?php echo esc_url( $about_img ); ?>" alt="about us gallery" />
+                                <img class="img-banner-desk" src="<?php echo esc_url( $about_img_url ); ?>" alt="about us gallery" />
                             </div>
                         <?php endif; ?>                            
                     <?php endwhile; ?>

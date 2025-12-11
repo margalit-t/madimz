@@ -34,3 +34,37 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+
+    const wrapper = document.getElementById("cf7-product-data");
+    if (!wrapper) return;
+
+    const pid   = wrapper.dataset.productId;
+    const title = wrapper.dataset.productTitle;
+
+    // אם אין מוצר — לא לעשות כלום
+    if (!pid || !title) return;
+
+    // מציאת שדה ה-Textarea
+    const messageField = document.getElementById("product-details");
+    if (messageField) {
+        messageField.value =
+            "מעוניין לקבל פרטים לגבי " + title + "\n";
+    }
+
+    // מציאת hidden שמכיל את product_id
+    const hiddenField = document.getElementById("product-id");
+    if (hiddenField) {
+        hiddenField.value = pid;
+    }
+});
+
+// Displaying the number on the thank you page
+document.addEventListener('DOMContentLoaded', function () {
+    const el = document.getElementById('ticket-number');
+    if (!el) return;
+
+    const url = new URL(window.location.href);
+    const t = url.searchParams.get('ticket');
+    if (t) el.textContent = t;
+});

@@ -15,7 +15,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main ggggg">
+	<main id="primary" class="site-main">
 
 		<?php
 		if ( have_posts() ) :
@@ -54,4 +54,5 @@ get_header();
 
 <?php
 // get_sidebar();
+get_template_part('template-parts/form', 'footer');
 get_footer();

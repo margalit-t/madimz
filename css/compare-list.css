@@ -44,9 +44,10 @@ input[type=radio] {
 }
 
 input:not([type=checkbox], [type=radio]) {
-  border: none;
+  border: solid 1px #ccc;
+  color: #333;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.7019607843);
+  background-color: #fff;
   font-family: "Heebo";
   font-size: 16px;
   max-width: none;
@@ -55,7 +56,6 @@ input:not([type=checkbox], [type=radio]) {
   width: 100%;
   font-weight: 400;
   text-align: right;
-  color: #000000;
 }
 
 select {
@@ -142,6 +142,7 @@ ul:not(.acf-custom-content ul):not(.wp_editor_wrapper ul) {
 
 ul:not(.acf-custom-content ul):not(.wp_editor_wrapper ul) li {
   list-style-type: none;
+  position: relative;
 }
 
 dl:not(.acf-custom-content dl):not(.wp_editor_wrapper dl),
@@ -210,6 +211,66 @@ a.whatsapp-float {
   top: 250px;
   left: 10px;
   z-index: 9999999;
+}
+
+.btn-wishlist-float {
+  display: block;
+  position: fixed;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border: solid 1px #ccc;
+  border-radius: 0 30px 30px 0;
+  z-index: 9999;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .btn-wishlist-float {
+    min-height: 22px;
+    min-width: 22px;
+    top: 50%;
+  }
+}
+.btn-wishlist-float a.wishlist-float {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 2px;
+  width: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: auto;
+}
+@media (min-width: 768px) {
+  .btn-wishlist-float a.wishlist-float {
+    height: 22px;
+    max-width: 30px;
+  }
+}
+.btn-wishlist-float a.wishlist-float span.counter {
+  font-size: 10px;
+}
+.btn-wishlist-float a.wishlist-float svg {
+  position: relative;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 100;
+  text-align: center;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .btn-wishlist-float a.wishlist-float svg {
+    max-height: 22px;
+    max-width: 22px;
+  }
 }
 
 /****
@@ -723,17 +784,21 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
 /****
 * Woocommercr Message
 */
-.woocommerce-notices-wrapper .woocommerce-error, .woocommerce-NoticeGroup .woocommerce-error, .woocommerce .woocommerce-error {
+.woocommerce-notices-wrapper, .woocommerce-NoticeGroup {
+  max-width: 1200px;
+  margin: auto;
+}
+.woocommerce-notices-wrapper .woocommerce-error, .woocommerce-NoticeGroup .woocommerce-error {
   background-color: #d1060d;
   color: #fff;
   border: 0;
   font-size: 16px;
   list-style-type: none;
   position: relative;
-  margin: 0 0 20px 0;
-  padding: 8px 36px 8px 8px;
+  margin: 0 0 20px 0 !important;
+  padding: 8px 36px 8px 8px !important;
 }
-.woocommerce-notices-wrapper .woocommerce-error::before, .woocommerce-NoticeGroup .woocommerce-error::before, .woocommerce .woocommerce-error::before {
+.woocommerce-notices-wrapper .woocommerce-error::before, .woocommerce-NoticeGroup .woocommerce-error::before {
   content: "";
   background-image: url("../images/alert.svg");
   position: absolute;
@@ -749,20 +814,20 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
   -webkit-filter: invert(1);
           filter: invert(1);
 }
-.woocommerce-notices-wrapper .woocommerce-error a, .woocommerce-NoticeGroup .woocommerce-error a, .woocommerce .woocommerce-error a {
-  display: none;
+.woocommerce-notices-wrapper .woocommerce-error a, .woocommerce-NoticeGroup .woocommerce-error a {
+  color: #fff !important;
 }
-.woocommerce-notices-wrapper .woocommerce-message, .woocommerce-NoticeGroup .woocommerce-message, .woocommerce .woocommerce-message {
+.woocommerce-notices-wrapper .woocommerce-message, .woocommerce-notices-wrapper .woocommerce-info, .woocommerce-NoticeGroup .woocommerce-message, .woocommerce-NoticeGroup .woocommerce-info {
   background-color: #026805;
   color: #fff;
   border: 0;
   font-size: 16px;
   list-style-type: none;
-  padding: 8px 36px 8px 8px;
-  margin: 0 0 20px 0;
+  padding: 8px 36px 8px 8px !important;
+  margin: 0 0 20px 0 !important;
   position: relative;
 }
-.woocommerce-notices-wrapper .woocommerce-message::before, .woocommerce-NoticeGroup .woocommerce-message::before, .woocommerce .woocommerce-message::before {
+.woocommerce-notices-wrapper .woocommerce-message::before, .woocommerce-notices-wrapper .woocommerce-info::before, .woocommerce-NoticeGroup .woocommerce-message::before, .woocommerce-NoticeGroup .woocommerce-info::before {
   content: "";
   background-image: url("../images/check-circle.svg");
   position: absolute;
@@ -778,7 +843,7 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
   -webkit-filter: invert(1);
           filter: invert(1);
 }
-.woocommerce-notices-wrapper .woocommerce-message a, .woocommerce-NoticeGroup .woocommerce-message a, .woocommerce .woocommerce-message a {
+.woocommerce-notices-wrapper .woocommerce-message a, .woocommerce-notices-wrapper .woocommerce-info a, .woocommerce-NoticeGroup .woocommerce-message a, .woocommerce-NoticeGroup .woocommerce-info a {
   display: none;
 }
 
@@ -856,6 +921,42 @@ header.site-header nav.main-navigation .sub-menu li a:hover {
 }
 .blog article .entry-content, .blog article .entry-content > * {
   font-size: 14px;
+}
+
+button.button-wishlist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 99;
+}
+button.button-wishlist .icon.wishlist {
+  width: 28px;
+  height: 28px;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  display: inline-block;
+  background-color: #333;
+  -webkit-mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
+          mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
+}
+button.button-wishlist.remove .icon {
+  -webkit-mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
+          mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
+}
+button.button-wishlist:hover, button.button-wishlist:active, button.button-wishlist:focus {
+  color: #d1060d;
 }
 
 #primary > article .entry-content > .compare h2 {

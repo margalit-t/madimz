@@ -28,6 +28,7 @@ ul:not(.acf-custom-content ul):not(.wp_editor_wrapper ul) {
 
 ul:not(.acf-custom-content ul):not(.wp_editor_wrapper ul) li {
     list-style-type: none;
+    position: relative;
 }
 
 dl:not(.acf-custom-content dl):not(.wp_editor_wrapper dl),
@@ -92,6 +93,57 @@ a.whatsapp-float {
     top: 250px;
     left: 10px;
     z-index: 9999999;
+}
+
+.btn-wishlist-float {
+    display: block;
+    position: fixed;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border: solid 1px #ccc;
+    border-radius: 0 30px 30px 0;
+    z-index: 9999;
+    cursor: pointer;
+    @media (min-width: 768px) {
+        min-height: 22px;
+        min-width: 22px;
+        top: 50%;
+        // transform: translateY(-50%);
+    }
+    a.wishlist-float {
+        display: flex;
+        align-items: flex-start;
+        gap: 2px;
+        width: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0;
+        margin: auto;
+        @media (min-width: 768px) {
+            height: 22px;
+            max-width: calc(22px + 8px);
+        }
+        span.counter {
+            font-size: 10px;
+        }
+        svg {
+            position: relative;
+            width: auto;
+            max-width: 100%;
+            max-height: 100%;
+            z-index: 100;
+            text-align: center;
+            cursor: pointer;
+            @media (min-width: 768px) {
+                max-height: 22px;
+                max-width: 22px;
+            }
+        }
+    }
 }
 
 /****
@@ -553,8 +605,9 @@ header.site-header {
 /****
 * Woocommercr Message
 */
-.woocommerce-notices-wrapper, .woocommerce-NoticeGroup, .woocommerce {
-
+.woocommerce-notices-wrapper, .woocommerce-NoticeGroup {
+    max-width: 1200px;
+    margin: auto;
     .woocommerce-error {
         background-color: #d1060d;
         color: #fff;
@@ -562,8 +615,8 @@ header.site-header {
         font-size: 16px;
         list-style-type: none;
         position: relative;
-        margin: 0 0 20px 0;
-        padding: 8px 36px 8px 8px;
+        margin: 0 0 20px 0 !important;
+        padding: 8px 36px 8px 8px !important;
         &::before {
             content: '';
             background-image: url("../images/alert.svg");
@@ -579,18 +632,19 @@ header.site-header {
             filter: invert(1);
         }
         a {
-            display: none;
+            color: #fff !important;
+            // display: none;
         }
     }
 
-    .woocommerce-message {
+    .woocommerce-message , .woocommerce-info {
         background-color: #026805;
         color: #fff;
         border: 0;
         font-size: 16px;
         list-style-type: none;
-        padding: 8px 36px 8px 8px;
-        margin: 0 0 20px 0;
+        padding: 8px 36px 8px 8px !important;
+        margin: 0 0 20px 0 !important;
         position: relative;
         &::before {
             content: '';
@@ -698,4 +752,36 @@ header.site-header {
    } 
 }
 
+button.button-wishlist {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 14px;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    z-index: 99;
+    .icon.wishlist {
+        width: 28px;
+        height: 28px;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        display: inline-block;
+        background-color: #333;
+        mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
+    }
+
+    &.remove {
+        .icon {
+            mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
+        }
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #d1060d;
+    }
+}
 

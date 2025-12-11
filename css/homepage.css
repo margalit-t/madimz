@@ -207,6 +207,7 @@
   padding: 24px 0 10px;
 }
 .section-wrap.favorite-pdts-wrapper .container .swiper-slide-pdts ul.products.swiper-wrapper li.product {
+  position: relative;
   width: 100%;
   height: 400px;
   text-align: center;
@@ -219,6 +220,9 @@
 .section-wrap.favorite-pdts-wrapper .container .swiper-slide-pdts ul.products.swiper-wrapper li.product:hover {
   -webkit-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1490196078);
           box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1490196078);
+}
+.section-wrap.favorite-pdts-wrapper .container .swiper-slide-pdts ul.products.swiper-wrapper li.product button.button-wishlist .wishlist-text {
+  display: none;
 }
 .section-wrap.favorite-pdts-wrapper .container .swiper-slide-pdts ul.products.swiper-wrapper li.product a {
   width: auto;
@@ -276,7 +280,6 @@
   width: 100%;
   height: auto;
   min-height: 36px;
-  overflow: hidden;
   margin: 0 auto;
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
@@ -287,7 +290,6 @@
   width: 150px;
   height: 28px;
   max-height: 28px;
-  overflow: hidden;
   padding: 4px 0;
   -webkit-transition: height 0.4s ease;
   transition: height 0.4s ease;
@@ -430,10 +432,10 @@
 .section-wrap.about-us-wrapper .right-content .about-content a.about-link {
   font-size: 14px;
   text-decoration: none;
-  color: #2f2483;
+  color: #337ab7;
 }
 .section-wrap.about-us-wrapper .right-content .about-content a.about-link:hover {
-  color: #d1060d;
+  color: #2f2483;
 }
 .section-wrap.about-us-wrapper .left-content {
   width: 40%;
@@ -456,10 +458,11 @@
   -webkit-tap-highlight-color: transparent;
   position: static;
   z-index: 1;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .section-wrap.about-us-wrapper .left-content .swiper.gallery-carousel-about .swiper-wrapper {
   position: relative;
-  overflow: hidden;
 }
 .section-wrap.about-us-wrapper .left-content .swiper.gallery-carousel-about .swiper-wrapper .swiper-slide {
   max-width: 500px;
@@ -469,7 +472,6 @@
 .section-wrap.about-us-wrapper .left-content .swiper.gallery-carousel-about .swiper-wrapper .swiper-slide img.img-banner-desk {
   -o-object-fit: cover;
      object-fit: cover;
-  border-radius: 12px;
 }
 .section-wrap.about-us-wrapper .left-content .swiper.gallery-carousel-about .swiper-main-nav {
   position: absolute;

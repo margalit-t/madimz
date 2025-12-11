@@ -61,3 +61,26 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 });
+
+//cf7
+
+document.addEventListener('wpcf7mailsent', function () {
+    if (typeof ajax_obj === 'undefined') return;
+
+    fetch(ajax_obj.ajaxurl + '?action=madimz_generate_ticket')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && data.data.ticket) {
+                const ticket = data.data.ticket;
+                window.location.href =
+                    ajax_obj.thank_you_url +
+                    '?ticket=' + encodeURIComponent(ticket);
+            } else {
+                window.location.href = ajax_obj.thank_you_url;
+            }
+        })
+        .catch(() => {
+            window.location.href = ajax_obj.thank_you_url;
+        });
+
+}, false);

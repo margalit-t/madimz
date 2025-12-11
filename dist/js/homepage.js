@@ -66,14 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // about-us images slider
     const aboutUsSwiper = new Swiper('.gallery-carousel-about', {
         // Optional parameters
-        spaceBetween: 0,
+        // spaceBetween: 0,
         slidesPerView: 1,
-        loop: true,
+        slidesPerGroup: 1,
+        autoHeight: true,
         speed: 1000,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
+        rtl: false,
+        loop: true,
     });
 });
 

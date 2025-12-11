@@ -10,7 +10,7 @@
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
-            nav.woocommerce-breadcrumb {
+            /*nav.woocommerce-breadcrumb {
                 direction: rtl;
                 width: 100%;
                 padding: 0;
@@ -28,7 +28,7 @@
                         color: #2f2483 !important;
                     }
                 }
-            }
+            }*/
             div.product {
                 display: flex;
                 flex-wrap: wrap;
@@ -73,6 +73,13 @@
                         p {
                             font-size: 14px !important;
                             margin: 0 !important;
+
+                            > * {
+                                background-color: transparent !important;
+                                color: #333 !important;
+                                font-family: 'Heebo' !important;
+                                font-size: 14px !important;
+                            }
                         }
                     }
                     .comparison-pdt {
@@ -130,21 +137,24 @@
                                         text-align: center;
                                         cursor: pointer;
                                         &.colors {
-                                            width: 30px;
-                                            height: 30px;
+                                            width: 32px;
+                                            height: 32px;
                                             border-radius: 20%;
-                                            border: 1px solid #000;
                                             margin: 4px !important;
                                             .color-option{
-                                                width: 26px;
-                                                height: 26px;
+                                                border: 1px solid #000;
+                                                width: 100%;
+                                                height: 100%;
                                                 border-radius: inherit;
                                                 text-align: center;
                                                 cursor: pointer;
+                                                &.active {
+                                                    border: 2px solid #000;
+                                                }
                                                 &:hover::after {
-                                                    content: attr(data-color);
+                                                    content: attr(data-label);
                                                     position: absolute;
-                                                    top: 28px;
+                                                    top: 30px;
                                                     right: 50%;
                                                     transform: translateX(50%);
                                                     background: #000;
@@ -174,19 +184,23 @@
                                             }
                                         }
                                         &.sizes {
-                                            border: 1px solid #ccc;
                                             flex-direction: column;
                                             width: 84px;
                                             height: 48px;
                                             // padding: 12px 0px;
                                             margin: 4px;
                                             .size-option {
+                                                border: 1px solid #ccc;
                                                 margin: 0;
                                                 font-weight: normal;
                                                 font-size: 16px;
                                                 width: 100%;
                                                 height: 100%;
                                                 padding: 12px 0;
+                                                border-collapse: collapse;
+                                                &.active {
+                                                    border: 2px solid #333;
+                                                }
                                             }
                                         }
                                     }
@@ -246,6 +260,7 @@
                                             text-align: center;
                                             padding: 0;
                                             font-size: 18px;
+                                            border: none;
                                         }
                                     }
                                 }
@@ -278,34 +293,12 @@
                         }
                         .extra-product-info {                                                        
                             button.button-wishlist {
-                                display: flex;
-                                gap: 5px;
-                                align-items: center;
                                 padding: 12px 0 !important;
-                                font-size: 14px;
+                                position: inherit;
                                 .icon.wishlist {
                                     width: 24px;
                                     height: 24px;
-                                    mask-repeat: no-repeat;
-                                    mask-position: center;
-                                    mask-size: contain;
-                                    display: inline-block;
-                                    background-color: #333;
-                                    mask-image: url("/wp-content/themes/madimz/dist/images/heart-outline.svg");
                                 }
-
-                                &.remove {
-                                    .icon {
-                                        mask-image: url("/wp-content/themes/madimz/dist/images/heart.svg");
-                                    }
-                                }
-
-                                &:hover,
-                                &:active,
-                                &:focus {
-                                    color: #d1060d;
-                                }
-
                             }
                             .delivery-info {
                                 font-size: 14px;
@@ -493,6 +486,7 @@
                                 }
                                 input#file {
                                     padding-right: 0;
+                                    border: none;
                                 }
                             }
                             img#image-file {
@@ -660,7 +654,32 @@
                                 }
                             }
                         }
-                        & > h3 {
+                        #matrix-overlay {
+                            position: fixed;
+                            top: 0; left: 0;
+                            right: 0; bottom: 0;
+                            z-index: 99999;
+                            background: rgba(255,255,255,0.75);
+                            display: none;
+                            z-index: 999999999 !important;
+                            .spinner {
+                               position: absolute;
+                               top: 50%; left: 50%;
+                               transform: translate(-50%,-50%);
+                               width: 60px;
+                               height: 60px;
+                               border-radius: 50%;
+                               border: 6px solid #ccc;
+                               border-top-color: #333;
+                               animation: spin 0.7s linear infinite;
+                           }
+                        }
+                        
+                        @keyframes spin {
+                            to { transform: translate(-50%,-50%) rotate(360deg); }
+                        }
+
+                        & > .matrix-legend p {
                             margin-top: 16px;
                             font-size: 16px;
                             font-weight: 400;
@@ -778,6 +797,15 @@
                         p {
                             max-width: 100%;
                             font-size: 14px;
+                            margin: 0 !important;
+                            a {
+                                color: #337ab7;
+                                text-decoration: none;
+                                cursor: pointer;
+                                &:hover {
+                                    color: #2f2483;
+                                }
+                            }
                         }
                     }
 
@@ -804,6 +832,11 @@
                                 width: 170px;
                                 max-width: 178px;
                             }
+                            button.button-wishlist {
+                                .wishlist-text {
+                                    display: none;
+                                }
+                            } 
                             a {
                                 text-align: center;
                                 width: 100%;
@@ -866,6 +899,12 @@
                         // width: 100%;
                         .swiper-wrapper {
                             li {
+                                position: relative;
+                                button.button-wishlist { 
+                                    .wishlist-text {
+                                        display: none;
+                                    }
+                                } 
                                 a {
                                     display: block;
                                     img {

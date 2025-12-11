@@ -9,7 +9,7 @@
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
-        nav.woocommerce-breadcrumb {
+        /*nav.woocommerce-breadcrumb {
             direction: rtl;
             width: 100%;
             padding: 0;
@@ -24,10 +24,10 @@
                 font-size: 12px;
                 margin-left: 12px;
                 &:hover {
-                    color: #23527c !important;
+                    color: #2f2483 !important;
                 }
             }
-        }
+        }*/
         header.woocommerce-products-header {
             margin-bottom: 20px;
             width: 100%;
@@ -72,6 +72,7 @@
         }
         ul.products {
             display: flex;
+            flex-wrap: wrap;
             width: 83.33333333%;
             padding: 0 32px;
             margin-top: 12px;
@@ -86,6 +87,15 @@
                 margin: 0;
                 margin-bottom: 20px;
                 width: 100%;
+                @media (min-width: 768px) {
+                    width: 50%;
+                }
+                @media (min-width: 992px) {
+                    width: 33.33333333%;
+                }
+                @media (min-width: 1200px) {
+                    width: 25%;
+                }
                 a {
                     display: inline-flex;
                     flex-direction: column;
@@ -234,7 +244,7 @@
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
-        nav.woocommerce-breadcrumb {
+        /*nav.woocommerce-breadcrumb {
             direction: rtl;
             width: 100%;
             padding: 0;
@@ -249,10 +259,10 @@
                 font-size: 12px;
                 margin-left: 12px;
                 &:hover {
-                    color: #23527c !important;
+                    color: #2f2483 !important;
                 }
             }
-        }
+        }*/
         header.woocommerce-products-header {
             margin-bottom: 20px;
             width: 100%;
@@ -412,157 +422,158 @@
                         }
                     }
                 }
-                ul.products {
-                    display: flex;
+            }
+        }
+        ul.products {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            overflow: hidden;
+    
+            li.product {
+                position: relative;
+                border-bottom: 1px solid #f3f1f1;
+                padding: 0;
+                margin: 0;
+                margin-bottom: 20px;
+                width: 100%;
+                @media (min-width: 768px) {
+                    width: 50%;
+                }
+                @media (min-width: 992px) {
+                    width: 33.33333333%;
+                }
+                @media (min-width: 1200px) {
+                    width: 25%;
+                }
+                a {
+                    display: inline-flex;
+                    flex-direction: column;
+                    align-items: center;
                     width: 100%;
-                    overflow: hidden;
-
-                    li {
+                    min-height: 1px;  
+                    padding: 0 15px;
+                    img {
+                        width: auto;
+                        height: 210px;
+                        margin: 0 auto 16px;
+                        margin: auto;
+                    }
+                    h2 {
                         position: relative;
-                        border-bottom: 1px solid #f3f1f1;
-                        padding: 0;
-                        margin: 0;
-                        margin-bottom: 20px;
+                        height: 40px;
+                        max-width: 100%;
+                        color: #333;
+                        font-size: 16px;
+                        font-weight: 400;
+                        text-align: center;
+                        line-height: 20px;
+                        padding: 0 20px;
+                        margin: 0 auto 12px;
+                        overflow: hidden;
+                    }
+                    span.price {
+                        margin: auto;
+                        height: 44px;
+                        width: auto;
+                        max-width: 100%;
+                        max-height: 100%;
+                        overflow: hidden;
+                        line-height: 44px;
+                        color: #2f2483;
+                        font-size: 18px;
+                        font-weight: 800;
+                        text-align: center;
+                        display: inline-block;
+                        order: 2;
+                    }
+                    div.product-color-variations {
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
                         width: 100%;
-                        @media (min-width: 768px) {
-                            width: 50%;
-                        }
-                        @media (min-width: 992px) {
-                            width: 33.33333333%;
-                        }
-                        @media (min-width: 1200px) {
-                            width: 25%;
-                        }
-                        a {
+                        height: auto;
+                        min-height: 36px;
+                        overflow: hidden;
+                        margin: 0 auto;
+                        order: 1;
+                        .color-dots {
                             display: inline-flex;
-                            flex-direction: column;
-                            align-items: center;
-                            width: 100%;
-                            min-height: 1px;  
-                            padding: 0 15px;
-                            img {
-                                width: auto;
-                                height: 210px;
-                                margin: 0 auto 16px;
-                                margin: auto;
-                            }
-                            h2 {
+                            justify-content: center;
+                            width: 150px;
+                            height: 28px;
+                            max-height: 28px;
+                            overflow: hidden;
+                            padding: 4px 0;
+                            transition: height 0.4s ease;
+                            .color-dot {
                                 position: relative;
-                                height: 40px;
-                                max-width: 100%;
-                                color: #333;
-                                font-size: 16px;
-                                font-weight: 400;
-                                text-align: center;
-                                line-height: 20px;
-                                padding: 0 20px;
-                                margin: 0 auto 12px;
-                                overflow: hidden;
-                            }
-                            span.price {
-                                margin: auto;
-                                height: 44px;
-                                width: auto;
-                                max-width: 100%;
-                                max-height: 100%;
-                                overflow: hidden;
-                                line-height: 44px;
-                                color: #2f2483;
-                                font-size: 18px;
-                                font-weight: 800;
-                                text-align: center;
-                                display: inline-block;
-                                order: 2;
-                            }
-                            div.product-color-variations {
-                                position: relative;
-                                display: flex;
-                                justify-content: center;
-                                width: 100%;
-                                height: auto;
-                                min-height: 36px;
-                                overflow: hidden;
-                                margin: 0 auto;
-                                order: 1;
-                                .color-dots {
-                                    display: inline-flex;
-                                    justify-content: center;
-                                    width: 150px;
-                                    height: 28px;
-                                    max-height: 28px;
-                                    overflow: hidden;
-                                    padding: 4px 0;
-                                    transition: height 0.4s ease;
-                                    .color-dot {
-                                        position: relative;
-                                        width: 20px;
-                                        height: 20px;
-                                        border-radius: 50%;
-                                        margin: 0 4px;
-                                        border: 1px solid #ccc;
-                                        cursor: pointer;
-                                        &:hover::after {
-                                            content: attr(data-color);
-                                            position: absolute;
-                                            top: 24px;
-                                            right: 50%;
-                                            transform: translateX(50%);
-                                            background: #000;
-                                            color: #fff;
-                                            padding: 4px 8px;
-                                            border-radius: 4px;
-                                            font-size: 11px;
-                                            white-space: nowrap;
-                                            opacity: 1;
-                                            pointer-events: none;
-                                            transition: 0.2s ease;
-                                        }
-                                        &:hover::before {
-                                            content: "";
-                                            position: absolute;
-                                            top: 20px;
-                                            right: 50%;
-                                            transform: translateX(50%);
-                                            width: 0;
-                                            height: 0;
-                                            border-left: 6px solid transparent;
-                                            border-right: 6px solid transparent;
-                                            border-bottom: 6px solid #000;
-                                            opacity: 1;
-                                            transition: 0.2s ease;
-                                        }
-                                    }
-                                }
-                                .color-more {
+                                width: 20px;
+                                height: 20px;
+                                border-radius: 50%;
+                                margin: 0 4px;
+                                border: 1px solid #ccc;
+                                cursor: pointer;
+                                &:hover::after {
+                                    content: attr(data-color);
                                     position: absolute;
-                                    left: 32px;
-                                    top: 8px;
-                                    display: inline-block;
-                                    margin-right: 4px;
-                                    pointer-events: auto;
-                                    cursor: pointer;
-                                    svg{
-                                        width: 24px;
-                                        height: 24px;
-                                        flex-shrink: 0;
-                                        @media (max-width: 1023px) {
-                                            width: 12px;
-                                            height: 12px;
-                                        }
-                                        .line-vertical {
-                                            transform-origin: center;
-                                            transition: transform 0.4s ease;
-                                        }
-                                    }
-                                    &.rotate .line-vertical {
-                                        transform: rotate(-90deg);
-                                    }
+                                    top: 24px;
+                                    right: 50%;
+                                    transform: translateX(50%);
+                                    background: #000;
+                                    color: #fff;
+                                    padding: 4px 8px;
+                                    border-radius: 4px;
+                                    font-size: 11px;
+                                    white-space: nowrap;
+                                    opacity: 1;
+                                    pointer-events: none;
+                                    transition: 0.2s ease;
                                 }
-                                &.show-all .color-dots {
-                                    height: 56px;
-                                    max-height: inherit;
+                                &:hover::before {
+                                    content: "";
+                                    position: absolute;
+                                    top: 20px;
+                                    right: 50%;
+                                    transform: translateX(50%);
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 6px solid transparent;
+                                    border-right: 6px solid transparent;
+                                    border-bottom: 6px solid #000;
+                                    opacity: 1;
+                                    transition: 0.2s ease;
                                 }
                             }
+                        }
+                        .color-more {
+                            position: absolute;
+                            left: 32px;
+                            top: 8px;
+                            display: inline-block;
+                            margin-right: 4px;
+                            pointer-events: auto;
+                            cursor: pointer;
+                            svg{
+                                width: 24px;
+                                height: 24px;
+                                flex-shrink: 0;
+                                @media (max-width: 1023px) {
+                                    width: 12px;
+                                    height: 12px;
+                                }
+                                .line-vertical {
+                                    transform-origin: center;
+                                    transition: transform 0.4s ease;
+                                }
+                            }
+                            &.rotate .line-vertical {
+                                transform: rotate(-90deg);
+                            }
+                        }
+                        &.show-all .color-dots {
+                            height: 56px;
+                            max-height: inherit;
                         }
                     }
                 }
@@ -571,7 +582,8 @@
     }
 }
 
-
-
-
-
+button.button-wishlist {
+    .wishlist-text {
+        display: none;
+    }
+}

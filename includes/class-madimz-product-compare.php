@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || exit;
 
 class MadimzProductCompare {
     public function __construct() {
-		$this->register_scripts();
+		// $this->register_scripts();
         $this->register_shortcodes();
         $this->register_hooks();
 	}
@@ -52,13 +52,39 @@ class MadimzProductCompare {
         add_action( 'wp_enqueue_scripts',   array( $this, 'enqueue_scripts' ) );
 
         add_action( 'woocommerce_init',                  array( $this, 'set_wc_session' ) );
-        add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'product_compare_fragments' ) );
+        // add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'product_compare_fragments' ) );
     }
 
     public function enqueue_scripts() {
+
+        wp_register_style( 
+            'madimz-compare-list-css', 
+            get_template_directory_uri() . '/dist/css/compare-list.min.css', 
+            array(), 
+            _S_VERSION 
+        );
+
+        wp_register_script( 
+            'madimz-product-compare-js', 
+            get_template_directory_uri() .  '/dist/js/product-compare.js', 
+            array( 'wc-cart-fragments' ),
+            _S_VERSION, 
+            array( 'strategy'  => 'defer' )
+        );
+
+        wp_localize_script( 
+            'madimz-product-compare-js', 
+            'madimz_product_compare_ajax', 
+            array(
+                'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+                'nonce'     => wp_create_nonce( 'madimz-product-compare' ),
+            )
+        );
+
         global $post;
         if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'madimz_product_compare') ) {
             wp_enqueue_style( 'madimz-compare-list-css' );
+            wp_enqueue_script( 'madimz-product-compare-js' );
         }
     }
 
@@ -281,10 +307,10 @@ class MadimzProductCompare {
         wp_send_json_success();
     }
 
-    public function product_compare_fragments( $fragments ) {
+    /*public function product_compare_fragments( $fragments ) {
         $fragments['.product-compare-count'] = $this->product_compare_count_shortcode();
         return $fragments;
-    }
+    }*/
 
     public function product_compare_shortcode() {
         wp_enqueue_script( 'madimz-product-compare-js' );

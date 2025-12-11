@@ -380,28 +380,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 15);
     }
 
-    document.getElementById('back-to-top').addEventListener('click', function(e){
-        e.preventDefault();
-        smoothScrollToTop();
-    });
+    const scrollTopBtn = document.getElementById('back-to-top');
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            smoothScrollToTop();
+        });
+    }
 
-    // complementary products slider
-    const complementaryPdtsSwiper = new Swiper('.complementary-products-swiper', {
-        // Optional parameters
-        spaceBetween: 16,
-        slidesPerView: 4,
-        slidesPerGroup: 1,
-        autoHeight: true,
-        loop: true,
-        speed: 1000,
-        rtl: true,
-        // autoplay: {
-        //     delay: 3000,
-        // },
-        
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
+    let complementaryPdtsSwiper;
+    
+    const complementarySwiper = document.querySelector('.complementary-products-swiper');
+    if (complementarySwiper) {
+        // complementary products slider
+        complementaryPdtsSwiper = new Swiper(complementarySwiper, {
+            // Optional parameters
+            spaceBetween: 16,
+            slidesPerView: 4,
+            slidesPerGroup: 1,
+            autoHeight: true,
+            loop: true,
+            speed: 1000,
+            rtl: true,
+            // autoplay: {
+            //     delay: 3000,
+            // },
+            
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    }
+    
 });

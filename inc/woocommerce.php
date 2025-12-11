@@ -319,8 +319,15 @@ function madimz_show_color_variations_in_loop() {
     }
 
     echo '</div>';
+
 }
 add_action( 'woocommerce_after_shop_loop_item_title', 'madimz_show_color_variations_in_loop', 15 );
+
+// Add a wishlist button
+function madimz_add_wishlist_in_loop() {
+	echo do_shortcode( '[madimz_wishlist_button]' ); 
+}
+add_action( 'woocommerce_before_shop_loop_item', 'madimz_add_wishlist_in_loop', 5 );
 
 //check if the current category has a parent.
 function madimz_is_parent_category() {
@@ -391,7 +398,9 @@ add_action('woocommerce_before_shop_loop', 'madimz_parent_category_content', 5);
 
 //Show products by category + sidebar filter
 function madimz_child_category_layout_start() {
-	if ( ! madimz_is_parent_category() || is_shop() ) : ?>
+	if ( is_shop() ) return;
+    
+	if ( ! madimz_is_parent_category() ) : ?>
 		<div class="child-shop-layout">
 			<aside class="shop-sidebar selected-filters">
 				<?php get_template_part('template-parts/filters', 'sidebar'); ?>
@@ -454,7 +463,9 @@ remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
 function madimz_child_category_layout_end() {
-	if ( ! madimz_is_parent_category() || is_shop() ) {
+	if ( is_shop() ) return;
+    
+	if ( ! madimz_is_parent_category() ) {
 		echo '</div>'; // close .shop-main
 		echo '</div>'; // close .child-shop-layout
     }
@@ -954,14 +965,14 @@ function custom_more_information_product_section_outside_summary() {
 	global $product;
 
 	// Get long description
-    $long_description = $product->get_description();
+    $short_description = get_field('additional_product_information_text', 'option');
 
     // Only show if exists
-    if ( ! empty( $long_description ) ) {
+    if ( ! empty( $short_description ) ) {
         echo '<section class="more-info-product-section">';
 			echo '<h3 class="sub-title-products">' . __( 'מידע נוסף', 'madimz' ) . '</h3>';
             echo '<div class="more-info-content">';
-                echo wpautop( wp_kses_post( $long_description ) ); 
+                echo wpautop( wp_kses_post( $short_description ) ); 
             echo '</div>';
 
         echo '</section>';

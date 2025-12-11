@@ -94,7 +94,22 @@ function custom_ajax_search() {
     wp_send_json( $results );
 }
 
+/**
+ * AJAX CF7 FORMS
+ * Generate Auto Ticket Number
+*/
+add_action('wp_ajax_madimz_generate_ticket', 'madimz_generate_ticket');
+add_action('wp_ajax_nopriv_madimz_generate_ticket', 'madimz_generate_ticket');
 
+function madimz_generate_ticket() {
 
+    $last    = (int) get_option('madimz_ticket_last');
+    $current = $last + 1;
+    update_option('madimz_ticket_last', $current);
+
+    wp_send_json_success([
+        'ticket' => $current
+    ]);
+}
 
 ?>

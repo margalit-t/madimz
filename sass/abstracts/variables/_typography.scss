@@ -55,9 +55,10 @@ input[type=radio] {
 }
 
 input:not([type=checkbox],[type=radio]) {
-  border: none;
+  border: solid 1px #ccc;
+  color: #333;
   border-radius: 8px;
-  background-color: #ffffffb3;
+  background-color: #fff;
   font-family: 'Heebo';
   font-size: 16px;
   max-width: none;
@@ -66,7 +67,6 @@ input:not([type=checkbox],[type=radio]) {
   width: 100%;
   font-weight: 400;
   text-align: right;
-  color: #000000;
 }
 
 select {
@@ -121,4 +121,4 @@ button:not(.acf-custom-content button).red-btn, .red-btn {
 }
 h2:not(.acf-custom-content h2).title, .title {
   @include title;
-}
+} 

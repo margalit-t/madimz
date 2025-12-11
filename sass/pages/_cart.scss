@@ -2,6 +2,23 @@
     h1.entry-title {
         display: none;
     }
+    .woocommerce {
+        min-height: 200px;
+        .wc-empty-cart-message {
+            margin-top: 64px;
+            .cart-empty.woocommerce-info {
+                background-color: transparent;
+                text-align: center;
+                font-size: 18px;
+            }
+        }
+        .return-to-shop a {
+            @include red_btn(#d1060d); 
+            border-radius: 0;
+            width: fit-content;
+            margin: 24px auto 0;
+        }
+    }
     form.woocommerce-cart-form {
         max-width: 1200px;
         border: 1px solid #ccc;
