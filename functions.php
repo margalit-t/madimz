@@ -49,7 +49,8 @@ function madimz_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'madimz' ),
+			'primary' => esc_html__( 'Primary', 'madimz' ),
+			'mobile-menu' => esc_html__( 'Mobile Menu', 'madimz' ),
 			'footer-navigation-1' => esc_html__('First Footer Navigation', 'madimz'),
 			'footer-navigation-2' => esc_html__('Second Footer Navigation', 'madimz'),
 		)

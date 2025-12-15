@@ -1,24 +1,33 @@
 .section-wrap {
     & + & {
         margin-top: 64px;
+        @include media("<mobile") {
+            margin-top: 24px;
+        }
     }
 
     &.design-banner-wrapper {
         .header-top {
-            &.desktop-swiper {
+            a {
+                width: 100%;
+                height: auto;
+                display: inline-block;
+            }
+            
+            /*&.desktop-swiper {
                 display: block;
             }
             &.mobile-swiper {
                 display: none;
             }
-            @media (max-width: 768px) {
+            @include media("<=mobile") {
                 &.desktop-swiper {
                     display: none;
                 }
                 &.mobile-swiper {
                     display: block;
                 }
-            }
+            }*/
         }
     }
 
@@ -26,6 +35,9 @@
         .category-carousel.swiper {
             position: relative;
             height: 400px;
+            @include media("<mobile") {
+                height: 200px;
+            }
             .swiper-slide {
                 a {
                     display: flex;
@@ -42,6 +54,11 @@
                         width: 87%;
                         height: 67%;
                         bottom: 68px;
+                        @include media("<mobile") {
+                            width: 80px;
+                            height: 80px;
+                            bottom: 36px;
+                        }
                         &:hover {
                             background-color: #fff;
                         }
@@ -50,11 +67,20 @@
                         transform-style: preserve-3d;
                         display: block;
                         width: 300px;
+                        @include media("<mobile") {
+                            width: 100%;
+                        }
                     }
                     .cat-name {
                         color: #000000;
                         font-weight: 800;
                         font-size: 20px;
+                        @include media("<mobile") {
+                            font-size: 14px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            width: 100%;
+                        }
                     }
                 }
             }
@@ -64,10 +90,14 @@
                 span.swiper-pagination-bullet {
                     background: none repeat scroll 0 0 #fff;
                     border-radius: 20px;
+                    width: 12px;
                     height: 12px;
                     opacity: 0.5;
-                    width: 12px;
                     border: 1px solid #869791;
+                    @include media("<mobile") {
+                        width: 16px;
+                        height: 16px;
+                    }
                     &.swiper-pagination-bullet-active {
                         background-color: #869791;
                     }
@@ -82,30 +112,40 @@
                 display: flex;
                 justify-content: space-between;
                 pointer-events: none; 
+                @include media("<mobile") {
+                    top: 40%;
+                    transform: translateY(-60%);
+                }
                 button {
                     pointer-events: auto;
                     &.swiper-button-prev {
                         margin-inline-start: 48px;
                         inset-inline-start: 0;
                         width: 16px;
+                        @include media("<mobile") {
+                            margin-inline-start: 32px;
+                        }
                     }
                     
                     &.swiper-button-next {
                         margin-inline-end: 48px;
                         inset-inline-end: 0;
                         width: 16px;
+                        @include media("<mobile") {
+                            margin-inline-end: 32px;
+                        }
                     }
-                }
-                
-        
-                        
+                }                       
                 svg {
                     display: inline-block;
                     flex-shrink: 0;
                     width: 32px;
                     height: 32px;
                     color: #000;
-
+                    @include media("<mobile") {
+                        width: 20px;
+                        height: 20px;
+                    }
                 }
             }
         }
@@ -124,6 +164,10 @@
             max-width: 80%;
             justify-content: center;
             gap: 32px 20px;
+            @include media("<mobile") {
+                grid-template-columns: 1fr;
+                max-width: 84%;
+            }
             .card-profession {
                 position: relative;
                 display: flex;
@@ -136,28 +180,51 @@
                 align-items: flex-end;
                 height: 300px;
                 max-width: 600px;
+                @include media("<mobile") {
+                    height: 250px;
+                    padding-left: 0;
+                }
                 img.img-card-profession {
                     width: 250px;
                     display: block;
                     position: absolute;
                     bottom: -24px;
                     height: auto;
+                    @include media("<mobile") {
+                        width: 150px;
+                        bottom: 44px;
+                    }
                 }
                 &:nth-child(odd) img {
-                    right: -96px;
+                    // right: -96px;
+                    right: -5vw;                    
+                    @include media("<mobile") {
+                        // right: -40px;
+                        right: -8vw;
+                    }
                 }
                 &:nth-child(even) {
                     align-items: flex-start;
                     img {
-                        left: -96px;
+                        // left: -96px;
+                        left: -5vw;
+                        @include media("<mobile") {
+                            left: -8vw; 
+                        }
                     }
                 }
                 .card-content {
                     width: 70%;
+                    @include media("<mobile") {
+                        width: 72%;
+                    }
                     h5 {
                         margin: 0 0 10px;
                         font-size: 24px;
                         font-weight: 800;
+                        @include media("<mobile") {
+                            font-size: 18px;
+                        }
                     }
                     a {
                         border-radius: 8px;
@@ -165,6 +232,10 @@
                         width: 200px;
                         &:hover {
                             background-color: #2f2483 !important;
+                        }
+                        @include media("<mobile") {
+                            font-size: 16px;
+                            width: 150px;
                         }
                     }
                 }
@@ -194,6 +265,9 @@
                         border: 1px solid #f2f2f2;
                         border-radius: 4px;
                         overflow: hidden;
+                        @include media("<desktop") {
+                            height: 360px;
+                        }
                         &:hover {
                             box-shadow: 0px 4px 10px 0px #00000026;
                         }  
@@ -207,10 +281,17 @@
                             display: inline-flex;
                             flex-direction: column;
                             align-items: center;
-                            img{
+                            @include media("<desktop") {
+                                width: 95%;
+                            }
+                            img {
                                 height: 215px;
                                 width: auto;
                                 margin: 0 auto;
+                                @include media("<desktop") {
+                                    height: 200px;
+                                    width: 100%;
+                                }
                             }
                             h2.woocommerce-loop-product__title {
                                 text-align: center;
@@ -310,7 +391,7 @@
                                         width: 24px;
                                         height: 24px;
                                         flex-shrink: 0;
-                                        @media (max-width: 1023px) {
+                                        @include media("<desktop") {
                                             width: 12px;
                                             height: 12px;
                                         }
@@ -336,9 +417,15 @@
                     width: 16px;
                     &.swiper-button-prev {
                         right: 180px !important;
+                        @include media("<desktop") {
+                            right: 24px !important;
+                        }
                     }
                     &.swiper-button-next {
                         left: 180px !important;
+                        @include media("<desktop") {
+                            left: 24px !important;
+                        }
                     }
                 }
             }
@@ -353,6 +440,11 @@
         flex-direction: row;
         margin-top: 80px;
         margin-bottom: 32px;
+        @include media("<mobile") {
+            flex-direction: column;
+            align-items: flex-end;
+            margin-top: 24px;
+        }
         .right-content {
             width: 60%;
             display: flex;
@@ -362,10 +454,19 @@
             border: 1px solid #e0e0e0;
             margin-bottom: 64px;
             border-radius: 12px;
+            @include media("<mobile") {
+                width: 92%;
+                padding: 16px 16px 52px 16px;
+                margin: 0 auto;
+                border-radius: 8px;
+            }
             p.about-title {
                 font-family: 'Heebo';
                 font-weight: 200;
                 font-size: 72px;
+                @include media("<mobile") {
+                    font-size: 28px;
+                }
             }
             .about-content {
                 text-align: right;
@@ -389,6 +490,12 @@
             position: relative;
             padding-top: 168px;
             left: 144px;
+            @include media("<mobile") {
+                width: 100%;
+                left: auto;
+                padding-top: 12px;
+                right: 0;
+            }
             .red-bg {
                 position: absolute;
                 width: 500px;
@@ -397,6 +504,13 @@
                 right: auto;
                 bottom: 108px;
                 border-radius: 12px;
+                @include media("<mobile") {
+                    max-width: 288px;
+                    left: 4px;
+                    bottom: 60px;
+                    width: 280px;
+                    height: 240px;
+                }
             }
             .swiper.gallery-carousel-about {
                 display: block;
@@ -406,12 +520,21 @@
                 z-index: 1;
                 border-radius: 12px;
                 overflow: hidden;
+                @include media("<mobile") {
+                    width: 288px;
+                    margin-right: 28px;
+                }
                 .swiper-wrapper {
                     position: relative;
                     .swiper-slide {
                         max-width: 500px;
                         width: 480px;
                         height: 400px;
+                        @include media("<mobile") {
+                            width: 280px;
+                            height: 240px;
+                            max-width: 288px;
+                        }
                         img.img-banner-desk {
                             object-fit: cover;
                         }
@@ -424,18 +547,21 @@
                     display: flex;
                     gap: 32px;
                     z-index: 1;
-                    @media (max-width: 1023px) {
+                    @include media("<desktop") {
                         bottom: 15px;
-                        right: 20px;
+                        left: 10px;
                     }
                     button {
                         width: 16px;
                         height: auto;
                         cursor: pointer;
                         position: relative;
+                        @include media("<desktop") {
+                            width: 12px;
+                        }
                         svg, path {
                             fill: #000;
-                            @media (max-width: 1023px) {
+                            @include media("<desktop") {
                                 width: 12px;
                             }
                         }

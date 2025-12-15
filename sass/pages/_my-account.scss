@@ -18,8 +18,14 @@
                 div#customer_login {
                     display: flex;
                     justify-content: space-between;
+                    @include media("<desktop") {
+                        flex-direction: column;
+                    }
                     & > div {
                         width: 45%;
+                        @include media("<desktop") {
+                            width: 100%;
+                        }
                         .woocommerce-privacy-policy-text p {
                             font-size: 14px !important;
                         }
@@ -121,7 +127,7 @@
                                     top: 50%;
                                     transform: translateY(-50%);
                                 }
-                                a{
+                                a {
                                     color: #337ab7;
                                     padding: 8px;
                                     font-size: 14px;

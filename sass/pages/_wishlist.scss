@@ -49,7 +49,7 @@
             margin: 0;
             margin-bottom: 20px;
             width: 100%;
-            @media (min-width: 768px) {
+            @include media(">mobile") {
                 width: 50%;
             }
             @media (min-width: 992px) {

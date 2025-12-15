@@ -15,11 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileSwiper = new Swiper('.mobile-swiper', {
         // Optional parameters
         spaceBetween: 0,
-        slidesPerView: 2,
+        slidesPerView: 1,
         centeredSlides: true,
         loop: true,
+        speed: 1000,
         autoplay: {
-            delay: 5000,
+            delay: 3000,
         },
 
     });
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categorySwiper = new Swiper('.category-carousel', {
         // Optional parameters
         spaceBetween: 10,
-        slidesPerView: 6.5,
+        slidesPerView: 4,
         slidesPerGroup: 1,
         autoHeight: true,
         loop: true,
@@ -43,13 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
+        breakpoints: {
+            1024: {
+                slidesPerView: 6.5,
+            }
+        },
     });
 
     // favorite products slider
     const favoritePdtsSwiper = new Swiper('.swiper-slide-pdts', {
         // Optional parameters
-        spaceBetween: 24,
-        slidesPerView: 5,
+        spaceBetween: 16,
+        slidesPerView: 2,
         slidesPerGroup: 1,
         autoHeight: true,
         loop: true,
@@ -60,6 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 5,
+                spaceBetween: 24,
+            }
         },
     });
     

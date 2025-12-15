@@ -1,3 +1,16 @@
+// Hamburger Mobile
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.menu-toggle');
+  const mobileNav = document.querySelector('.mobile-navigation');
+
+  if (!toggle || !mobileNav) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+});
+
 // cart page
 document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', function(e) {

@@ -414,3 +414,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 });
+
+// Product filtering and mobile filtering via popup
+document.addEventListener('DOMContentLoaded', function () {
+
+    const sidebar = document.querySelector('.shop-sidebar');
+    const toggleBtn = document.querySelector('.mobile-filter-toggle');
+
+    // If there is no sidebar or button – exit
+    if (!sidebar || !toggleBtn) return;
+
+    // Create a modal
+    const modal = document.createElement('div');
+    modal.className = 'filters-modal';
+
+    modal.innerHTML = `
+        <div class="filters-modal__content">
+        <div class="filters-modal__header">
+            <h3>סינונים</h3>
+            <button class="filters-modal__close" aria-label="Close">×</button>
+        </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const content = modal.querySelector('.filters-modal__content');
+    const closeBtn = modal.querySelector('.filters-modal__close');
+
+    // Move the sidebar into the modal
+    content.appendChild(sidebar);
+
+    // open
+    toggleBtn.addEventListener('click', () => {
+        modal.classList.add('is-open');
+        // document.body.style.overflow = 'hidden';
+    });
+
+    // close
+    const closeModal = () => {
+        modal.classList.remove('is-open');
+        // document.body.style.overflow = '';
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+});
+

@@ -443,16 +443,20 @@ function madimz_child_category_layout_start() {
 					</div>
 					<div class="sorting-options">
 						<span><?php esc_html_e( 'מיין לפי:', 'madimz' ); ?></span>
-						<a href="<?php echo esc_url( $name_url ); ?>" class="sort-link <?php echo ( $current_orderby === 'title' ? ' active ' . esc_attr( $current_order ) : '' ); ?>">
+						<a href="<?php echo esc_url( $name_url ); ?>" class="sort-link sort-alpha <?php echo ( $current_orderby === 'title' ? ' active ' . esc_attr( $current_order ) : '' ); ?>">
 							<?php esc_html_e( 'שם', 'madimz' ); ?>
 							<div class="triangle"></div>
 						</a>
-						&nbsp;/&nbsp;
-						<a href="<?php echo esc_url( $price_url ); ?>" class="sort-link <?php echo ( $current_orderby === 'price' ? ' active ' . esc_attr( $current_order ) : '' );?> ">
+						<span class="separator">&nbsp;/&nbsp;</span>
+						<a href="<?php echo esc_url( $price_url ); ?>" class="sort-link sort-price <?php echo ( $current_orderby === 'price' ? ' active ' . esc_attr( $current_order ) : '' );?> ">
 							<?php esc_html_e( 'מחיר', 'madimz' ); ?>
 							<div class="triangle"></div>
 						</a>
 					</div>
+					<button class="mobile-filter-toggle hidden-desktop" type="button">
+						<span><?php esc_html_e( 'סנן:', 'madimz' ); ?></span>
+						<?php echo inline_svg_with_class('filter.svg', ''); ?>
+					</button>
 				</div>
     <?php endif;
 }

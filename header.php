@@ -69,27 +69,43 @@
 			<!-- <div id="site-search">
 				<?//php get_product_search_form(); ?>
 			</div> -->
-			<div class="search-wrapper">
-				<div class="search-icon">
-					<?php echo inline_svg_with_class('search.svg', '');?>
-				</div>
-				<input type="text" id="live-search" placeholder="<?php esc_html_e( 'מה אתם מחפשים?', 'madimz' ); ?>" autocomplete="off">
-				<div id="search-results"></div>
-			</div><!-- .search-wrapper -->
+			
+			<div class="header-left-icons">
+				
+				<!-- Hamburger - for mobile -->
+				<button type="button" class="menu-toggle hidden-desktop" aria-label="Open menu" aria-expanded="false">
+					<?php echo file_get_contents(get_template_directory_uri() . '/dist/images/menu.svg'); ?>
+				</button>
 
-			<div class="site-branding">
+				<!-- search -->
+				<div class="search-wrapper">
+					<div class="search-icon">
+						<?php echo inline_svg_with_class('search.svg', '');?>
+					</div>
+					<input type="text" id="live-search" placeholder="<?php esc_html_e( 'מה אתם מחפשים?', 'madimz' ); ?>" autocomplete="off">
+					<div id="search-results"></div>
+				</div><!-- .search-wrapper -->
+			</div><!-- .header-left-icons -->
+
+			<div class="site-branding hidden-mobile">
 				<?php
 					the_custom_logo();
 				?>
 			</div><!-- .site-branding -->
 
 			<ul class="header-right-icons">
-				<!-- Business Login -->
-				<li class="account-btn">
-					<a type="button" class="header-link red-btn bussiness-btn" aria-label="<?php esc_html_e( 'כניסה לחנות', 'madimz' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
+				<!-- shop -->
+				<li class="shop-btn">
+					<a type="button" class="header-link red-btn" aria-label="<?php esc_html_e( 'כניסה לחנות', 'madimz' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
 						<?php esc_html_e( 'כניסה לחנות', 'madimz' ); ?>
 					</a>
 				</li>
+
+				<div class="site-branding hidden-desktop">
+					<?php
+						the_custom_logo();
+					?>
+				</div><!-- .site-branding -->
 
 				<!-- My Account / Login -->
 				<li class="account-icon login-icon">
@@ -109,7 +125,7 @@
 
 				<!-- copmare products -->
 				<?php if( class_exists( 'MadimzProductCompare' ) && ( $product_compare_page = MadimzProductCompare::get_compare_list_url() ) ): ?>
-					<li class="account-icon compare-icon">
+					<li class="account-icon compare-icon hidden-mobile">
 						<a href="<?php echo esc_attr( $product_compare_page ); ?>" class="header-link">
 							<?php echo inline_svg_with_class('compare.svg', '');?>
 						</a>
@@ -123,26 +139,42 @@
 						<?php
 						$cart_count = WC()->cart->get_cart_contents_count();
 						if ( $cart_count > 0 ) : ?>
-							<span class="cart-count">(<?php echo esc_html( $cart_count ); ?>)</span>
+							<span class="cart-count"><?php echo esc_html( $cart_count ); ?></span>
 						<?php endif; ?>
 					</button>
 				</li>
 			</ul><!-- .header-right-icons -->
 		</div><!-- .top-header -->
 
-		<nav id="site-navigation" class="main-navigation">
-			<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php //esc_html_e( 'Menu', 'madimz' ); ?></button> -->
+		<!-- Navigation -->
+		<nav id="site-navigation" class="desktop-navigation hidden-mobile">
 			<?php
 			wp_nav_menu(
 				array(
-					'theme_location' => 'menu-1',
+					'theme_location' => 'primary',
 					// 'menu_id'        => 'primary-menu',
 					'menu_class'     => 'primary-menu',
-					'container_id'	 => 'menu-main-menu-container',
+					'container'      => false,
+					// 'container_id'	 => 'menu-main-menu-container',
 				)
 			);
 			?>
 		</nav><!-- #site-navigation -->
+
+		<!-- Navigation Mobile-->
+		<nav class="mobile-navigation hidden-desktop" aria-hidden="true">
+			<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'mobile-menu',
+						// 'menu_id'        => 'primary-menu',
+						'menu_class'     => 'mobile-menu',
+						'container'      => false,
+					)
+				);
+			?>
+		</nav><!-- #site-navigation -->
+
 	</header><!-- #masthead -->
 
     <?php if ( !is_admin() || !is_front_page() ) : ?>

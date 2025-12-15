@@ -33,6 +33,9 @@
         }
         form.woocommerce-checkout {      
             order: 1;    
+            @include media("<mobile") {
+                width: 100%;
+            }
             #customer_details {
                 position: relative;
                 background-color: #fcfcfc;
@@ -40,10 +43,14 @@
                 max-width: 100%;
                 margin: 40px auto 20px;
                 padding: 12px;
+
                 .col-1 { 
                     width: 100%;
                     margin: 0;
                     padding: 20px;
+                    @include media("<mobile") {
+                        padding: 16px 0;
+                    }
                     .woocommerce-billing-fields {
                         .woocommerce-billing-fields__field-wrapper {
                             display: flex;
@@ -51,6 +58,9 @@
                             p.form-row{
                                 width: calc(50% - 32px);
                                 margin: 8px 16px !important;
+                                @include media("<mobile") {
+                                    width: 100%;
+                                }
 
                                 input {
                                     border: 1px solid #ccc;
@@ -159,6 +169,9 @@
                     display: flex;
                     flex-wrap: wrap;
                     flex-direction: column;
+                    @include media("<mobile") {
+                        padding: 0 16px;
+                    }
 
                     .woocommerce-shipping-fields {
                         width: 100%;
@@ -168,6 +181,9 @@
                         background-color: #f4f4f4;
                         border-radius: 0;
                         margin: 0 16px;
+                        @include media("<mobile") {
+                            margin: 0;
+                        }
 
                         h3#ship-to-different-address {
                             font-size: 16px;
@@ -192,11 +208,11 @@
                                     &:checked{
                                         background-color: rgb(66,66,66);
                                         &:before{
-                                        content:url("../images/check.svg");
-                                        width: 16px;
-                                        height: 20px;
-                                        color: #fff;
-                                        filter: invert(100%) brightness(100%);
+                                            content:url("../images/check.svg");
+                                            width: 16px;
+                                            height: 20px;
+                                            color: #fff;
+                                            filter: invert(100%) brightness(100%);
                                         }
                                     }
                                 }
@@ -206,6 +222,9 @@
                             p.form-row{
                                 width: calc(50% - 32px);
                                 margin: 8px 16px !important;
+                                @include media("<mobile") {
+                                    width: 100%;
+                                }
     
                                 input {
                                     border: 1px solid #ccc;
@@ -239,6 +258,9 @@
                     .woocommerce-additional-fields {
                         padding-top: 20px;
                         margin: 20px 16px 0;
+                        @include media("<mobile") {
+                            margin: 0;
+                        }
 
                         div.woocommerce-additional-fields__field-wrapper {
                             padding-bottom: 10px;
@@ -293,7 +315,6 @@
                                 }
 
                             }
-
                             
                             div.form-row {
                                 width: 100%;
@@ -338,32 +359,17 @@
                                                 &:checked{
                                                     background-color: #424242;
                                                     &:before{
-                                                    content:url("../images/svg/check.svg");
-                                                    width: 16px;
-                                                    height: 20px;
-                                                    color: #fff;
-                                                    filter: invert(100%) brightness(100%);
+                                                        content:url("../images/check.svg");
+                                                        width: 16px;
+                                                        height: 20px;
+                                                        color: #fff;
+                                                        filter: invert(100%) brightness(100%);
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                }
-
-                                .btn_submit_order {
-                                    button#place_order {
-                                        background-color: #026805;
-                                        
-                                        &:hover {
-                                            color: #026805;
-                                            background-color: #fff;
-                                            border-color: #026805;
-                                        }
-                                    }
-
-                                }
-
-                                
+                                }                                
                             }
                         }
                     }
@@ -380,6 +386,9 @@
                     align-items: stretch;
                     gap: 40px;
                     margin-top: 40px;
+                    @include media("<mobile") {
+                        flex-wrap: wrap;
+                    }
                     thead {
                         display: none !important;
                     }
@@ -390,6 +399,9 @@
                         border: 1px solid #ccc;
                         margin: 0;
                         padding: 20px;
+                        @include media("<mobile") {
+                            width: 100%;
+                        }
                         &:before {
                             content: "02";
                             position: absolute;
@@ -412,6 +424,10 @@
                             align-items: center;
                             font-size: 16px;
                             margin-bottom: 8px;
+                            @include media("<mobile") {
+                                font-size: 14px;
+                                align-items: flex-start;
+                            }
                             &:first-child {
                                 margin-top: 20px;
                             }
@@ -420,6 +436,9 @@
                             // }
                         }
                         tr.coupon-row {
+                            @include media("<mobile") {
+                                margin: 16px 0;
+                            }
                             .woocommerce-form-coupon-toggle {
                                 display: none;
                             }
@@ -436,6 +455,9 @@
                                 button.button {
                                     font-size: 16px;
                                     color: #2f2483;
+                                    @include media("<mobile") {
+                                        font-size: 14px;
+                                    }
                                 }
                             }
                         }
@@ -449,6 +471,9 @@
                         padding: 20px;
                         display: flex;
                         flex-direction: column;
+                        @include media("<mobile") {
+                            width: 100%;
+                        }
                         &:before {
                             content: "03";
                             position: absolute;
@@ -470,6 +495,10 @@
                             justify-content: space-between;
                             align-items: center;
                             font-size: 16px;
+                            @include media("<mobile") {
+                                font-size: 14px;
+                                align-items: flex-start;
+                            }
                             &.cart-subtotal {
                                 margin: 20px 0;
                             }
@@ -515,98 +544,5 @@
                 }
             }
         }
-        .woocommerce-form-coupon-toggle {
-            order: 2;
-        }
-        
-        .woocommerce-form-login {
-            background-color: #f4f4f4;
-            padding: 40px;
-        
-            .woocommerce-form-login-toggle {
-                .woocommerce-info {
-                    display: flex;
-                    align-items: center;
-                    font-size: 16px;
-                    text-transform: uppercase;
-                    font-weight: 700;
-                    padding-inline-end: 24px;
-                    background-color: #fff;
-
-                    &:after{
-                        content:url("../images/svg/arrow-down.svg");
-                        width: 20px;
-                        height: 20px;
-                        display: inline-block;
-                        transition: transform 0.3s ease;
-                    }
-                    &:hover {
-                        border-bottom: 1px solid #e10915;
-
-                    }
-
-                    a {
-                        text-decoration: none;
-                        background-color: #fff;
-                        padding: 16px 24px;
-                        display: inline-block;
-                        width: 100%;
-                    }
-                }     
-                &.rotate180 .woocommerce-info:after  {
-                    transform: rotate(180deg);
-                }
-            }
-
-            form.woocommerce-form-login {
-                padding: 16px 24px;
-                padding-top: 40px;
-                background-color: #fff;
-
-                span.password-input {
-                    .show-password-input {
-                        top: 55%;
-                        transform: translateY(-45%);
-                    }
-                }
-
-                label.woocommerce-form__label.woocommerce-form-login__rememberme {
-                    position: static;
-                    transform: none;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    margin: 16px;
-                    display: none;
-
-                    input#rememberme[type="checkbox"] {
-                        position: relative;
-                        appearance: none;
-                        width: 16px;
-                        height: 16px;
-                        border: 1px solid #424242;
-                        flex-shrink: 0;
-                        display: inline-grid;
-                        place-content: center;
-                        cursor: pointer;
-                        padding: 0;
-
-                        &:checked{
-                            background-color: rgb(66,66,66);
-                            &:before{
-                                content:url("../images/svg/check.svg");
-                                width: 16px;
-                                height: 20px;
-                                color: #fff;
-                                filter: invert(100%) brightness(100%);
-                            }
-                        } 
-                    }
-                }
-            }
-        }
-
-
-
     }
 }

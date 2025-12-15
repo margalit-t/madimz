@@ -9,7 +9,7 @@
     <?php if ( have_rows( 'homepage_header_gallery' ) ) : ?>
         
         <!-- Desktop Swiper -->
-        <div class="header-top desktop-swiper swiper">
+        <div class="header-top desktop-swiper swiper hidden-mobile">
             <div class="swiper-wrapper">
 
                 <?php while ( have_rows( 'homepage_header_gallery' ) ): the_row();
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Mobile Swiper -->
-        <div class="header-top mobile-swiper swiper">
+        <div class="header-top mobile-swiper swiper hidden-desktop">
             <div class="swiper-wrapper">
                 <?php while ( have_rows( 'homepage_header_gallery' ) ): the_row(); 
                     $img_mobile = get_sub_field( 'top_banner_image_mobile' );
