@@ -85,6 +85,18 @@ img {
     transform: rotate(180deg);
 }
 
+.pswp__img {
+  object-fit: contain !important;
+}
+
+.pswp__top-bar {
+  display: none;
+}
+
+.pswp__bg {
+    background: #000000b8;
+}
+
 a.whatsapp-float {
     width: 64px;
     height: 64px;
@@ -92,7 +104,7 @@ a.whatsapp-float {
     position: fixed;
     top: 250px;
     left: 10px;
-    z-index: 9999999;
+    z-index: 999;
     @include media("<mobile") {
         top: 120px;
         right: 10px;
@@ -112,7 +124,7 @@ a.whatsapp-float {
     height: 50px;
     border: solid 1px #ccc;
     border-radius: 0 30px 30px 0;
-    z-index: 9999;
+    z-index: 999;
     cursor: pointer;
     @include media(">mobile") {
         min-height: 22px;
@@ -877,6 +889,7 @@ body.menu-open {
     }
 
 }
+
 .blog{
     main.site-main{
         max-width: 1200px;

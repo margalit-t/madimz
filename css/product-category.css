@@ -99,6 +99,19 @@ img {
           transform: rotate(180deg);
 }
 
+.pswp__img {
+  -o-object-fit: contain !important;
+     object-fit: contain !important;
+}
+
+.pswp__top-bar {
+  display: none;
+}
+
+.pswp__bg {
+  background: rgba(0, 0, 0, 0.7215686275);
+}
+
 a.whatsapp-float {
   width: 64px;
   height: 64px;
@@ -106,7 +119,7 @@ a.whatsapp-float {
   position: fixed;
   top: 250px;
   left: 10px;
-  z-index: 9999999;
+  z-index: 999;
 }
 @media (max-width: 767px) {
   a.whatsapp-float {
@@ -129,7 +142,7 @@ a.whatsapp-float {
   height: 50px;
   border: solid 1px #ccc;
   border-radius: 0 30px 30px 0;
-  z-index: 9999;
+  z-index: 999;
   cursor: pointer;
 }
 @media (min-width: 769px) {
@@ -1753,7 +1766,6 @@ h2:not(.acf-custom-content h2).title, .title {
 }
 .child-category-layout main#primary .child-shop-layout .shop-main .shop-sorting-wrapper .sorting-options span {
   padding-left: 8px;
-  margin-left: 32px;
 }
 @media (max-width: 767px) {
   .child-category-layout main#primary .child-shop-layout .shop-main .shop-sorting-wrapper .sorting-options span {
@@ -2073,6 +2085,11 @@ button.button-wishlist .wishlist-text {
   display: none;
 }
 
+@media (min-width: 768px) {
+  .filters-modal {
+    display: none;
+  }
+}
 @media (max-width: 767px) {
   .filters-modal {
     position: fixed;

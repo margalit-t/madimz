@@ -41,6 +41,11 @@
         overflow: hidden;
         @include container;
         margin: 0 auto !important;
+        @include media("<mobile") {
+            flex-direction: column;
+            width: calc(100% - 32px);
+            margin: 0 16px !important;
+        }
 
         li {
             position: relative;
@@ -114,6 +119,7 @@
                     overflow: hidden;
                     margin: 0 auto;
                     order: 1;
+                    display: none;
                     .color-dots {
                         display: inline-flex;
                         justify-content: center;

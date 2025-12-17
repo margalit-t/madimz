@@ -1,467 +1,413 @@
-// מאזינים לכמה אירועים; חשוב לשים passive: false בשביל touchstart כדי שנוכל לעשות preventDefault()
-['click', 'mousedown', 'touchstart'].forEach(evt => {
-  document.addEventListener(evt, function(e) {
-    // מצא את האלמנט .color-more גם אם לחצת על ילד שלו (למשל svg)
-    const btn = e.target.closest && e.target.closest('.color-more');
+// MADIMZ – PRODUCT & CATEGORY SCRIPTS (FINAL)
+
+let currentCell = null;
+let activePhotoSwipe = null;
+
+
+//COLOR VARIATIONS – SHOW MORE
+['click', 'mousedown', 'touchstart'].forEach(type => {
+  document.addEventListener(type, e => {
+    const btn = e.target.closest?.('.color-more');
     if (!btn) return;
 
-    // עצור את הניווט וההתפשטות
-    if (e.preventDefault) e.preventDefault();
-    if (e.stopPropagation) e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
-    // בטיחות - מצא את המעטפת והחלף קלאס
     const wrapper = btn.closest('.product-color-variations');
-    if (wrapper) {
-      wrapper.classList.toggle('show-all');
-      // עדכון טקסט הפלוס/מינוס
-      btn.classList.toggle("rotate");
-    }
+    if (!wrapper) return;
+
+    wrapper.classList.toggle('show-all');
+    btn.classList.toggle('rotate');
   }, { passive: false });
 });
 
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('variation-box')) {
 
-        const box = e.target;
-        const attr = box.dataset.attr;
-        const value = box.dataset.value;
+// VARIATION BOX → WC SELECT SYNC
+document.addEventListener('click', e => {
+  const box = e.target.closest('.variation-box');
+  if (!box) return;
 
-        // ניקוי ACTIVE
-        document.querySelectorAll('.variation-box[data-attr="'+attr+'"]').forEach(el => {
-            el.classList.remove('active');
-        });
+  const { attr, value } = box.dataset;
+  if (!attr || !value) return;
 
-        box.classList.add('active');
+  document
+    .querySelectorAll(`.variation-box[data-attr="${attr}"]`)
+    .forEach(el => el.classList.remove('active'));
 
-        // עדכון ה־select הסמוי
-        select = document.querySelector('select[name="attribute_' + attr + '"]');
-        if (select) {
-            select.value = value;
+  box.classList.add('active');
 
-            // חשוב מאוד — להפעיל את המנגנון של WooCommerce
-            select.dispatchEvent(new Event('change', { bubbles: true }));
-            jQuery(select).trigger('change');
-        }
-    }
+  const select = document.querySelector(`select[name="attribute_${attr}"]`);
+  if (!select) return;
+
+  select.value = value;
+  select.dispatchEvent(new Event('change', { bubbles: true }));
 });
 
-// ===============================
-// משתנה גלובלי למודאל
-// ===============================
-let currentCell = null;
-
-// ===== Matrix Helpers =====
-function getQuantity(varId) {
-    const cell = document.getElementById(varId);
-    const input = cell?.querySelector('input[type="number"]');
-    return input ? parseInt(input.value, 10) || 0 : 0;
-}
-
-function getTheModal(varId) {
-    const cell = document.getElementById(varId);
-    return cell?.dataset.namesNumbers || null;
-}
-
-function getUniqueKey(varId) {
-    const cell = document.getElementById(varId);
-    return cell?.dataset.uniqueKey || 0;
-}
-
-// Init Modal & Checkboxes 
+//  DOM READY INIT
 document.addEventListener('DOMContentLoaded', () => {
-    initPrintCheckboxes();
-    initMatrixModal();
+  initPrintCheckboxes();
+  initMatrixModal();
+  initQuantityButtons();
+  initBackToTop();
+  initComplementarySlider();
+  initProductGallery();
+  initMobileFilters();
 });
 
-// ===============================================
-// 1. לוגיקת צ'קבוקסים – מה להדפיס
-// ===============================================
+//  MATRIX – PRINT CHECKBOXES
 function initPrintCheckboxes() {
-    const container = document.querySelector('.single-product-variation-matrix');
-    if (!container) return;
+  const container = document.querySelector('.single-product-variation-matrix');
+  if (!container) return;
 
-    const checkboxes = container.querySelectorAll('.checkbox');
-    if (!checkboxes.length) return;
+  const checkboxes = container.querySelectorAll('.checkbox');
+  if (!checkboxes.length) return;
 
-    // מצב התחלתי
-    checkboxes.forEach(updateCheckboxTarget);
+  checkboxes.forEach(updateCheckboxTarget);
+  checkboxes.forEach(cb =>
+    cb.addEventListener('change', () => updateCheckboxTarget(cb))
+  );
+}
 
-    // שינוי
-    checkboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            updateCheckboxTarget(cb);
-        });
+function updateCheckboxTarget(cb) {
+  const targetClass = cb.dataset.name;
+  const targetSelector = cb.dataset.target;
+  const isChecked = cb.checked;
+
+  if (targetClass) {
+    document.querySelectorAll(`.${targetClass}`).forEach(el => {
+      el.style.display = isChecked ? '' : 'none';
     });
+  }
+
+  if (!isChecked && targetSelector === '#upload-logo-area') {
+    const file = document.getElementById('file');
+    const img = document.getElementById('image-file');
+    if (file) file.value = '';
+    if (img) {
+      img.src = '';
+      img.style.display = 'none';
+      img.removeAttribute('data-attachment_id');
+    }
+  }
 }
 
-function updateCheckboxTarget(sourceCheckbox) {
-    if (!sourceCheckbox) return;
-
-    const targetClass = sourceCheckbox.dataset.name; // לדוגמה "myBtn" או "print-logo"
-    const targetSelector = sourceCheckbox.dataset.target;
-    const isChecked = sourceCheckbox.checked;
-
-    // טיפול ברמת קלאס (data-name)
-    if (targetClass) {
-        const targetElements = document.querySelectorAll('.' + targetClass);
-
-        const show = () => targetElements.forEach(el => el.style.display = '');
-        const hide = () => targetElements.forEach(el => el.style.display = 'none');
-
-        if (isChecked) {
-            show();
-        } else {
-            // טיפול מיוחד בעיפרון – myBtn
-            if (targetClass === 'myBtn') {
-                const numCheckbox  = document.querySelector('.checkbox-mum');
-                const nameCheckbox = document.querySelector('.checkbox-name');
-                const numOn        = !!(numCheckbox && numCheckbox.checked);
-                const nameOn       = !!(nameCheckbox && nameCheckbox.checked);
-
-                // אם לפחות אחד דולק – העיפרון נשאר
-                if (numOn || nameOn) {
-                    show();
-                } else {
-                    hide();
-                }
-            } else {
-                hide();
-            }
-        }
-    }
-
-    // טיפול ביעד ישיר (data-target, למשל #upload-logo-area)
-    if (targetSelector) {
-        const targetEl = document.querySelector(targetSelector);
-        /*if (targetEl) {
-            targetEl.style.display = isChecked ? '' : 'none';
-        }*/
-
-        // אם זה הלוגו ונכבה – ננקה את התמונה והקובץ
-        if (!isChecked && targetSelector === '#upload-logo-area') {
-            const fileInput  = document.getElementById('file');
-            const imgPreview = document.getElementById('image-file');
-            if (fileInput) fileInput.value = '';
-            if (imgPreview) {
-                imgPreview.src = '';
-                imgPreview.style.display = 'none';
-                imgPreview.removeAttribute('data-attachment_id');
-            }
-        }
-    }
-}
-
-// =========================================
-// 2. מודאל המטריצה
-// =========================================
+//  MATRIX MODAL
 function initMatrixModal() {
-    const modal        = document.getElementById('myModal');
-    const tableWrapper = document.getElementById('choose-size');
+  const modal = document.getElementById('myModal');
+  const tableWrap = document.getElementById('choose-size');
+  if (!modal || !tableWrap) return;
 
-    if (!modal || !tableWrapper) return;
+  tableWrap.querySelectorAll('.myBtn').forEach(btn =>
+    btn.addEventListener('click', openMatrixModal)
+  );
 
-    const buttons = tableWrapper.querySelectorAll('.myBtn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', openMatrixModal);
-    });
+  modal.querySelector('.close')?.addEventListener('click', e => {
+    e.preventDefault();
+    closeModalAndSave();
+  });
 
-    const closeBtn = modal.querySelector('.close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            closeModalAndSave();
-        });
-    }
-
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            closeModalAndSave();
-        }
-    });
+  window.addEventListener('click', e => {
+    if (e.target === modal) closeModalAndSave();
+  });
 }
 
-function openMatrixModal(event) {
-    event.preventDefault();
+function openMatrixModal(e) {
+  e.preventDefault();
 
-    const btn  = event.currentTarget;
-    const cell = btn.closest('td');
-    if (!cell) return;
+  const cell = e.currentTarget.closest('td');
+  const qtyInput = cell?.querySelector('input[type="number"]');
+  const qty = parseInt(qtyInput?.value, 10);
 
-    const qtyInput = cell.querySelector('input[type="number"]');
-    if (!qtyInput) return;
+  if (!qty || qty <= 0) {
+    alert('Please enter quantity first');
+    return;
+  }
 
-    const quantity = parseInt(qtyInput.value, 10);
-    if (!quantity || quantity <= 0) {
-        alert('אופס, שכחת להקיש כמות');
-        return;
-    }
-
-    currentCell = cell;
-
-    const modal      = document.getElementById('myModal');
-    const modalValue = document.getElementById('modal-value');
-    const modalVarId = document.getElementById('modal-var-id');
-    const modalColor = document.getElementById('modal-color');
-    const modalSize  = document.getElementById('modal-size');
-
-    if (modalValue) modalValue.textContent = quantity.toString();
-    if (modalVarId) modalVarId.textContent = cell.id || '';
-    if (modalColor) modalColor.textContent = cell.dataset.color || '';
-    if (modalSize)  modalSize.textContent  = cell.dataset.size  || '';
-
-    buildModalTable(quantity, cell);
-    modal.style.display = 'block';
+  currentCell = cell;
+  buildModalTable(qty, cell);
+  document.getElementById('myModal').style.display = 'block';
 }
 
-// בניית טבלה במודאל לפי הכמות + צ'קבוקסים
-function buildModalTable(quantity, cell) {
-    const table = document.getElementById('myTable');
-    if (!table) return;
+function buildModalTable(qty, cell) {
+  const table = document.getElementById('myTable');
+  if (!table) return;
 
-    let thead = table.querySelector('thead');
-    let tbody = table.querySelector('tbody');
+  table.innerHTML = '<thead></thead><tbody></tbody>';
+  const thead = table.querySelector('thead');
+  const tbody = table.querySelector('tbody');
 
-    if (!thead) {
-        thead = document.createElement('thead');
-        table.appendChild(thead);
-    }
-    if (!tbody) {
-        tbody = document.createElement('tbody');
-        table.appendChild(tbody);
-    }
+  thead.innerHTML = '<tr><th>Name</th><th>Number</th><th>#</th></tr>';
 
-    thead.innerHTML = '';
-    tbody.innerHTML = '';
+  let saved = [];
+  try {
+    saved = JSON.parse(cell.dataset.namesNumbers || '[]');
+  } catch {}
 
-    if (!quantity || quantity <= 0) return;
-
-    // load saved
-    let saved = [];
-    const namesJson = cell.dataset.namesNumbers;
-    if (namesJson) {
-        try {
-            const parsed = JSON.parse(namesJson);
-            if (Array.isArray(parsed)) saved = parsed;
-        } catch (e) {}
-    }
-
-    const nameCheckbox = document.querySelector('.checkbox-name');
-    const numCheckbox  = document.querySelector('.checkbox-mum');
-    const showName     = !!(nameCheckbox && nameCheckbox.checked);
-    const showNum      = !!(numCheckbox && numCheckbox.checked);
-
-    const headerRow = document.createElement('tr');
-
-    if (showName) {
-        const thName = document.createElement('th');
-        thName.textContent = 'שם עובד';
-        headerRow.appendChild(thName);
-    }
-    if (showNum) {
-        const thNum = document.createElement('th');
-        thNum.textContent = 'מספר עובד';
-        headerRow.appendChild(thNum);
-    }
-
-    const thIndex = document.createElement('th');
-    headerRow.appendChild(thIndex);
-    thead.appendChild(headerRow);
-
-    for (let i = 1; i <= quantity; i++) {
-        const row = document.createElement('tr');
-        const savedItem = saved[i - 1] || {};
-        const savedName = typeof savedItem.name === 'string'   ? savedItem.name   : '';
-        const savedNum  = typeof savedItem.number === 'string' ? savedItem.number : '';
-
-        if (showName) {
-            const tdName    = document.createElement('td');
-            const nameInput = document.createElement('input');
-            nameInput.type  = 'text';
-            nameInput.className = 'input-name';
-            if (savedName) nameInput.value = savedName;
-            tdName.appendChild(nameInput);
-            row.appendChild(tdName);
-        }
-
-        if (showNum) {
-            const tdNum    = document.createElement('td');
-            const numInput = document.createElement('input');
-            numInput.type  = 'text';
-            numInput.className = 'input-num';
-            if (savedNum) numInput.value = savedNum;
-            tdNum.appendChild(numInput);
-            row.appendChild(tdNum);
-        }
-
-        const tdIndex = document.createElement('td');
-        tdIndex.textContent = i.toString();
-        row.appendChild(tdIndex);
-
-        tbody.appendChild(row);
-    }
-}
-
-// ===== Modal Save =====
-function saveModalData() {
-    const table = document.getElementById('myTable');
-    if (!table || !currentCell) return;
-
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const data = rows.map(row => {
-        const nameInput = row.querySelector('.input-name');
-        const numInput  = row.querySelector('.input-num');
-
-        return {
-            name:   nameInput ? nameInput.value.trim() : '',
-            number: numInput  ? numInput.value.trim()  : ''
-        };
-    });
-
-    currentCell.dataset.namesNumbers = JSON.stringify(data);
+  for (let i = 1; i <= qty; i++) {
+    const s = saved[i - 1] || {};
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><input class="input-name" value="${s.name || ''}"></td>
+      <td><input class="input-num" value="${s.number || ''}"></td>
+      <td>${i}</td>
+    `;
+    tbody.appendChild(row);
+  }
 }
 
 function closeModalAndSave() {
-    const modal = document.getElementById('myModal');
-    if (!modal) return;
+  const modal = document.getElementById('myModal');
+  const table = document.getElementById('myTable');
+  if (!modal || !table || !currentCell) return;
 
-    saveModalData();
-    modal.style.display = 'none';
+  const data = Array.from(table.querySelectorAll('tbody tr')).map(r => ({
+    name: r.querySelector('.input-name')?.value || '',
+    number: r.querySelector('.input-num')?.value || ''
+  }));
+
+  currentCell.dataset.namesNumbers = JSON.stringify(data);
+  modal.style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', () => { 
-    // החפת כפתורי החיצים של הכמות למספר
-    
-    // כפתור פלוס
-    const plusBtn = document.querySelector('.qty-plus');
-    const minusBtn = document.querySelector('.qty-minus');
-    const qtyInput = document.querySelector('input.qty');
+//  QUANTITY BUTTONS
+function initQuantityButtons() {
+  const input = document.querySelector('input.qty');
+  if (!input) return;
 
-    if (plusBtn && qtyInput) {
-        plusBtn.addEventListener('click', function () {
-            let val = parseInt(qtyInput.value);
-            let max = parseInt(qtyInput.getAttribute('max'));
+  document.querySelector('.qty-plus')?.addEventListener('click', () => {
+    input.value = parseInt(input.value || 0, 10) + 1;
+    input.dispatchEvent(new Event('change'));
+  });
 
-            if (!isNaN(val)) {
-                if (max && val >= max) return;
-                qtyInput.value = val + 1;
-                qtyInput.dispatchEvent(new Event('change'));
-            }
-        });
+  document.querySelector('.qty-minus')?.addEventListener('click', () => {
+    const val = parseInt(input.value || 0, 10);
+    if (val > 1) {
+      input.value = val - 1;
+      input.dispatchEvent(new Event('change'));
     }
+  });
+}
 
-    // כפתור מינוס
-    if (minusBtn && qtyInput) {
-        minusBtn.addEventListener('click', function () {
-            let val = parseInt(qtyInput.value);
-            let min = parseInt(qtyInput.getAttribute('min')) || 1;
+//  BACK TO TOP
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
 
-            if (!isNaN(val) && val > min) {
-                qtyInput.value = val - 1;
-                qtyInput.dispatchEvent(new Event('change'));
-            }
-        });
-    }
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
+// COMPLEMENTARY PRODUCTS SLIDER
+function initComplementarySlider() {
+  const el = document.querySelector('.complementary-products-swiper');
+  if (!el || typeof Swiper === 'undefined') return;
 
-    // back to top
-    console.log('back-to-top script loaded');
-    function smoothScrollToTop() {
-        let scrollStep = -window.scrollY / 30; 
-        let scrollInterval = setInterval(function () {
-            if (window.scrollY !== 0) {
-                window.scrollBy(0, scrollStep);
-            } else {
-                clearInterval(scrollInterval);
-            }
-        }, 15);
-    }
+  new Swiper(el, {
+    slidesPerView: 1,
+    spaceBetween: 4,
+    loop: true,
+    rtl: true,
+    speed: 1000,
+    autoplay: {
+      delay: 3000,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    breakpoints: {
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 16,
+      }
+    },
+  });
+}
 
-    const scrollTopBtn = document.getElementById('back-to-top');
-    if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            smoothScrollToTop();
-        });
-    }
+//  PRODUCT GALLERY INIT
+function initProductGallery() {
+  if (typeof Swiper === 'undefined') return;
 
-    let complementaryPdtsSwiper;
-    
-    const complementarySwiper = document.querySelector('.complementary-products-swiper');
-    if (complementarySwiper) {
-        // complementary products slider
-        complementaryPdtsSwiper = new Swiper(complementarySwiper, {
-            // Optional parameters
-            spaceBetween: 16,
-            slidesPerView: 4,
-            slidesPerGroup: 1,
-            autoHeight: true,
-            loop: true,
-            speed: 1000,
-            rtl: true,
-            // autoplay: {
-            //     delay: 3000,
-            // },
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-    }
-    
-});
+  document.querySelectorAll('.product-gallery').forEach(wrapper => {
+    const mainEl   = wrapper.querySelector('.swiper-pdt-container');
+    const thumbsEl = wrapper.querySelector('.swiper-thumbs');
+    if (!mainEl || !thumbsEl) return;
 
-// Product filtering and mobile filtering via popup
-document.addEventListener('DOMContentLoaded', function () {
-
-    const sidebar = document.querySelector('.shop-sidebar');
-    const toggleBtn = document.querySelector('.mobile-filter-toggle');
-
-    // If there is no sidebar or button – exit
-    if (!sidebar || !toggleBtn) return;
-
-    // Create a modal
-    const modal = document.createElement('div');
-    modal.className = 'filters-modal';
-
-    modal.innerHTML = `
-        <div class="filters-modal__content">
-        <div class="filters-modal__header">
-            <h3>סינונים</h3>
-            <button class="filters-modal__close" aria-label="Close">×</button>
-        </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    const content = modal.querySelector('.filters-modal__content');
-    const closeBtn = modal.querySelector('.filters-modal__close');
-
-    // Move the sidebar into the modal
-    content.appendChild(sidebar);
-
-    // open
-    toggleBtn.addEventListener('click', () => {
-        modal.classList.add('is-open');
-        // document.body.style.overflow = 'hidden';
+    const thumbsSwiper = new Swiper(thumbsEl, {
+      slidesPerView: 5,
+      spaceBetween: 5
     });
 
-    // close
-    const closeModal = () => {
-        modal.classList.remove('is-open');
-        // document.body.style.overflow = '';
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
+    const mainSwiper = new Swiper(mainEl, {
+      slidesPerView: 1,
+      rtl: true,
+      navigation: {
+        nextEl: wrapper.querySelector('.swiper-main-next'),
+        prevEl: wrapper.querySelector('.swiper-main-prev')
+      },
+      thumbs: { swiper: thumbsSwiper }
     });
 
-});
+    /* Build images array from DOM */
+    const images = getGalleryImagesFromDOM(wrapper);
 
+    /* Init PhotoSwipe */
+    if (images.length) {
+      setupLightbox(wrapper, images, mainSwiper);
+    }
+
+    /* Variation image switch */
+    initVariationImageSwitch(wrapper, mainSwiper);
+  });
+}
+
+//  BUILD IMAGES ARRAY FROM DOM
+function getGalleryImagesFromDOM(wrapper) {
+  return Array.from(
+    wrapper.querySelectorAll('.swiper-pdt-container .swiper-slide a')
+  ).map(link => ({
+    src: link.getAttribute('data-large_image') || link.href,
+    w: parseInt(link.getAttribute('data-large_image_width'), 10) || 1200,
+    h: parseInt(link.getAttribute('data-large_image_height'), 10) || 1200,
+    title: link.querySelector('img')?.getAttribute('alt') || ''
+  }));
+}
+
+/***
+ * PHOTOSWIPE – SYNCED TO ACTIVE SWIPER SLIDE
+ * - Prevents double open
+ */
+function setupLightbox(wrapper, images, swiper) {
+  if (
+    typeof PhotoSwipe === 'undefined' ||
+    typeof PhotoSwipeUI_Default === 'undefined'
+  ) return;
+
+  const pswp = document.querySelector('.pswp');
+  if (!pswp) return;
+
+  wrapper
+    .querySelectorAll('.swiper-pdt-container .swiper-slide a')
+    .forEach((link, index) => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        if (activePhotoSwipe) return;
+
+        const startIndex = swiper.activeIndex ?? index;
+
+        activePhotoSwipe = new PhotoSwipe(
+          pswp,
+          PhotoSwipeUI_Default,
+          images,
+          {
+            index: startIndex,
+            history: false,
+            focus: false,
+            preload: [1, 1] // lazy preload next + prev
+          }
+        );
+
+        /* Sync Swiper on slide change */
+        activePhotoSwipe.listen('afterChange', () => {
+          const psIndex = activePhotoSwipe.getCurrentIndex();
+          swiper.slideTo(psIndex);
+        });
+
+        /* Cleanup on close */
+        activePhotoSwipe.listen('close', () => {
+          activePhotoSwipe = null;
+        });
+
+        activePhotoSwipe.init();
+      });
+    });
+}
+
+/***
+ * VARIATION IMAGE SWITCH
+ * Requires variation element with:
+ * data-image-id OR data-image-index
+ */
+function initVariationImageSwitch(wrapper, swiper) {
+  document.addEventListener('click', e => {
+    const variation = e.target.closest('.variation-box');
+    if (!variation) return;
+
+    const imageIndex = variation.dataset.imageIndex;
+    const imageId    = variation.dataset.imageId;
+
+    if (imageIndex !== undefined) {
+      swiper.slideTo(parseInt(imageIndex, 10));
+    }
+
+    if (imageId) {
+      const slides = wrapper.querySelectorAll('.swiper-slide');
+      slides.forEach((slide, i) => {
+        if (slide.querySelector(`img[data-attachment-id="${imageId}"]`)) {
+          swiper.slideTo(i);
+        }
+      });
+    }
+  });
+}
+
+// CATEGORY – MOBILE FILTERS MODAL
+function initMobileFilters() {
+  const sidebar = document.querySelector('.shop-sidebar');
+  const toggle = document.querySelector('.mobile-filter-toggle');
+
+  if (!sidebar || !toggle) return;
+
+  const originalParent = sidebar.parentNode;
+  const originalNextSibling = sidebar.nextElementSibling;
+
+  const modal = document.createElement('div');
+  modal.className = 'filters-modal';
+
+  modal.innerHTML = `
+    <div class="filters-modal__content">
+      <div class="filters-modal__header">
+        <h3>סינונים</h3>
+        <button class="filters-modal__close" aria-label="Close">×</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const modalContent = modal.querySelector('.filters-modal__content');
+
+  function updateSidebarLocation() {
+    if (isMobile()) {
+      if (!modalContent.contains(sidebar)) {
+        modalContent.appendChild(sidebar);
+      }
+    } else {
+      if (originalNextSibling) {
+        originalParent.insertBefore(sidebar, originalNextSibling);
+      } else {
+        originalParent.appendChild(sidebar);
+      }
+      modal.classList.remove('is-open');
+    }
+  }
+
+  updateSidebarLocation();
+
+  window.addEventListener('resize', updateSidebarLocation);
+
+  toggle.addEventListener('click', () => modal.classList.add('is-open'));
+
+  modal.querySelector('.filters-modal__close')
+    .addEventListener('click', () => modal.classList.remove('is-open'));
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.remove('is-open');
+  });
+}
+
+function isMobile() {
+  return window.matchMedia('(max-width: 767px)').matches;
+}

@@ -108,19 +108,25 @@
 				</div><!-- .site-branding -->
 
 				<!-- My Account / Login -->
-				<li class="account-icon login-icon">
-					<a class="header-link" aria-label="<?php esc_html_e( 'חשבון שלי', 'madimz' ); ?>" href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>">
-						<?php echo inline_svg_with_class('user.svg', '');?>
-					</a>
-					<?php if(false): ?>
-					<?php if(is_user_logged_in()): ?>
-						<ul class="dropdown-login">
-							<li><a href="<?php echo wc_get_page_permalink( 'myaccount' );?>"><?php esc_html_e( 'My account', 'madimz' ); ?></a></li>
-							<li><a href="<?php echo wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) );?>"><?php esc_html_e( 'My orders', 'madimz' ); ?></a></li>
-							<li><a href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>"><?php esc_html_e( 'Sign out', 'madimz' ); ?></a></li>
-						</ul>
-					<?php endif;?>
-					<?php endif;?>
+				 <li class="account-icon login-icon">
+					<?php if ( is_user_logged_in() ) : ?>
+						<a class="header-link" aria-label="<?php esc_html_e( 'החשבון שלי', 'madimz' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">
+							<?php echo inline_svg_with_class('user.svg', ''); ?>
+						</a>
+						<?php if(false): ?>
+							<?php if(is_user_logged_in()): ?>
+								<ul class="dropdown-login">
+									<li><a href="<?php echo wc_get_page_permalink( 'myaccount' );?>"><?php esc_html_e( 'My account', 'madimz' ); ?></a></li>
+									<li><a href="<?php echo wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) );?>"><?php esc_html_e( 'My orders', 'madimz' ); ?></a></li>
+									<li><a href="<?php echo esc_url( wp_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>"><?php esc_html_e( 'Sign out', 'madimz' ); ?></a></li>
+								</ul>
+							<?php endif;?>
+						<?php endif;?>
+					<?php else : ?>
+						<a class="header-link" aria-label="<?php esc_html_e( 'התחברות', 'madimz' ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">
+							<?php echo inline_svg_with_class('user.svg', ''); ?>
+						</a>
+					<?php endif; ?>
 				</li>
 
 				<!-- copmare products -->

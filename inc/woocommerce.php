@@ -567,6 +567,8 @@ function madimz_pr_label($range) {
  * Single Product
  */
 
+// Remove default gallery image
+remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
 // Remove short description from original location
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
 // Remove price
@@ -577,6 +579,127 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
 // Remove default variation dropdowns
 remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation', 10 );
 remove_action( 'woocommerce_before_single_variation', 'woocommerce_variable_add_to_cart', 30 );
+
+// add image gallery with library swiper
+add_action('woocommerce_before_single_product_summary', function() {
+
+	global $product;
+	$image_ids = [];
+	$colors_seen = [];
+
+    $product_id = $product->get_id();
+    $gallery = $product->get_gallery_image_ids();
+    $main_img_id = get_post_thumbnail_id($product_id);
+    $main_img = wp_get_attachment_image_url($main_img_id, 'large');
+
+	if ( ! empty( $gallery ) ) {
+        $image_ids = array_merge( $image_ids, $gallery );
+    }
+
+	if ( $product->is_type( 'variable' ) ) {
+		foreach ( $product->get_available_variations() as $variation ) {
+
+			$image_id = $variation['image_id'] ?? 0;
+            if ( ! $image_id ) {
+                continue; 
+			}
+
+			$color = $variation['attributes']['attribute_pa_color'] ?? '';
+
+			if ( $color ) {
+
+				if ( isset( $colors_seen[ $color ] ) ) continue;
+
+				$colors_seen[ $color ] = true;
+                $image_ids[] = $image_id;
+
+			} else {
+ 				$image_ids[] = $image_id;
+            }
+		}
+	}
+	$image_ids = array_values( array_unique( $image_ids ) );
+
+    echo '<div class="product-gallery woocommerce-product-gallery" id="custom-gallery-' . esc_attr($product_id) . '">';
+    echo '<div class="woocommerce-product-gallery__wrapper">';
+
+    // MAIN SWIPER
+    echo '<div class="swiper-pdt-container swiper" id="swiper-main-' . esc_attr($product_id) . '">';
+    echo '<div class="swiper-wrapper">';
+
+    // Main image
+    if ($main_img_id) {
+        $meta = wp_get_attachment_metadata($main_img_id);
+        echo '<div class="swiper-slide">';
+        echo '<a href="' . esc_url(wp_get_attachment_image_url($main_img_id, 'full')) . '"
+                 class="woocommerce-product-gallery__image"
+                 data-large_image="' . esc_url(wp_get_attachment_image_url($main_img_id, 'full')) . '"
+                 data-large_image_width="' . esc_attr($meta['width']) . '"
+                 data-large_image_height="' . esc_attr($meta['height']) . '">';
+        echo '<img src="' . esc_url($main_img) . '" alt="">';
+        echo '</a>';
+        echo '</div>';
+    }
+
+    // Gallery images
+    foreach ($image_ids as $img_id) {
+		$full  = wp_get_attachment_image_url($img_id, 'full');
+		$large = wp_get_attachment_image_url($img_id, 'large');
+		$meta  = wp_get_attachment_metadata($img_id);
+
+		$width  = $meta['width']  ?? 1200;
+		$height = $meta['height'] ?? 1200;
+
+        echo '<div class="swiper-slide">';
+        echo '<a href="' . esc_url($full) . '"
+                 class="woocommerce-product-gallery__image"
+                 data-large_image="' . esc_url($full) . '"
+                 data-large_image_width="' . esc_attr($width) . '"
+                 data-large_image_height="' . esc_attr($height) . '">';
+        echo '<img src="' . esc_url($large) . '" alt="">';
+        echo '</a>';
+        echo '</div>';
+    }
+
+    echo '</div>'; // swiper-wrapper
+
+    // Navigation
+    echo '<div class="swiper-main-nav">';
+    echo '<button class="swiper-main-prev">' . inline_svg_with_class('swiper-arrow.svg', 'rotate') . '</button>';
+    echo '<button class="swiper-main-next">' . inline_svg_with_class('swiper-arrow.svg', '') . '</button>';
+    echo '</div>';
+
+    echo '</div>'; // swiper-pdt-container
+
+    // THUMBS 
+    echo '<div class="swiper-thumbs swiper" id="swiper-thumbs-' . esc_attr($product_id) . '">';
+    echo '<div class="swiper-wrapper">';
+
+    // Main thumb
+    if ($main_img_id) {
+        echo '<div class="swiper-slide">';
+        echo '<img src="' . esc_url(wp_get_attachment_image_url($main_img_id, 'thumbnail')) . '" alt="">';
+        echo '</div>';
+    }
+
+    foreach ($image_ids as $img_id) {
+        echo '<div class="swiper-slide">';
+        echo '<img src="' . esc_url(wp_get_attachment_image_url($img_id, 'thumbnail')) . '" alt="">';
+        echo '</div>';
+    }
+
+    echo '</div>'; // swiper-wrapper
+    echo '</div>'; // swiper-thumbs
+
+    echo '</div>'; // woocommerce-product-gallery__wrapper
+    echo '</div>'; // product-gallery
+
+}, 20);
+
+// ass title before gallery only mobile
+add_action('woocommerce_before_single_product_summary', function() {
+	the_title( '<h1 class="product_title entry-title hidden-desktop">', '</h1>' );
+}, 15);
 
 // Add a long description after the name
 add_action( 'woocommerce_single_product_summary', 'custom_single_product_long_description', 10 );
@@ -1092,7 +1215,12 @@ function custom_back_to_top_button() {
 			. inline_svg_with_class('arrow-up.svg', '') 
 			. __('חזרה למעלה', 'madimz')
 		 . '</button>';
+
+		global $product;
+		echo '<a href="' . esc_url( wc_get_cart_url() . '?add-to-cart=' . $product->get_id() ) . '" class="buy-now-btn hidden-desktop">' . __('קנה עכשיו', 'woocommerce') . '</a>';
     echo '</div>';
+	    
+	
 }
 
 add_action( 'woocommerce_before_add_to_cart_quantity', 'custom_quantity_plus' );
@@ -1205,67 +1333,3 @@ function custom_coupon_in_wrapper() {
 		echo '</td>';
     echo '</tr>';
 }
-
-
-
-
-// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
-
-/*add_action('woocommerce_before_single_product_summary', function() {
-
-    global $product;
-    $product_id = $product->get_id();
-	$gallery = $product->get_gallery_image_ids();
-	$main_img = get_the_post_thumbnail_url($product_id, 'large');
-
-	// Wrapper
-    echo '<div class="product-gallery" id="custom-gallery-' . $product_id . '">';
-    
-    // Main slider container
-    echo '<div class="swiper-pdt-container swiper" id="swiper-main-' . $product_id . '">';
-    echo '<div class="swiper-wrapper">';
-
-	// Main image
-    echo '<div class="swiper-slide">';
-	echo '	<img  src="' . esc_url($main_img) . '" alt="">';
-	echo '</div>';
-
-	// Gallery images
-	foreach ($gallery as $img_id) {
-		echo '<div class="swiper-slide">';
-		echo '	<img  src="' . esc_url(wp_get_attachment_image_url($img_id, 'large')) . '" alt="">';
-		echo '</div>';
-	}
-
-    echo '</div>'; // End swiper-wrapper
-
-    
-    // Navigation buttons
-    echo '<div class="swiper-main-nav">';
-    echo '	<button class="swiper-main-prev">'.inline_svg_with_class('swiper-arrow.svg', '').'</button>';
-    echo '	<button class="swiper-main-next">'.inline_svg_with_class('swiper-arrow.svg', '').'</button>';
-    echo '</div>';
-
-	echo '</div>'; // End swiper-pdt-container    
-	
-    // Thumbs slider
-    // echo '<div class="swiper-thumbs swiper" id="swiper-thumbs-' . $product_id . '">';
-    // echo '<div class="swiper-wrapper">';
-
-	// // Thumbnail main image
-    // echo '<div class="swiper-slide">';
-    // echo '    <img  src="' . esc_url($main_img) . '" alt="">';
-    // echo '</div>';
-
-	// // Thumbnail gallery images
-    // foreach ($gallery as $img_id) {
-    //     echo '<div class="swiper-slide">';
-    //     echo '    <img  src="' . esc_url(wp_get_attachment_image_url($img_id, 'thumbnail')) . '" alt="">';
-    //     echo '</div>';
-    // }
-
-    // echo '</div>'; // End swiper-wrapper
-    // echo '</div>'; // End swiper-thumbs
-
-    echo '</div>'; // End product-gallery
-}, 20);*/

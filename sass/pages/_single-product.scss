@@ -35,22 +35,161 @@
                 max-width: 100%;
                 margin: 0 auto;
                 border-bottom: 1px solid #ccc;
-                @media (min-width: 1200px) {
+                @include media(">=desktop") {
                     border-bottom: none;
                 }
-                .woocommerce-product-gallery {
+                h1.product_title {
+                    width: 100%;
+                    max-height: 44px;
+                    font-size: 20px;
+                    line-height: 24px;
+                    font-weight: bold;
+                    margin: 0;
+                    margin-bottom: 6px;
+                    color: #2f2483;
+                }
+                .product-gallery {
+                    width: 40%;
+                    position: relative;
+                    @include media("<mobile") {
+                        width: 100%;
+                    }
+                    a.woocommerce-product-gallery__trigger {
+                        width: 32px;
+                        height: 32px;
+                        top: 325px;
+                        right: 12px !important;
+                        @include media("<mobile") {
+                            bottom: 128px;
+                            top: inherit;
+                        }
+                        span:after {
+                            content: "";
+                            display: inline-block;
+                            width: 30px;
+                            height: 30px;
+                            background-image: url("../images/zoom.svg");
+                            background-repeat: no-repeat;
+                            background-size: contain;
+                            background-position: center;
+                            flex-shrink: 0;
+                        }
+                        img {
+                            display: none !important;
+                        }
+                    }
+                    .swiper-pdt-container {
+                        position: relative;
+                        width: 96%;
+                        margin: 0;
+                        margin-left: auto;
+                        .swiper-wrapper {
+                            .swiper-slide {
+                                display: inline-block;
+                                vertical-align: middle;
+                                overflow: hidden;
+                                @include media(">mobile") {
+                                    height: 380px;
+                                }
+                                @include media("<mobile") {
+                                    height: 300px;
+                                }
+
+                            }
+                        }
+                        .swiper-main-nav {
+                            position: absolute;
+                            width: 100%;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            z-index: 999;
+                            display: flex;
+                            justify-content: space-between;
+                            pointer-events: none; 
+                            @include media("<mobile") {
+                                top: 40%;
+                                transform: translateY(-60%);
+                            }
+                            button {
+                                display: inline-flex;
+                                justify-content: center;
+                                align-items: center;
+                                background-color: #00000026 !important;
+                                width: 34px;
+                                height: 34px;
+                                pointer-events: auto;
+
+                                &.swiper-button-disabled {
+                                    background-color: #0000000a !important;
+                                }
+                                svg {
+                                    display: inline-block;
+                                    flex-shrink: 0;
+                                    width: 24px;
+                                    height: 24px;
+                                    color: #fff;
+                                    fill: #fff;
+                                    @include media("<mobile") {
+                                        width: 20px;
+                                        height: 20px;
+                                    }
+                                }
+                            }                       
+                        }
+                    }
+                    .swiper-thumbs {
+                        width: 96%;
+                        margin-top: 5px;
+                        transition-duration: 400ms;
+                        .swiper-slide {
+                            width: 92px;
+                            height: 97px;
+                            display: block;
+                            border: none;
+                            margin-bottom: 10px;
+                            cursor: pointer;
+                            overflow: visible;
+                            &.swiper-slide-thumb-active {
+                                border: 3px solid #ccc;
+                                @include media(">=desktop") {
+                                    border: none;
+                                    border-top: 4px solid #ccc;
+                                }
+                            }
+                            img {
+                                padding: 4px;
+                            }
+                        }
+                    }
+                    .pg-zoom {
+                        position: absolute;
+                        right: 12px;
+                        bottom: 128px;
+                        width: 36px;
+                        height: 36px;
+                        z-index: 9999;
+                        border: none;
+                        cursor: pointer;
+                        svg {
+                            width: 30px;
+                            height: 30px;
+                            fill: #888;
+                        }
+                    }
+                }
+                /*.woocommerce-product-gallery {
                     width: 40%;
                     @media (max-width: 768px) {
                         width: 100%;
                     }
-                }
+                }*/
                 .summary.entry-summary {
                     margin-bottom: 10px;
                     width: 60%;
                     display: flex;
                     flex-wrap: wrap;
                     align-content: flex-start;
-                    @media (max-width: 768px) {
+                    @include media("<mobile") {
                         width: 100%;
                     }
                     h1.product_title {
@@ -62,6 +201,9 @@
                         margin: 0;
                         margin-bottom: 6px;
                         color: #2f2483;
+                        @include media("<mobile") {
+                            display: none;
+                        }
                     }
                     .product-long-description {
                         color: #333;
@@ -70,6 +212,9 @@
                         font-size: 14px;
                         line-height: 24px;
                         transition: All 0.25s ease;
+                        @include media("<mobile") {
+                            max-height: 100px;
+                        }
                         p {
                             font-size: 14px !important;
                             margin: 0 !important;
@@ -87,11 +232,12 @@
                         padding-bottom: 12px;
                         margin-bottom: 12px;
                         border-bottom: 1px solid #ccc;
-                        a {
+                        button.add-to-compare-list {
                             display: block;
                             width: 66.66666667%;
                             color: #333;
                             font-size: 14px;
+                            text-align: right;
                             line-height: 32px;
                             margin-left: 16px;
                             text-decoration: underline;
@@ -122,6 +268,9 @@
                                     font-size: 14px;
                                     line-height: 18px;
                                     font-weight: bold;
+                                    @include media("<mobile") {
+                                        margin-right: 4px;
+                                    }
                                 }
                                 .variation-options {
                                     display: block;
@@ -226,6 +375,12 @@
                                 display: flex;
                                 align-items: center;
                                 column-gap: 16px;
+                                @include media("<mobile") {
+                                    flex-direction: row-reverse;
+                                    align-items: stretch;
+                                    justify-content: space-between;
+                                    column-gap: 8px;
+                                }
                                 input.qty::-webkit-outer-spin-button,
                                 input.qty::-webkit-inner-spin-button {
                                     -webkit-appearance: none;
@@ -353,6 +508,10 @@
                             justify-content: space-between;
                             margin-bottom: 12px;
                             padding-bottom: 12px;
+                            @include media("<mobile") {
+                                justify-content: center;
+                                column-gap: 12px;
+                            }
                             .service-icon {
                                 width: 72px;
                                 height: 88px;
@@ -401,8 +560,14 @@
                     flex-wrap: wrap;
                     justify-content: space-around;
                     margin-top: 40px;
+                    @include media("<mobile") {
+                        flex-direction: column;
+                    }
                     .checkbox-to-print {
                         width: 30%;
+                        @include media("<mobile") {
+                            width: 100%;
+                        }
                         // margin: 40px auto;
                         p {
                             font-size: 16px;
@@ -465,6 +630,9 @@
                     .upload-logo-wrapper {
                         width: 30%;
                         margin-top: 24px;
+                        @include media("<mobile") {
+                            width: 100%;
+                        }
                         p.file-text {
                             font-size: 16px !important;
                             font-weight: 800;
@@ -479,8 +647,14 @@
                             display: flex;
                             flex-wrap: wrap;
                             margin-bottom: 16px;
+                            @include media("<mobile") {
+                                flex-direction: column;
+                            }
                             form.file-upload {
                                 width: 55%;
+                                @include media("<mobile") {
+                                    width: 100%;
+                                }
                                 label {
                                     display: none;
                                 }
@@ -833,9 +1007,7 @@
                                 max-width: 178px;
                             }
                             button.button-wishlist {
-                                .wishlist-text {
-                                    display: none;
-                                }
+                                display: none;
                             } 
                             a {
                                 text-align: center;
@@ -844,7 +1016,7 @@
                                 // height: 150px;
                                 display: block;
                                 border: none;
-                                margin: 0 auto;
+                                margin: 8px 24px;
                                 img {
                                     width: auto;
                                     height: 150px;
@@ -965,6 +1137,11 @@
                 margin: 20px auto; 
                 padding: 12px 0;
                 width: 100%;
+                @include media("<mobile") {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: stretch;
+                }
                 .back-to-top-btn {
                     width: auto;
                     display: flex;
@@ -981,6 +1158,9 @@
                     padding: 8px 24px 16px;
                     transition: All 0.3s ease;
                     cursor: pointer;
+                    @include media("<mobile") {
+                        margin: 0;
+                    }
                     svg {
                         width: 24px;
                         height: 24px;
@@ -990,6 +1170,17 @@
                     &:hover {
                         border-color: #d1060d;
                     }
+                }
+                .buy-now-btn {
+                    @include red_btn(#d1060d); 
+                    width: 34%;
+                    border-radius: 0;
+                    font-size: 16px;
+                    border: 1px solid #2f2483 !important;
+                    &:hover {
+                        background-color: #fff !important;
+                        color: #2f2483 !important;
+                    }    
                 }
             }
         }

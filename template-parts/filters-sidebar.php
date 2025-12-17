@@ -34,9 +34,11 @@
     <?php 
         global $wpdb;
         $manufacturers = $wpdb->get_col("
-            SELECT DISTINCT meta_value 
+            SELECT DISTINCT meta_value
             FROM wp_postmeta
-            WHERE meta_key='manufacturer'
+            WHERE meta_key = 'manufacturer'
+            AND meta_value IS NOT NULL
+            AND meta_value != ''
         ");
     ?>
 
@@ -49,15 +51,19 @@
                     <!-- Skip if already selected -->
                     <?php if (!empty($_GET['manufacturer']) && $_GET['manufacturer'] == $man) continue; ?>
                     <?php 
-                        $count = madimz_count_products([
-                            [ 'key' => 'manufacturer', 'value' => $man ]
-                        ]);
+                    $count = madimz_count_products([
+                        [ 'key' => 'manufacturer', 'value' => $man ]
+                    ]);
 
-                        $url = add_query_arg('manufacturer', urlencode($man));
-                    ?>
-                    <li>
-                        <a href="<?php echo esc_url($url); ?>"><?php echo $man . ' (' . $count . ')'; ?></a>
-                    </li>
+                    if ( $count > 0 ) :
+                        $url = add_query_arg( 'manufacturer', urlencode( $man ) );
+                        ?>
+                        <li>
+                            <a href="<?php echo esc_url($url); ?>"><?php echo $man . ' (' . $count . ')'; ?></a>
+                        </li>
+                    <?php else : ?>
+                        <span class="manufacturer-name disabled"><?php echo esc_html( $man ) . ' (' . $count . ')'; ?></span>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -83,12 +89,17 @@
                                 [ 'key' => '_price', 'type' => 'NUMERIC', 'compare' => 'BETWEEN', 'value' => [ $min, $max ] ]
                             ]);
 
-                            $url = add_query_arg('pricerange', $key);
-                            ?>
+                            if ( $count > 0 ) :
 
-                            <li>
-                                <a href="<?php echo esc_url($url); ?>"><?php echo $label . ' (' . $count . ')'; ?></a>
-                            </li>
+                                $url = add_query_arg('pricerange', $key);
+                                ?>
+
+                                <li>
+                                    <a href="<?php echo esc_url($url); ?>"><?php echo $label . ' (' . $count . ')'; ?></a>
+                                </li>
+                            <?php else : ?>
+                                <span class="price_range disabled"><?php echo esc_html( $label ) . ' (' . $count . ')'; ?></span>
+                            <?php endif; ?>
                         <?php
                         endwhile;
                     endif;

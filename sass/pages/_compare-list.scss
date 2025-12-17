@@ -55,6 +55,10 @@
             &:hover {
                 text-decoration: underline;
             }
+            @include media("<mobile") {
+                white-space: break-spaces;
+            }
+
         }
 
         .price {
@@ -63,9 +67,9 @@
             font-size: 14px !important;
         }
 
-        @media (max-width: 768px) {
-            display: block;
-            overflow-x: auto;
+        @include media("<mobile") {
+            display: inline-table;
+            overflow: hidden;
             white-space: nowrap;    
         }
     }

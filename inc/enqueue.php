@@ -37,6 +37,8 @@ function madimz_custom_scripts() {
     }
 
     if ( is_product() ) {
+        wp_enqueue_script('wc-single-product');
+
         wp_enqueue_style( 'swiper-bundle', get_template_directory_uri() . '/dist/lib/swiper/swiper-bundle.min.css', array() ,'12.0.3');
         wp_enqueue_style( 'single-product', get_template_directory_uri() . '/dist/css/single-product.min.css', array(), _S_VERSION );
         wp_enqueue_script( 'swiper-bundle', get_template_directory_uri() . '/dist/lib/swiper/swiper-bundle.min.js', array(), '12.0.3', array( 'strategy' => 'defer' ) );

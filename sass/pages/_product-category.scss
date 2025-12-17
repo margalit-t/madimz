@@ -420,7 +420,7 @@
                         }
                         span {
                             padding-left: 8px;
-                            margin-left: 32px;
+                            // margin-left: 32px;
                             @include media("<mobile") {
                                 margin: 0;
                             }
@@ -701,8 +701,11 @@ button.button-wishlist {
 }
 
 // pop-up filters mobile
-@include media("<mobile") {
-    .filters-modal {
+.filters-modal {
+    @include media(">=mobile") {
+        display: none;
+    }
+    @include media("<mobile") {
         position: fixed;
         inset: 0;
         z-index: 9999;
