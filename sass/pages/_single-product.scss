@@ -685,22 +685,45 @@
                     }
                     .table-choose {
                         width: 100%;
+                        @include media("<=tablet") {
+                            max-width: 100%;
+                        }
                         table.choose-size {
                             border-collapse: collapse;
                             max-width: 100%;
                             margin: auto;
+                            @include media("<=tablet") {
+                                table-layout: fixed;
+                                width: 100%;
+                            }
                             th, td {
                                 padding: 8px;
+                                @include media("<=tablet") {
+                                    padding: 4px 2px; 
+                                }
+                            }
+                            th {
+                                @include media("<=tablet") {
+                                    font-size: 11px;
+                                    letter-spacing: 0;
+                                    white-space: nowrap;
+                                }
                             }
                             tr.sizes {
                                 font-size: 16px;
                                 font-weight: 800;
                                 background-color: #ededed;
+                                @include media("<=tablet") {
+                                    font-size: 21px;
+                                }
                                 th {
                                     border-bottom: 2px solid #d1060d;
                                     padding: 12px;
                                     &:not(:last-child) {
                                         border-left: 1px solid #ccc;
+                                    }
+                                    @include media("<=tablet") {
+                                        padding: 4px;
                                     }
                                 }
                             }
@@ -712,15 +735,30 @@
                                     &.color {
                                         border: 1px solid #ccc;
                                     }
+                                    @include media("<=tablet") {
+                                        min-width: auto;
+                                        font-size: 12px;
+                                        white-space: break-spaces;
+                                    }
                                 }
                                 td {                
                                     text-align: center;
                                     border: 1px solid #ccc;
                                     font-size: 12px;
                                     font-weight: 800;
+                                    @include media("<=tablet") {
+                                        padding: 4px 2px;
+                                    }
+                                    @include media("<mobile") {
+                                        font-size: 10px;
+                                        font-weight: 400;
+                                    }
                                     h3 {
                                         font-size: 12px;
                                         font-weight: 400;
+                                        @include media("<mobile") {
+                                            font-size: 10px;
+                                        }
                                     }
                                     input {
                                         width: 72px;
@@ -731,6 +769,7 @@
                                         border-bottom: 1px solid #d1060d;
                                         border-radius: 0;
                                         font-size: 14px;
+                                        text-align: center;
                                         margin-left: 8px;
                                         &[type="number"] {
                                             appearance: auto;
@@ -742,12 +781,28 @@
                                             opacity: 1 !important;
                                             display: block !important;
                                         }
+                                        @include media("<=tablet") {
+                                            width: auto;
+                                            max-width: 100%;
+                                            font-size: 12px;
+                                            margin: 0;
+                                        }
                                     }
                                     a.myBtn{
                                         padding: 4px;
                                         cursor: pointer;
+                                        @include media("<=tablet") {
+                                            padding: 2px;
+                                            width: 16px;
+                                            height: 16px;
+                                            display: inline-block;
+                                            margin: 2px;
+                                        }
                                         img {
                                             width: 16px;
+                                            @include media("<=tablet") {
+                                                width: 14px;
+                                            }
                                         }
                                     }
                                 }
@@ -883,6 +938,14 @@
                             flex-direction: column;
                             justify-content: space-between;
                             overflow-y: auto; /* Enable scroll if needed */
+                            @include media("<=mobile") {
+                                width: calc(100% - 24px);
+                                max-width: 100%;
+                                margin: 80px auto 24px;
+                                padding: 16px;
+                                height: auto;
+                                max-height: calc(100% - 120px);
+                            }
                             .p-title {
                                 width: 100%;
                                 .modal-flex {
@@ -915,6 +978,9 @@
                                 td {
                                     border: none;
                                     padding: 8px;
+                                    @include media("<=mobile") {
+                                        padding: 4px;
+                                    }
                                     input {
                                         padding: 4px;
                                         border: none;
@@ -923,6 +989,10 @@
                                         height: 24px;
                                         font-size: 14px;
                                         color: #333;
+                                        @include media("<=mobile") {
+                                            width: 100%;
+                                            font-size: 12px;
+                                        }
                                         &:hover{
                                             border-bottom:1px #d1060d solid;
                                         }

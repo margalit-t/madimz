@@ -493,7 +493,7 @@ header.site-header nav.desktop-navigation ul.primary-menu > li.menu-item-has-chi
 }
 header.site-header nav.desktop-navigation .sub-menu {
   position: absolute;
-  top: 135%;
+  top: 110%;
   right: -5%;
   width: 400px;
   height: 260px;
@@ -2115,18 +2115,46 @@ h2:not(.acf-custom-content h2).title, .title {
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose {
   width: 100%;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose {
+    max-width: 100%;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size {
   border-collapse: collapse;
   max-width: 100%;
   margin: auto;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size {
+    table-layout: fixed;
+    width: 100%;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size th, .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size td {
   padding: 8px;
+}
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size th, .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size td {
+    padding: 4px 2px;
+  }
+}
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size th {
+    font-size: 11px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.sizes {
   font-size: 16px;
   font-weight: 800;
   background-color: #ededed;
+}
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.sizes {
+    font-size: 21px;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.sizes th {
   border-bottom: 2px solid #d1060d;
@@ -2134,6 +2162,11 @@ h2:not(.acf-custom-content h2).title, .title {
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.sizes th:not(:last-child) {
   border-left: 1px solid #ccc;
+}
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.sizes th {
+    padding: 4px;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color th {
   min-width: 80px;
@@ -2143,15 +2176,38 @@ h2:not(.acf-custom-content h2).title, .title {
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color th.color {
   border: 1px solid #ccc;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color th {
+    min-width: auto;
+    font-size: 12px;
+    white-space: break-spaces;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td {
   text-align: center;
   border: 1px solid #ccc;
   font-size: 12px;
   font-weight: 800;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td {
+    padding: 4px 2px;
+  }
+}
+@media (max-width: 767px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td h3 {
   font-size: 12px;
   font-weight: 400;
+}
+@media (max-width: 767px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td h3 {
+    font-size: 10px;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td input {
   width: 72px;
@@ -2162,6 +2218,7 @@ h2:not(.acf-custom-content h2).title, .title {
   border-bottom: 1px solid #d1060d;
   border-radius: 0;
   font-size: 14px;
+  text-align: center;
   margin-left: 8px;
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td input[type=number] {
@@ -2173,12 +2230,34 @@ h2:not(.acf-custom-content h2).title, .title {
   opacity: 1 !important;
   display: block !important;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td input {
+    width: auto;
+    max-width: 100%;
+    font-size: 12px;
+    margin: 0;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td a.myBtn {
   padding: 4px;
   cursor: pointer;
 }
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td a.myBtn {
+    padding: 2px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 2px;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td a.myBtn img {
   width: 16px;
+}
+@media (max-width: 940px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color td a.myBtn img {
+    width: 14px;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .table-choose table.choose-size tr.tr-color.order-details td:hover:not(:first-child) {
   border-bottom: 2px solid #d1060d;
@@ -2341,6 +2420,16 @@ h2:not(.acf-custom-content h2).title, .title {
           justify-content: space-between;
   overflow-y: auto; /* Enable scroll if needed */
 }
+@media (max-width: 768px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content {
+    width: calc(100% - 24px);
+    max-width: 100%;
+    margin: 80px auto 24px;
+    padding: 16px;
+    height: auto;
+    max-height: calc(100% - 120px);
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content .p-title {
   width: 100%;
 }
@@ -2380,6 +2469,11 @@ h2:not(.acf-custom-content h2).title, .title {
   border: none;
   padding: 8px;
 }
+@media (max-width: 768px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content #myTable td {
+    padding: 4px;
+  }
+}
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content #myTable td input {
   padding: 4px;
   border: none;
@@ -2388,6 +2482,12 @@ h2:not(.acf-custom-content h2).title, .title {
   height: 24px;
   font-size: 14px;
   color: #333;
+}
+@media (max-width: 768px) {
+  .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content #myTable td input {
+    width: 100%;
+    font-size: 12px;
+  }
 }
 .single-product .child-category-layout main#primary div.product .single-product-variation-matrix .popup-modal .popup-modal-content #myTable td input:hover {
   border-bottom: 1px #d1060d solid;

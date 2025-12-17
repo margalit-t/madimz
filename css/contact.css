@@ -493,7 +493,7 @@ header.site-header nav.desktop-navigation ul.primary-menu > li.menu-item-has-chi
 }
 header.site-header nav.desktop-navigation .sub-menu {
   position: absolute;
-  top: 135%;
+  top: 110%;
   right: -5%;
   width: 400px;
   height: 260px;
