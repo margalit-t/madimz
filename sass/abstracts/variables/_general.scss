@@ -848,7 +848,12 @@ body.menu-open {
 *  Content Page
 */
 
-.page-template-default{
+.page-template-default {
+    &.privacy-policy, &.page-id-389 {
+        p {
+            font-size: 14px !important;
+        }
+    }
     main.site-main{
         max-width: 1200px;
         margin: 0 auto 30px;
@@ -928,6 +933,30 @@ body.menu-open {
             font-size: 14px;
         }
    } 
+}
+
+.error404 {
+    main#primary section.error-404 {
+        @include container;
+        padding: 0;
+        min-height: 350px;
+        header.page-header {
+            display: none;
+        }
+        p {
+            font-size: 16px !important;
+            display: inline-block !important;
+            margin-left: 4px;
+        }
+        a {
+            display: inline-block;
+            color: #337ab7 !important;
+            &:hover {
+                color: #2f2483 !important;
+            }
+        }
+
+    }
 }
 
 button.button-wishlist {

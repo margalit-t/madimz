@@ -365,12 +365,23 @@
                                 width: 25%;
                             }
                         }
-                        .variations_form {
+                        form.cart {
                             width: 100%;
                             border-bottom: 1px solid #ccc;
                             margin-top: 16px;
                             margin-bottom: 12px;
                             padding-bottom: 12px; 
+                            &:not(.variations_form) {
+                                display: flex;
+                                align-items: center;
+                                column-gap: 16px;
+                                @include media("<mobile") {
+                                    flex-direction: row-reverse;
+                                    align-items: stretch;
+                                    justify-content: space-between;
+                                    column-gap: 8px;
+                                }
+                            }
                             .single_variation_wrap .variations_button {
                                 display: flex;
                                 align-items: center;
@@ -381,66 +392,66 @@
                                     justify-content: space-between;
                                     column-gap: 8px;
                                 }
-                                input.qty::-webkit-outer-spin-button,
-                                input.qty::-webkit-inner-spin-button {
-                                    -webkit-appearance: none;
-                                    margin: 0;
-                                }
-                                input.qty {
-                                    -moz-appearance: textfield; /* Firefox */
-                                }
-                                .qty-btn-wrapper {
-                                    height: 50px;
-                                    width: 25%;
-                                    border: 1px solid #ccc;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: space-between;
-                                    padding: 0 8px;
-                                    .qty-btn {
-                                        background-color: #fff !important;
-                                        width: 20px;
-                                        height: 20px;
-                                        line-height: 1;
-                                        font-weight: 400;
-                                        cursor: pointer;
-                                        svg {
-                                            width: 18px;
-                                        }
+                            }
+                            input.qty::-webkit-outer-spin-button,
+                            input.qty::-webkit-inner-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+                            input.qty {
+                                -moz-appearance: textfield; /* Firefox */
+                            }
+                            .qty-btn-wrapper {
+                                height: 50px;
+                                width: 25%;
+                                border: 1px solid #ccc;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                padding: 0 8px;
+                                .qty-btn {
+                                    background-color: #fff !important;
+                                    width: 20px;
+                                    height: 20px;
+                                    line-height: 1;
+                                    font-weight: 400;
+                                    cursor: pointer;
+                                    svg {
+                                        width: 18px;
                                     }
-                                    .quantity {
-                                        width: 50%;
+                                }
+                                .quantity {
+                                    width: 50%;
+                                    text-align: center;
+                                    input.qty {
                                         text-align: center;
-                                        input.qty {
-                                            text-align: center;
-                                            padding: 0;
-                                            font-size: 18px;
-                                            border: none;
-                                        }
+                                        padding: 0;
+                                        font-size: 18px;
+                                        border: none;
                                     }
                                 }
-                                .single_add_to_cart_button {
-                                    @include red_btn(#d1060d); 
-                                    width: 34%;
-                                    border-radius: 0;
-                                    font-size: 16px;
-                                    border: 1px solid #d1060d !important;
-                                    &:hover {
-                                        background-color: #fff !important;
-                                        color: #d1060d !important;
-                                    }
+                            }
+                            .single_add_to_cart_button {
+                                @include red_btn(#d1060d); 
+                                width: 34%;
+                                border-radius: 0;
+                                font-size: 16px;
+                                border: 1px solid #d1060d !important;
+                                &:hover {
+                                    background-color: #fff !important;
+                                    color: #d1060d !important;
                                 }
-                                .buy-now-btn {
-                                    @include red_btn(#2f2483); 
-                                    width: 34%;
-                                    border-radius: 0;
-                                    font-size: 16px;
-                                    border: 1px solid #2f2483 !important;
-                                    &:hover {
-                                        background-color: #fff !important;
-                                        color: #2f2483 !important;
-                                    }    
-                                }
+                            }
+                            .buy-now-btn {
+                                @include red_btn(#2f2483); 
+                                width: 34%;
+                                border-radius: 0;
+                                font-size: 16px;
+                                border: 1px solid #2f2483 !important;
+                                &:hover {
+                                    background-color: #fff !important;
+                                    color: #2f2483 !important;
+                                }    
                             }
                             .variations {
                                 display: none !important;
@@ -761,6 +772,7 @@
                                         }
                                     }
                                     input {
+                                        display: inline-block;
                                         width: 72px;
                                         max-width: 80px;
                                         padding: 0;
@@ -789,6 +801,7 @@
                                         }
                                     }
                                     a.myBtn{
+                                        display: contents;
                                         padding: 4px;
                                         cursor: pointer;
                                         @include media("<=tablet") {
