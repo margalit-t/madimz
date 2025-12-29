@@ -5,44 +5,87 @@ let activePhotoSwipe = null;
 
 
 //COLOR VARIATIONS – SHOW MORE
-['click', 'mousedown', 'touchstart'].forEach(type => {
-  document.addEventListener(type, e => {
-    const btn = e.target.closest?.('.color-more');
-    if (!btn) return;
+document.addEventListener('click', function (e) {
 
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
+  const btn = e.target.closest('.color-more');
+  if (!btn) return;
 
-    const wrapper = btn.closest('.product-color-variations');
-    if (!wrapper) return;
+  e.preventDefault();
+  e.stopPropagation();
 
-    wrapper.classList.toggle('show-all');
-    btn.classList.toggle('rotate');
-  }, { passive: false });
-});
+  const wrapper = btn.closest('.product-color-variations');
+  if (!wrapper) return;
 
+  wrapper.classList.toggle('show-all');
+  btn.classList.toggle('rotate');
+
+}, true); // 👈 CAPTURE MODE
 
 // VARIATION BOX → WC SELECT SYNC
-document.addEventListener('click', e => {
-  const box = e.target.closest('.variation-box');
-  if (!box) return;
+// update variation enable or disable after choose one option
+document.addEventListener('DOMContentLoaded', () => {
 
-  const { attr, value } = box.dataset;
-  if (!attr || !value) return;
+  const dataEl = document.getElementById('product-variations-data');
+  if (!dataEl) return;
 
-  document
-    .querySelectorAll(`.variation-box[data-attr="${attr}"]`)
-    .forEach(el => el.classList.remove('active'));
+  const variations = JSON.parse(dataEl.textContent);
+  const selected = {};
 
-  box.classList.add('active');
+  document.addEventListener('click', e => {
 
-  const select = document.querySelector(`select[name="attribute_${attr}"]`);
-  if (!select) return;
+    const box = e.target.closest('.variation-box');
+    if (!box || box.classList.contains('disabled')) return;
 
-  select.value = value;
-  select.dispatchEvent(new Event('change', { bubbles: true }));
+    const { attr, value } = box.dataset;
+    if (!attr || !value) return;
+
+    // clear active in same attribute
+    document
+      .querySelectorAll(`.variation-box[data-attr="${attr}"]`)
+      .forEach(el => el.classList.remove('active'));
+
+    box.classList.add('active');
+    selected[attr] = value;
+
+    // sync with WC select
+    const select = document.querySelector(`select[name="attribute_${attr}"]`);
+    if (select) {
+      select.value = value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    updateDisabledOptions();
+  });
+
+function updateDisabledOptions() {
+
+  document.querySelectorAll('.variation-box').forEach(box => {
+
+    const { attr, value } = box.dataset;
+
+    const isPossible = variations.some(v => {
+
+      if (!v.is_purchasable || !v.is_in_stock) return false;
+
+      // check all selected EXCEPT this attribute
+      for (const key in selected) {
+        if (key === attr) continue;
+
+        if (v.attributes[`attribute_${key}`] !== selected[key]) {
+            return false;
+        }
+      }
+
+      // now check this option
+      return v.attributes[`attribute_${attr}`] === value;
+    });
+
+    box.classList.toggle('disabled', !isPossible);
+  });
+}
+
 });
+
 
 //  DOM READY INIT
 document.addEventListener('DOMContentLoaded', () => {
@@ -125,8 +168,18 @@ function openMatrixModal(e) {
   }
 
   currentCell = cell;
+  const modal      = document.getElementById('myModal');
+  const modalValue = document.getElementById('modal-value');
+  const modalVarId = document.getElementById('modal-var-id');
+  const modalColor = document.getElementById('modal-color');
+  const modalSize  = document.getElementById('modal-size');
+
+  if (modalValue) modalValue.textContent = quantity.toString();
+  if (modalVarId) modalVarId.textContent = cell.id || '';
+  if (modalColor) modalColor.textContent = cell.dataset.color || '';
+  if (modalSize)  modalSize.textContent  = cell.dataset.size  || '';
   buildModalTable(qty, cell);
-  document.getElementById('myModal').style.display = 'block';
+  modal.style.display = 'block';
 }
 
 function buildModalTable(qty, cell) {
@@ -168,6 +221,23 @@ function closeModalAndSave() {
 
   currentCell.dataset.namesNumbers = JSON.stringify(data);
   modal.style.display = 'none';
+}
+
+// ===== Matrix Helpers =====
+function getQuantity(varId) {
+    const cell = document.getElementById(varId);
+  const input = cell?.querySelector('input[type="number"]');
+  return input ? parseInt(input.value, 10) || 0 : 0;
+}
+
+function getTheModal(varId) {
+  const cell = document.getElementById(varId);
+  return cell?.dataset.namesNumbers || null;
+}
+
+function getUniqueKey(varId) {
+  const cell = document.getElementById(varId);
+  return cell?.dataset.uniqueKey || 0;
 }
 
 //  QUANTITY BUTTONS

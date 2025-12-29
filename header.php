@@ -140,6 +140,15 @@
 
 				<!-- Cart -->
 				<li class="account-icon cart-icon">
+					<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="header-link open-mini-cart">
+						<?php echo inline_svg_with_class('cart.svg', '');?>
+						<?php
+						$cart_count = WC()->cart->get_cart_contents_count();
+						if ( $cart_count > 0 ) : ?>
+							<span class="cart-count"><?php echo esc_html( $cart_count ); ?></span>
+						<?php endif; ?>
+					</a>
+					<?php if(false): ?>
 					<button class="header-link open-mini-cart" aria-label="<?php esc_html_e( 'cart', 'madimz' ); ?>">
 						<?php echo inline_svg_with_class('cart.svg', '');?>
 						<?php
@@ -148,6 +157,7 @@
 							<span class="cart-count"><?php echo esc_html( $cart_count ); ?></span>
 						<?php endif; ?>
 					</button>
+					<?php endif; ?>
 				</li>
 			</ul><!-- .header-right-icons -->
 		</div><!-- .top-header -->

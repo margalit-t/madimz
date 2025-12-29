@@ -287,9 +287,20 @@ function madimz_show_color_variations_in_loop() {
     echo '<div class="color-dots">';
 
     $counter = 0;
+	$colors_map = [];
+	if ( have_rows( 'add_color', 'option' ) ) {
+		while ( have_rows( 'add_color', 'option' ) ) {
+			the_row();
+			$name = trim( get_sub_field( 'name_color', 'option' ) );
+			$gen_hex  = get_sub_field( 'color', 'option' );
+			if ( $name && $gen_hex ) {
+				$colors_map[ $name ] = $gen_hex;
+			}
+		}
+	}
     foreach ( $colors as $color ) {
-		$label = urldecode( $color );
-		switch ( $label ) {
+		$label = str_replace('-', ' ', urldecode($color));
+		/*switch ( $label ) {
 			case 'כתום':
 				$hex = '#fc7b22';
 				break;
@@ -304,7 +315,9 @@ function madimz_show_color_variations_in_loop() {
 				break;
 			default:
        			$hex = '#ffffff';
-		}
+		}*/
+
+		$hex = isset( $colors_map[$label] ) ? $colors_map[$label] : 'transparent';
 
         // if ( $counter < $max_show ) {
             echo '<span class="color-dot" style="background-color:' . $hex . '" data-color="' . esc_attr( $label ) . '"></span>';
@@ -810,6 +823,13 @@ function custom_variation_boxes() {
 
 		echo '</div>'; // .variation-boxes-wrapper
 
+		// send variation to JS
+		$available_variations = $product->get_available_variations();
+
+		echo '<script type="application/json" id="product-variations-data">';
+		echo wp_json_encode( $available_variations );
+		echo '</script>';
+
 
     // Load hidden variation form for WooCommerce JS
     // wc_get_template( 'single-product/add-to-cart/variable.php' );
@@ -968,16 +988,16 @@ function custom_matriza_page() {
 			</label>
 
 			<!-- number worker -->
-			<label class="container-check"> 
+			<label class="container-check disabeld"> 
 				<span><?php esc_html_e( 'מספר עובד', 'madimz' ); ?></span>
-				<input type="checkbox"  class="checkbox checkbox-mum" checked="true" data-name="myBtn">
+				<input type="checkbox"  class="checkbox checkbox-mum" data-name="myBtn">
 				<span class="check-mark" ></span>
 			</label>
-
+				
 			<!-- name worker -->
-			<label class="container-check">
+			<label class="container-check disabeld">
 				<span><?php esc_html_e( 'שם עובד', 'madimz' ); ?></span>
-				<input type="checkbox"  class="checkbox checkbox-name" checked="true" data-name="myBtn">
+				<input type="checkbox"  class="checkbox checkbox-name" data-name="myBtn">
 				<span class="check-mark"></span>
 			</label>
 		</div>

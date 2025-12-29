@@ -63,7 +63,10 @@
                             bottom: 128px;
                             top: inherit;
                         }
-                        span:after {
+                        span[aria-hidden="true"] {
+                            display: none;
+                        }
+                        &:after {
                             content: "";
                             display: inline-block;
                             width: 30px;
@@ -298,7 +301,8 @@
                                                 text-align: center;
                                                 cursor: pointer;
                                                 &.active {
-                                                    border: 2px solid #000;
+                                                    border: 2px solid #fff;
+                                                    outline: 2px solid #333;
                                                 }
                                                 &:hover::after {
                                                     content: attr(data-label);
@@ -334,7 +338,7 @@
                                         }
                                         &.sizes {
                                             flex-direction: column;
-                                            width: 84px;
+                                            width: 80px;
                                             height: 48px;
                                             // padding: 12px 0px;
                                             margin: 4px;
@@ -351,6 +355,11 @@
                                                     border: 2px solid #333;
                                                 }
                                             }
+                                        }
+                                        .variation-box.disabled {
+                                            opacity: .35;
+                                            pointer-events: none;
+                                            cursor: not-allowed;
                                         }
                                     }
                                 }
@@ -613,6 +622,9 @@
                                     }
                                 }
                             }
+                            &.disabeld {
+                                display: none;
+                            }
                             /* custom checkbox */
                             .check-mark {
                                 position: absolute;
@@ -773,8 +785,8 @@
                                     }
                                     input {
                                         display: inline-block;
-                                        width: 72px;
-                                        max-width: 80px;
+                                        width: calc(100% - 28px);
+                                        // max-width: 80px;
                                         padding: 0;
                                         background-color: #fff;
                                         border: none;

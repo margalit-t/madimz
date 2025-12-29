@@ -1363,6 +1363,7 @@ h2:not(.acf-custom-content h2).title, .title {
           transform-style: preserve-3d;
   display: block;
   width: 300px;
+  aspect-ratio: 1/1;
 }
 @media (max-width: 767px) {
   .section-wrap.carousel-category-wrapper .category-carousel.swiper .swiper-slide a img {
@@ -1631,7 +1632,7 @@ h2:not(.acf-custom-content h2).title, .title {
   display: none;
 }
 .section-wrap.favorite-pdts-wrapper .container .swiper-slide-pdts ul.products.swiper-wrapper li.product a {
-  width: auto;
+  width: 100%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -1708,6 +1709,7 @@ h2:not(.acf-custom-content h2).title, .title {
   height: 28px;
   max-height: 28px;
   padding: 4px 0;
+  overflow: hidden;
   -webkit-transition: height 0.4s ease;
   transition: height 0.4s ease;
 }

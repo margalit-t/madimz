@@ -1495,118 +1495,6 @@ h2:not(.acf-custom-content h2).title, .title {
       -ms-flex-order: 2;
           order: 2;
 }
-.parent-category-layout main#primary ul.products li a div.product-color-variations {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 100%;
-  height: auto;
-  min-height: 36px;
-  overflow: hidden;
-  margin: 0 auto;
-  -webkit-box-ordinal-group: 2;
-      -ms-flex-order: 1;
-          order: 1;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-dots {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 150px;
-  height: 28px;
-  max-height: 28px;
-  overflow: hidden;
-  padding: 4px 0;
-  -webkit-transition: height 0.4s ease;
-  transition: height 0.4s ease;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-dots .color-dot {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin: 0 4px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-dots .color-dot:hover::after {
-  content: attr(data-color);
-  position: absolute;
-  top: 24px;
-  right: 50%;
-  -webkit-transform: translateX(50%);
-          transform: translateX(50%);
-  background: #000;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  white-space: nowrap;
-  opacity: 1;
-  pointer-events: none;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-dots .color-dot:hover::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  right: 50%;
-  -webkit-transform: translateX(50%);
-          transform: translateX(50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #000;
-  opacity: 1;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-more {
-  position: absolute;
-  left: 32px;
-  top: 8px;
-  display: inline-block;
-  margin-right: 4px;
-  pointer-events: auto;
-  cursor: pointer;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-more svg {
-  width: 24px;
-  height: 24px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-}
-@media (max-width: 1023px) {
-  .parent-category-layout main#primary ul.products li a div.product-color-variations .color-more svg {
-    width: 12px;
-    height: 12px;
-  }
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-more svg .line-vertical {
-  -webkit-transform-origin: center;
-          transform-origin: center;
-  -webkit-transition: -webkit-transform 0.4s ease;
-  transition: -webkit-transform 0.4s ease;
-  transition: transform 0.4s ease;
-  transition: transform 0.4s ease, -webkit-transform 0.4s ease;
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations .color-more.rotate .line-vertical {
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-}
-.parent-category-layout main#primary ul.products li a div.product-color-variations.show-all .color-dots {
-  height: 56px;
-  max-height: inherit;
-}
 
 .child-category-layout {
   min-height: 400px;
@@ -2017,7 +1905,12 @@ h2:not(.acf-custom-content h2).title, .title {
       -ms-flex-order: 2;
           order: 2;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations {
+
+button.button-wishlist .wishlist-text {
+  display: none;
+}
+
+div.product-color-variations {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2028,37 +1921,41 @@ h2:not(.acf-custom-content h2).title, .title {
   width: 100%;
   height: auto;
   min-height: 36px;
-  overflow: hidden;
   margin: 0 auto;
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
           order: 1;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-dots {
+div.product-color-variations .color-dots {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   width: 150px;
   height: 28px;
   max-height: 28px;
-  overflow: hidden;
   padding: 4px 0;
   -webkit-transition: height 0.4s ease;
   transition: height 0.4s ease;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-dots .color-dot {
+div.product-color-variations .color-dots .color-dot {
   position: relative;
+  display: block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  margin: 0 4px;
+  margin: 4px;
   border: 1px solid #ccc;
   cursor: pointer;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-dots .color-dot:hover::after {
+div.product-color-variations .color-dots .color-dot:nth-child(n+6) {
+  display: none;
+}
+div.product-color-variations .color-dots .color-dot:hover::after {
   content: attr(data-color);
   position: absolute;
   top: 24px;
@@ -2076,7 +1973,7 @@ h2:not(.acf-custom-content h2).title, .title {
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-dots .color-dot:hover::before {
+div.product-color-variations .color-dots .color-dot:hover::before {
   content: "";
   position: absolute;
   top: 20px;
@@ -2092,28 +1989,28 @@ h2:not(.acf-custom-content h2).title, .title {
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-more {
+div.product-color-variations .color-more {
   position: absolute;
-  left: 32px;
-  top: 8px;
+  left: 8px;
+  top: 6px;
   display: inline-block;
   margin-right: 4px;
   pointer-events: auto;
   cursor: pointer;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-more svg {
+div.product-color-variations .color-more svg {
   width: 24px;
   height: 24px;
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
 @media (max-width: 1023px) {
-  .child-category-layout main#primary ul.products li.product a div.product-color-variations .color-more svg {
+  div.product-color-variations .color-more svg {
     width: 12px;
     height: 12px;
   }
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-more svg .line-vertical {
+div.product-color-variations .color-more svg .line-vertical {
   -webkit-transform-origin: center;
           transform-origin: center;
   -webkit-transition: -webkit-transform 0.4s ease;
@@ -2121,17 +2018,16 @@ h2:not(.acf-custom-content h2).title, .title {
   transition: transform 0.4s ease;
   transition: transform 0.4s ease, -webkit-transform 0.4s ease;
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations .color-more.rotate .line-vertical {
+div.product-color-variations .color-more.rotate .line-vertical {
   -webkit-transform: rotate(-90deg);
           transform: rotate(-90deg);
 }
-.child-category-layout main#primary ul.products li.product a div.product-color-variations.show-all .color-dots {
+div.product-color-variations.show-all .color-dots {
   height: 56px;
   max-height: inherit;
 }
-
-button.button-wishlist .wishlist-text {
-  display: none;
+div.product-color-variations.show-all .color-dots .color-dot {
+  display: block;
 }
 
 @media (min-width: 768px) {

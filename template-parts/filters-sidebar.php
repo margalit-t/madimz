@@ -2,7 +2,25 @@
 
     if ( ! defined( 'ABSPATH' ) ) exit;
 
-    if (!is_product_category()) return;
+    if ( !is_product_category() ) return;
+
+    $default_price_ranges = [
+        [
+            'label' => 'עד 40 ₪',
+            'min'   => 0,
+            'max'   => 40,
+        ],
+        [
+            'label' => '40 ₪ עד 100 ₪',
+            'min'   => 41,
+            'max'   => 100,
+        ],
+        [
+            'label' => 'מעל 100 ₪',
+            'min'   => 101,
+            'max'   => 999999,
+        ],
+    ];
 ?>
 
 <!-- Filter sidebar on category page -->
@@ -62,7 +80,9 @@
                             <a href="<?php echo esc_url($url); ?>"><?php echo $man . ' (' . $count . ')'; ?></a>
                         </li>
                     <?php else : ?>
-                        <span class="manufacturer-name disabled"><?php echo esc_html( $man ) . ' (' . $count . ')'; ?></span>
+                        <li>
+                            <span class="manufacturer-name disabled"><?php echo esc_html( $man ) . ' (0)'; ?></span>
+                        </li>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
@@ -71,38 +91,71 @@
         <!-- Price ranges filter -->
         <div class="filter-section price-filter">
             <h4><?php esc_html_e( 'טווח מחירים', 'madimz' ); ?></h4>
+            
+            <?php 
+                $price_ranges = [];
+
+                if (have_rows('price_ranges', $term)) :
+                    while (have_rows('price_ranges', $term)) : 
+                        the_row();
+
+                        $label = trim( get_sub_field('price_label') );
+                        $min   = (int)get_sub_field('price_min');
+                        $max   = (int)get_sub_field('price_max');
+
+                        if ( $label === '' || $min === '' || $max === '' ) {
+                            continue;
+                        }
+
+                        $price_ranges[] = [
+                            'label' => $label,
+                            'min'   => (int) $min,
+                            'max'   => (int) $max,
+                        ];
+                    endwhile;
+                endif;
+
+                if ( empty( $price_ranges ) ) :
+                    $price_ranges = $default_price_ranges;
+                endif;
+            ?>
             <ul>
-                <?php 
-                    if (have_rows('price_ranges', $term)) :
-                        while (have_rows('price_ranges', $term)) : the_row();
-                            $label = get_sub_field('price_label');
-                            $min   = (int)get_sub_field('price_min');
-                            $max   = (int)get_sub_field('price_max');
+                <?php
+                    foreach ( $price_ranges as $range ) :
+                        $label = $range['label'];
+                        $min   = $range['min'];
+                        $max   = $range['max'];
+                
+                        $key = $min . '-' . $max;
 
-                            $key = $min . '-' . $max;
+                        // Skip if already selected
+                        if ( ! empty($_GET['pricerange']) && $_GET['pricerange'] === $key ) continue;
 
-                            // Skip if already selected
-                            if (!empty($_GET['pricerange']) && $_GET['pricerange']==$key) continue;
+                        // Count products
+                        $count = madimz_count_products([
+                            [ 
+                                'key' => '_price', 
+                                'type' => 'NUMERIC', 
+                                'compare' => 'BETWEEN', 
+                                'value' => [ $min, $max ],
+                            ]
+                        ]);
 
-                            // Count products
-                            $count = madimz_count_products([
-                                [ 'key' => '_price', 'type' => 'NUMERIC', 'compare' => 'BETWEEN', 'value' => [ $min, $max ] ]
-                            ]);
+                        $url = add_query_arg('pricerange', $key);
+                        ?>
 
-                            if ( $count > 0 ) :
+                        <?php if ( $count > 0 ) : ?>
 
-                                $url = add_query_arg('pricerange', $key);
-                                ?>
-
-                                <li>
-                                    <a href="<?php echo esc_url($url); ?>"><?php echo $label . ' (' . $count . ')'; ?></a>
-                                </li>
-                            <?php else : ?>
-                                <span class="price_range disabled"><?php echo esc_html( $label ) . ' (' . $count . ')'; ?></span>
-                            <?php endif; ?>
+                            <li>
+                                <a href="<?php echo esc_url($url); ?>"><?php echo esc_html( $label ) . ' (' . $count . ')'; ?></a>
+                            </li>
+                        <?php else : ?>
+                            <li>
+                                <span class="price_range disabled"><?php echo esc_html( $label ) . ' (0)'; ?></span>
+                            </li>
+                        <?php endif; ?>
                         <?php
-                        endwhile;
-                    endif;
+                    endforeach;
                 ?>
             </ul>
         </div>
